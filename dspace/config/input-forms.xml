@@ -160,6 +160,52 @@ it, please enter the types and the actual numbers or codes.</hint>
          <hint>Select the language of the main content of the item.  If the language does not appear in the list, please select 'Other'.  If the content does not really have a language (for example, if it is a dataset or an image) please select 'N/A'.</hint>
          <required></required>
        </field>
+       
+   
+   	   <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>gruparezultata</dc-element>
+         <dc-qualifier></dc-qualifier> 
+         <repeatable>false</repeatable>
+         <label>Grupa rezultata</label>
+         <input-type value-pairs-name="grupa_rezultata">dropdown</input-type>
+         <hint>Izabrati grupu rezultata, vrstu rezultata i oblast nauke.</hint>
+         <required></required>
+       </field> 
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>vrstarezultata</dc-element>
+         <dc-qualifier></dc-qualifier> 
+         <repeatable>false</repeatable>
+         <label>Vrsta rezultata</label>
+         <input-type value-pairs-name="vrsta_rezultata">dropdown</input-type>
+         <hint></hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>oblastnauke</dc-element>
+         <dc-qualifier></dc-qualifier> 
+         <repeatable>false</repeatable>
+         <label>Oblast nauke</label>
+         <input-type value-pairs-name="oblasti_nauke">dropdown</input-type>
+         <hint></hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>vrednostrezultata</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Vrednost rezultata</label>
+         <input-type>onebox</input-type>
+         <hint></hint>
+         <required></required>
+       </field>
+       
      </page>
 
      <page number="2">
@@ -1351,6 +1397,123 @@ it, please enter the types and the actual numbers or codes.</hint>
      <pair>
        <displayed-value>ISBN</displayed-value>
        <stored-value>isbn</stored-value>
+     </pair>
+   </value-pairs>
+    
+   <value-pairs value-pairs-name="grupa_rezultata" dc-term="gruparezultata">
+   	 <pair>
+       <displayed-value> </displayed-value>
+       <stored-value></stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M10 - Monografije, monografske studije, tematski zbornici, leksikografske i kartografske publikacije medjunarodnog znacaja</displayed-value>
+       <stored-value>m10</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M20 - Radovi objavljeni u naucnim casopisima medjunarodnog znacaja; naucna kritika; uredjivanje casopisa</displayed-value>
+       <stored-value>m20</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M30 - Zbornici medjunarodnih naucnih skupova</displayed-value>
+       <stored-value>m30</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M40 - Monografije nacionalnog znacaja</displayed-value>
+       <stored-value>m40</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M50 - Radovi u casopisima nacionalnog znacaja</displayed-value>
+       <stored-value>m50</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M60 - Predavanja po pozivu na skupovima nacionalnog znacaja</displayed-value>
+       <stored-value>m60</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M70 - Odbranjena doktorska disertacija</displayed-value>
+       <stored-value>m70</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M80 - Tehnicka resenja</displayed-value>
+       <stored-value>m80</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M90 - Patenti</displayed-value>
+       <stored-value>m90</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M100 - Izvedena dela, nagrade, studije, izlozbe, ziriranja i kustoski rad od medjunarodnog znacaja</displayed-value>
+       <stored-value>m100a</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M100 - Izvedena dela, nagrade, studije, izlozbe od nacionalnog znacaja</displayed-value>
+       <stored-value>m100b</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M120 - Dokumenti pripremljeni u vezi sa kreiranjem i analizom javnih politika</displayed-value>
+       <stored-value>m120</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="vrsta_rezultata" dc-term="vrstarezultata">
+   	<pair>
+       <displayed-value> - </displayed-value>
+       <stored-value></stored-value>
+     </pair>
+    <pair>
+       <displayed-value>M11 - Istaknuta monografija medjunarodnog znacaja</displayed-value>
+       <stored-value>m11</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M12 - Monografija medjunarodnog znacaja</displayed-value>
+       <stored-value>m12</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M13 - Monografska studija/poglavlje u knjizi M11 ili rad u tematskom zborniku vodeceg medjunarodnog znacaja</displayed-value>
+       <stored-value>m13</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M14 - Monografska studija/poglavlje u knjizi M12 ili rad u tematskom zborniku medjunarodnog znacaja</displayed-value>
+       <stored-value>m14</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M15 - Leksikografska jedinica ili karta u naucnoj publikaciji vodeceg medjunarodnog znacaja</displayed-value>
+       <stored-value>m15</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M16 - Leksikografska jedinica ili karta u publikaciji medjunarodnog znacaja</displayed-value>
+       <stored-value>m16</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M17 - Uredjivanje tematskog zbornika leksikografske ili kartografske publikacije vodeceg medjunarodnog znacaja</displayed-value>
+       <stored-value>m17</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M18 - Uredjivanje tematskog zbornika, leksikografske ili kartografske publikacije medjunarodnog znacaja</displayed-value>
+       <stored-value>m18</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="oblasti_nauke" dc-term="oblastnauke">
+   	<pair>
+       <displayed-value> - </displayed-value>
+       <stored-value></stored-value>
+     </pair>
+     <pair>
+       <displayed-value>1 - Prirodno-matematicke i medicinske</displayed-value>
+       <stored-value>1</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>2 - Tehnicko-tehnoloske i biotehnicke</displayed-value>
+       <stored-value>2</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>3 - Drustvene</displayed-value>
+       <stored-value>3</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>4 - Humanisticke</displayed-value>
+       <stored-value>4</stored-value>
      </pair>
    </value-pairs>
    

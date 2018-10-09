@@ -35,3 +35,4 @@ META-INF/
 rebel.xml
 .externalToolBuilders/
 *.bak
+/.metadata/
