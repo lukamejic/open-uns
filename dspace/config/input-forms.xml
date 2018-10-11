@@ -1457,7 +1457,7 @@ it, please enter the types and the actual numbers or codes.</hint>
 
    <value-pairs value-pairs-name="vrsta_rezultata" dc-term="vrstarezultata">
    	<pair>
-       <displayed-value> - </displayed-value>
+       <displayed-value> </displayed-value>
        <stored-value></stored-value>
      </pair>
     <pair>
@@ -1496,7 +1496,7 @@ it, please enter the types and the actual numbers or codes.</hint>
 
    <value-pairs value-pairs-name="oblasti_nauke" dc-term="oblastnauke">
    	<pair>
-       <displayed-value> - </displayed-value>
+       <displayed-value> </displayed-value>
        <stored-value></stored-value>
      </pair>
      <pair>

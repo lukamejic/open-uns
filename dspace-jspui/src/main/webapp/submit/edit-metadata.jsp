@@ -1814,7 +1814,7 @@ j(document).ready(
 		}		
 );
 
-window.onload = function() {checkGrupa(); setVrRezultata();};
+window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 
 	function checkGrupa(){
 		
@@ -1827,11 +1827,18 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 			ddVrsta.options.length = 0;
 			ddOblNauke.options.length = 0;
 			vrRezultata.value = "";
+		}else{
+			changeVrstaList(ddGrupa);
 		}
 		
 	}
 	
-	/*
+	function setVrednostReadOnly(){
+		
+		document.getElementById("dc_vrednostrezultata").readOnly = true;
+		
+	}
+	
 	function setVrRezultata(){
 		
 		var ddGrupa = document.getElementById("dc_gruparezultataId");
@@ -1839,14 +1846,243 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 		var ddOblNauke = document.getElementById("dc_oblastnaukeId");
 		var vrRezultata = document.getElementById("dc_vrednostrezultata");
 		
-		if(ddGrupa.value && !ddVrsta.value && !ddOblNauke.value){
-			ddVrsta.options.length = 0;
-			ddOblNauke.options.length = 0;
-			vrRezultata.value = "";
+		vrRezultata.value = "";
+		
+		if(ddGrupa.value){
+			
+			if(ddGrupa.value === "m10"){
+				
+				if(ddVrsta.value === "m11"){
+					vrRezultata.value = 14;
+				}else if(ddVrsta.value === "m12"){
+					vrRezultata.value = 10;
+				}else if(ddVrsta.value === "m13"){
+					vrRezultata.value = 7;
+				}else if(ddVrsta.value === "m14"){
+					if(ddOblNauke.value === "1" || ddOblNauke.value === "2"){
+						vrRezultata.value = 4;
+					}
+					if(ddOblNauke.value === "3" || ddOblNauke.value === "4"){
+						vrRezultata.value = 5;
+					}
+				}else if(ddVrsta.value === "m15" || ddVrsta.value === "m17"){
+					vrRezultata.value = 3;
+				}else if(ddVrsta.value === "m16" || ddVrsta.value === "m18"){
+					vrRezultata.value = 2;
+				}
+				
+			}else if(ddGrupa.value === "m20"){
+				
+				if(ddVrsta.value === "m21a"){
+					vrRezultata.value = 10;
+				}else if(ddVrsta.value === "m21"){
+					vrRezultata.value = 8;
+				}else if(ddVrsta.value === "m22"){
+					vrRezultata.value = 5;
+				}else if(ddVrsta.value === "m23"){
+					if(ddOblNauke.value === "4"){
+						vrRezultata.value = 4;
+					}else{
+						vrRezultata.value = 3;
+					}
+				}else if(ddVrsta.value === "m24"){
+					if(ddOblNauke.value === "1"){
+						vrRezultata.value = 2;
+					}else if(ddOblNauke.value === "4"){
+						vrRezultata.value = 4;
+					}else{
+						vrRezultata.value = 3;
+					}
+				}else if(ddVrsta.value === "m25"){
+					vrRezultata.value = 1.5;
+				}else if(ddVrsta.value === "m26" || ddVrsta.value === "m29v"){
+					vrRezultata.value = 1;
+				}else if(ddVrsta.value === "m27"){
+					if(ddOblNauke.value === "4"){
+						vrRezultata.value = 1;
+					}else{
+						vrRezultata.value = 0.5;
+					}
+				}else if(ddVrsta.value === "m28a"){
+					vrRezultata.value = 3.5;
+				}else if(ddVrsta.value === "m28b"){
+					vrRezultata.value = 2.5;
+				}else if(ddVrsta.value === "m29a" || ddVrsta.value === "m29b"){
+					vrRezultata.value = 1.5;
+				}
+				
+			}else if(ddGrupa.value === "m30"){
+				
+				if(ddVrsta.value === "m31"){
+					vrRezultata.value = 3.5;
+				}else if(ddVrsta.value === "m32" || ddVrsta.value === "m36"){
+					vrRezultata.value = 1.5;
+				}else if(ddVrsta.value === "m33"){
+					vrRezultata.value = 1;
+				}else if(ddVrsta.value === "m34"){
+					vrRezultata.value = 0.5;
+				}else if(ddVrsta.value === "m35"){
+					vrRezultata.value = 0.3;
+				}
+				
+			}else if(ddGrupa.value === "m40"){
+				
+				if(ddVrsta.value === "m41"){
+					vrRezultata.value = 7;
+				}else if(ddVrsta.value === "m42"){
+					vrRezultata.value = 5;
+				}else if(ddVrsta.value === "m43"){
+					if(ddOblNauke.value === "4"){
+						vrRezultata.value = 5;
+					}else{
+						vrRezultata.value = 3;
+					}
+				}else if(ddVrsta.value === "m44" || ddVrsta.value === "m48"){
+					vrRezultata.value = 2;
+				}else if(ddVrsta.value === "m45"){
+					vrRezultata.value = 1.5;
+				}else if(ddVrsta.value === "m46" || ddVrsta.value === "m49"){
+					vrRezultata.value = 1;
+				}else if(ddVrsta.value === "m47"){
+					vrRezultata.value = 0.5;
+				}
+				
+			}else if(ddGrupa.value === "m50"){
+				
+				if(ddVrsta.value === "m51" || ddVrsta.value === "m54"){
+					vrRezultata.value = 2;
+				}else if(ddVrsta.value === "m52"){
+					vrRezultata.value = 1.5;
+				}else if(ddVrsta.value === "m53" || ddVrsta.value === "m55"){
+					vrRezultata.value = 1;
+				}else if(ddVrsta.value === "m56"){
+					if(ddOblNauke.value === "4"){
+						vrRezultata.value = 0.5;
+					}else{
+						vrRezultata.value = 0.3;
+					}
+				}else if(ddVrsta.value === "m57"){
+					if(ddOblNauke.value === "4"){
+						vrRezultata.value = 0.3;
+					}else{
+						vrRezultata.value = 0.2;
+					}
+				}
+				
+			}else if(ddGrupa.value === "m60"){
+				
+				if(ddVrsta.value === "m61"){
+					vrRezultata.value = 1.5;
+				}else if(ddVrsta.value === "m62" || ddVrsta.value === "m66"){
+					vrRezultata.value = 1;
+				}else if(ddVrsta.value === "m63"){
+					if(ddOblNauke.value === "1" || ddOblNauke.value === "4"){
+						vrRezultata.value = 1;
+					}else{
+						vrRezultata.value = 0.5;
+					}
+				}else if(ddVrsta.value === "m64"){
+					if(ddOblNauke.value === "4"){
+						vrRezultata.value = 0.5;
+					}else{
+						vrRezultata.value = 0.2;
+					}
+				}else if(ddVrsta.value === "m65"){
+					vrRezultata.value = 0.2;
+				}else if(ddVrsta.value === "m67"){
+					vrRezultata.value = 5;
+				}else if(ddVrsta.value === "m68"){
+					vrRezultata.value = 2;
+				}else if(ddVrsta.value === "m69"){
+					vrRezultata.value = 6;
+				}
+				
+			}else if(ddGrupa.value === "m70"){
+				
+				vrRezultata.value = 6;
+				
+			}else if(ddGrupa.value === "m80"){
+				
+				if(ddVrsta.value === "m81"){
+					vrRezultata.value = 8;
+				}else if(ddVrsta.value === "m82"){
+					vrRezultata.value = 6;
+				}else if(ddVrsta.value === "m83"){
+					vrRezultata.value = 4;
+				}else if(ddVrsta.value === "m84"){
+					vrRezultata.value = 3;
+				}else if(ddVrsta.value === "m85" || ddVrsta.value === "m86"){
+					vrRezultata.value = 2;
+				}else if(ddVrsta.value === "m87"){
+					vrRezultata.value = 1;
+				}
+				
+			}else if(ddGrupa.value === "m90"){
+				
+				if(ddVrsta.value === "m91"){
+					vrRezultata.value = 16;
+				}else if(ddVrsta.value === "m92" || ddVrsta.value === "m95"){
+					vrRezultata.value = 12;
+				}else if(ddVrsta.value === "m93"){
+					vrRezultata.value = 9;
+				}else if(ddVrsta.value === "m94"){
+					vrRezultata.value = 7;
+				}else if(ddVrsta.value === "m96"){
+					vrRezultata.value = 8;
+				}else if(ddVrsta.value === "m97"){
+					vrRezultata.value = 5;
+				}else if(ddVrsta.value === "m98"){
+					vrRezultata.value = 3;
+				}else if(ddVrsta.value === "m99"){
+					vrRezultata.value = 2;
+				}
+				
+			}else if(ddGrupa.value === "m100a"){
+				
+				if(ddVrsta.value === "m101"){
+					vrRezultata.value = 8;
+				}else if(ddVrsta.value === "m102"){
+					vrRezultata.value = 5;
+				}else if(ddVrsta.value === "m103"){
+					vrRezultata.value = 3;
+				}else if(ddVrsta.value === "m104"){
+					vrRezultata.value = 2;
+				}else if(ddVrsta.value === "m105"){
+					vrRezultata.value = 1;
+				}else if(ddVrsta.value === "m106" || ddVrsta.value === "m107"){
+					vrRezultata.value = 0.5;
+				}
+				
+			}else if(ddGrupa.value === "m100b"){
+				
+				if(ddVrsta.value === "m108"){
+					vrRezultata.value = 4;
+				}else if(ddVrsta.value === "m109"){
+					vrRezultata.value = 2.5;
+				}else if(ddVrsta.value === "m110"){
+					vrRezultata.value = 1.5;
+				}else if(ddVrsta.value === "m111"){
+					vrRezultata.value = 1;
+				}else if(ddVrsta.value === "m112"){
+					vrRezultata.value = 0.5;
+				}
+				
+			}else if(ddGrupa.value === "m120"){
+				
+				if(ddVrsta.value === "m121"){
+					vrRezultata.value = 3;
+				}else if(ddVrsta.value === "m122"){
+					vrRezultata.value = 2;
+				}else if(ddVrsta.value === "m123" || ddVrsta.value === "m124"){
+					vrRezultata.value = 1;
+				}
+				
+			}
+			
 		}
 		
 	}
-	*/
+	
 
 	function changeVrstaList(dd) {
 		
@@ -1871,36 +2107,37 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 				if(ddGrupaValue === "m10"){
 					
 					ddVrsta.options.length = 0;
-					ddOblNauke.options.length = 0;
-					
+
 					var myObject = {
-							m11 : 'M11 - Istaknuta monografija medjunarodnog znacaja',
-							m12 : 'M12 - Monografija medjunarodnog znacaja',
-							m13 : 'M13 - Monografska studija/poglavlje u knjizi M11 ili rad u tematskom zborniku vodeceg medjunarodnog znacaja',
-							m14 : 'M14 - Monografska studija/poglavlje u knjizi M12 ili rad u tematskom zborniku medjunarodnog znacaja',
-							m15 : 'M15 - Leksikografska jedinica ili karta u naucnoj publikaciji vodeceg medjunarodnog znacaja',
-							m16 : 'M16 - Leksikografska jedinica ili karta u publikaciji medjunarodnog znacaja',
-							m17 : 'M17 - Uredjivanje tematskog zbornika leksikografske ili kartografske publikacije vodeceg medjunarodnog znacaja',
-							m18 : 'M18 - Uredjivanje tematskog zbornika, leksikografske ili kartografske publikacije medjunarodnog znacaja'
+						m11 : 'M11 - Istaknuta monografija medjunarodnog znacaja',
+						m12 : 'M12 - Monografija medjunarodnog znacaja',
+						m13 : 'M13 - Monografska studija/poglavlje u knjizi M11 ili rad u tematskom zborniku vodeceg medjunarodnog znacaja',
+						m14 : 'M14 - Monografska studija/poglavlje u knjizi M12 ili rad u tematskom zborniku medjunarodnog znacaja',
+						m15 : 'M15 - Leksikografska jedinica ili karta u naucnoj publikaciji vodeceg medjunarodnog znacaja',
+						m16 : 'M16 - Leksikografska jedinica ili karta u publikaciji medjunarodnog znacaja',
+						m17 : 'M17 - Uredjivanje tematskog zbornika leksikografske ili kartografske publikacije vodeceg medjunarodnog znacaja',
+						m18 : 'M18 - Uredjivanje tematskog zbornika, leksikografske ili kartografske publikacije medjunarodnog znacaja'
 					};
 					for (index in myObject){
 						ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
 					}
-					
+
+					ddOblNauke.options.length = 0;
+
 					var myObjectOblasti = {
-							1 : '1 - Prirodno-matematicke i medicinske',
-							2 : '2 - Tehnicko-tehnoloske - biotehnicke',
-							3 : '3 - Drustvene',
-							4 : '4 - Humanisticke'
+						1 : '1 - Prirodno-matematicke i medicinske',
+						2 : '2 - Tehnicko-tehnoloske - biotehnicke',
+						3 : '3 - Drustvene',
+						4 : '4 - Humanisticke'
 					};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+					
 				}else if(ddGrupaValue === "m20"){
 					
 					ddVrsta.options.length = 0;
-					ddOblNauke.options.length = 0;
-					
+				
 					var myObject = {
 							m21a : 'M21a - Rad u vrhunskom medjunarodnom casopisu',
 							m21 : 'M21 - Rad u vrhunskom medjunarodnom casopisu',
@@ -1919,7 +2156,9 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObject){
 						ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
 					}
-					
+				
+					ddOblNauke.options.length = 0;
+				
 					var myObjectOblasti = {
 							1 : '1 - Prirodno-matematicke i medicinske',
 							2 : '2 - Tehnicko-tehnoloske - biotehnicke',
@@ -1929,10 +2168,10 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+					
 				}else if(ddGrupaValue === "m30"){
 					
 					ddVrsta.options.length = 0;
-					ddOblNauke.options.length = 0;
 					
 					var myObject = {
 							m31 : 'M31 - Predavanje po pozivu sa medjunarodnog skupa stampano u celini (neophodno pozivno pismo)',
@@ -1943,9 +2182,13 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 							m36 : 'M36 - Uredjivanje zbornika saopstenja medjunarodnog naucnog skupa'
 					};
 					for (index in myObject){
+						
+						
 						ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
 					}
-					
+				
+					ddOblNauke.options.length = 0;
+				
 					var myObjectOblasti = {
 							1 : '1 - Prirodno-matematicke i medicinske',
 							2 : '2 - Tehnicko-tehnoloske - biotehnicke',
@@ -1955,10 +2198,10 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+					
 				}else if(ddGrupaValue === "m40"){
 					
 					ddVrsta.options.length = 0;
-					ddOblNauke.options.length = 0;
 					
 					var myObject = {
 							m41 : 'M41 - Istaknuta monografija nacionalnog znacaja',
@@ -1974,6 +2217,8 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObject){
 						ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
 					}
+				
+					ddOblNauke.options.length = 0;
 					
 					var myObjectOblasti = {
 							1 : '1 - Prirodno-matematicke i medicinske',
@@ -1984,11 +2229,11 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+					
 				}else if(ddGrupaValue === "m50"){
 					
 					ddVrsta.options.length = 0;
-					ddOblNauke.options.length = 0;
-					
+				
 					var myObject = {
 							m51 : 'M51 - Rad u vodecem casopisu nacionalnog znacaja',
 							m52 : 'M52 - Rad u casopisu nacionalnog znacaja',
@@ -2001,6 +2246,8 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObject){
 						ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
 					}
+				
+					ddOblNauke.options.length = 0;
 					
 					var myObjectOblasti = {
 							1 : '1 - Prirodno-matematicke i medicinske',
@@ -2011,10 +2258,10 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+					
 				}else if(ddGrupaValue === "m60"){
 					
 					ddVrsta.options.length = 0;
-					ddOblNauke.options.length = 0;
 					
 					var myObject = {
 							m61 : 'M61 - Predavanje po pozivu sa skupa nacionalnog znacaja stampano u celini',
@@ -2030,6 +2277,8 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObject){
 						ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
 					}
+				
+					ddOblNauke.options.length = 0;
 					
 					var myObjectOblasti = {
 							1 : '1 - Prirodno-matematicke i medicinske',
@@ -2040,6 +2289,7 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+					
 				}else if(ddGrupaValue === "m70"){
 					
 					//Nema vrsta i oblasti nauka za ovu grupu
@@ -2050,7 +2300,6 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 				}else if(ddGrupaValue === "m80"){
 					
 					ddVrsta.options.length = 0;
-					ddOblNauke.options.length = 0;
 					
 					var myObject = {
 							m81 : 'M81 - Novo tehnicko resenje primenjeno na medjunarodnom nivou',
@@ -2063,7 +2312,9 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					};
 					for (index in myObject){
 						ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
-					}
+					}	
+				
+					ddOblNauke.options.length = 0;
 					
 					var myObjectOblasti = {
 							2 : '2 - Tehnicko-tehnoloske - biotehnicke'
@@ -2071,10 +2322,10 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+					
 				}else if(ddGrupaValue === "m90"){
 					
 					ddVrsta.options.length = 0;
-					ddOblNauke.options.length = 0;
 					
 					var myObject = {
 							m91 : 'M91 - Registrovan patent na medjunarodnom nivou',
@@ -2090,17 +2341,19 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObject){
 						ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
 					}
-					
+				
+					ddOblNauke.options.length = 0;
+				
 					var myObjectOblasti = {
 							2 : '2 - Tehnicko-tehnoloske - biotehnicke'
 					};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+						
 				}else if(ddGrupaValue === "m100a"){
 					
 					ddVrsta.options.length = 0;
-					ddOblNauke.options.length = 0;
 					
 					var myObject = {
 							m101 : 'M101 - Izvedeno (autorsko) delo',
@@ -2114,6 +2367,8 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObject){
 						ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
 					}
+				
+					ddOblNauke.options.length = 0;
 					
 					var myObjectOblasti = {
 							4 : '4 - Humanisticke'
@@ -2121,10 +2376,10 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+					
 				}else if(ddGrupaValue === "m100b"){
 					
 					ddVrsta.options.length = 0;
-					ddOblNauke.options.length = 0;
 					
 					var myObject = {
 							m108 : 'M108 - Izvedeno (autorsko) delo sa publikacijom u nacionalnom casopisu',
@@ -2136,6 +2391,8 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObject){
 						ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
 					}
+				
+					ddOblNauke.options.length = 0;
 					
 					var myObjectOblasti = {
 							4 : '4 - Humanisticke'
@@ -2143,10 +2400,10 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+					
 				}else if(ddGrupaValue === "m120"){
 					
 					ddVrsta.options.length = 0;
-					ddOblNauke.options.length = 0;
 					
 					var myObject = {
 							m121 : 'M121 - Strateski dokument nacionalnog ili supra-nacionalnog nivoa narucen od odgovarajuceg organa javne vlasti koji je prihvacen na odgovarajucem naucnom/nastavno-naucnom vecu',
@@ -2157,6 +2414,8 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObject){
 						ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
 					}
+				
+					ddOblNauke.options.length = 0;
 					
 					var myObjectOblasti = {
 							1 : '1 - Prirodno-matematicke i medicinske',
@@ -2183,7 +2442,9 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+					
 				}else{
+					
 					ddOblNauke.options.length = 0;
 					
 					var myObjectOblasti = {
@@ -2195,8 +2456,12 @@ window.onload = function() {checkGrupa(); setVrRezultata();};
 					for (index in myObjectOblasti){
 						ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 					}
+					
 				}
+				
 		}
+		
+		setVrRezultata();
 		
 	}
 
