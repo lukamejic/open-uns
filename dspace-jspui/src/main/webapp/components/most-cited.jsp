@@ -11,10 +11,10 @@
         <div class="panel panel-primary vertical-carousel" data-itemstoshow="3">        
         <div class="panel-heading">
           <h3 class="panel-title">
-          		<fmt:message key="jsp.components.most-cited"/>
+          		<a href="JavaScript:otvoriBlok('RecSub');"><fmt:message key="jsp.components.most-cited"/><i id="faMostCit" class="fa fa-angle-double-down"></i></a>
           </h3>
        </div>   
-	   <div class="panel-body">
+	   <div class="panel-body hideNi panDesno" id="blokMostCit">
 	   		<div class="list-groups">
 <% for(MostViewedItem mvi : mostCitedItem.getItems()){
 		IGlobalSearchResult item = mvi.getItem();

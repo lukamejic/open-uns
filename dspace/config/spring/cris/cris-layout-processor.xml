@@ -43,6 +43,10 @@
 						<bean class="org.dspace.app.webui.discovery.GlobalFacetProcessorConfigurator.InnerGlobalFacetProcessorConfigurator">
 							<property name="name" value="events"/>							
 						</bean>
+						<bean
+							class="org.dspace.app.webui.discovery.GlobalFacetProcessorConfigurator.InnerGlobalFacetProcessorConfigurator">
+							<property name="name" value="datasets" />
+						</bean>
 					</list>				
 				</entry>
 				<entry key="group-right">
@@ -56,10 +60,6 @@
 						<bean
 							class="org.dspace.app.webui.discovery.GlobalFacetProcessorConfigurator.InnerGlobalFacetProcessorConfigurator">
 							<property name="name" value="conferencematerials" />
-						</bean>
-						<bean
-							class="org.dspace.app.webui.discovery.GlobalFacetProcessorConfigurator.InnerGlobalFacetProcessorConfigurator">
-							<property name="name" value="datasets" />
 						</bean>
 						<bean
 							class="org.dspace.app.webui.discovery.GlobalFacetProcessorConfigurator.InnerGlobalFacetProcessorConfigurator">

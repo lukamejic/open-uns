@@ -100,8 +100,8 @@
 <hr/>
 <div class="row">
 <form id="searchglobalprocessor" name="searchglobalprocessor" class="col-md-10 col-md-offset-1" action="<%= request.getContextPath() %>/simple-search" method="get">
-<div class="input-group">
-    <input type="text" class="form-control" name="query" placeholder="Search term...">
+<div class="input-group"><br/>
+    <input type="text" class="form-control" name="query" placeholder=<fmt:message key="jsp.controlledvocabulary.search.searchbutton"/>><br/><br/>
     <span class="input-group-btn">
         <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
     </span>    
@@ -142,7 +142,7 @@
 </div>
 </form>
 </div>
-<hr/>
+<br/>
 
 
 <%
@@ -174,211 +174,202 @@
 		}
 %>
 <div class="row">
-	<a href="#group-left-info-popover-content"><div class="col-md-4 text-center">
-		<h4 class="text-success"><fmt:message key="jsp.home.explore.group-left-info" /></h4>
-		<p><span class="fa fa-users fa-5x" id="group-left-info" data-placement="right"></span> <span class="badge"><%= totGroupLeft %></span></p>
-		<small class="label label-success"><fmt:message key="jsp.home.explore.title.group-left-info" /></small>
-	</div></a>
+
+	<!-- CENTRALNI BLOK ISTRAZIVACI -->
 	
-	<a href="#group-center-info-popover-content"><div class="col-md-4 text-center">
-		<h4 class="text-success"><fmt:message key="jsp.home.explore.group-center-info" /></h4>
-		<p><span class="fa fa-cogs fa-5x" id="group-center-info"  data-placement="bottom"></span> <span class="badge"><%= totGroupCenter%></span></p>
-		<small class="label label-success"><fmt:message key="jsp.home.explore.title.group-center-info" /></small>
-	</div></a>
+	<div class="col-md-4 text-center">
+			<div id="group-left-info-popover-content">
+				<ul class="list-group">
+					<%
+					if(facetsGlobalConf!=null) {
+						for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
+						{
+							String f = facetConf.getIndexFieldName();   	
+							List<FacetResult> facet = mapGlobalFacetes.get(f);
+							if(facet!=null) {
+								for (FacetResult fvalue : facet)
+								{ 
+									if(mapFacetFirstLevel.containsKey(fvalue.getAuthorityKey())) {
+										if(mapFacetFirstLevel.get(fvalue.getAuthorityKey()).equals("group-left")) {	
+										String fkey =  "jsp.home.group-left-info."+fvalue.getAuthorityKey();
+								%>
+				
+								<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath() %>/simple-search?query=&location=<%=fvalue.getAuthorityKey()%>"><fmt:message key="<%= fkey %>"/></a></li>
+						<%
+										}
+									}
+								}
+							}	    		    
+							
+						}
+					
+					%>
+					<%
+						for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
+						{
+							String f = facetConf.getIndexFieldName();   
+							if(mapFacetSecondLevel.containsKey(f)) {
+								if(mapFacetFirstLevel.get(mapFacetSecondLevel.get(f)).equals("group-left")) {
+									%>
+									<li role="presentation" class="dropdown-header"><fmt:message key="jsp.home.group.dropdown.header.secondlevel"/></li>
+									<%
+							List<FacetResult> facet = mapGlobalFacetes.get(f);
+							if(facet!=null) {
+								for (FacetResult fvalue : facet)
+								{ 
+								%>
+				
+								<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath()
+									+ "/simple-search?filterquery="+URLEncoder.encode(fvalue.getAsFilterQuery(),"UTF-8")
+									+ "&amp;filtername="+URLEncoder.encode(f,"UTF-8")
+									+ "&amp;filtertype="+URLEncoder.encode(fvalue.getFilterType(),"UTF-8") %>"
+									title="<fmt:message key="jsp.search.facet.narrow"><fmt:param><%=fvalue.getDisplayedValue() %></fmt:param></fmt:message>">
+									<%= StringUtils.abbreviate(fvalue.getDisplayedValue(),36) %></a></li>
+						<%
+								}
+							}
+							}
+							}	    		    
+							
+						}
+					}
+					%>
+					</ul>
+			</div>	
+	</div>
 	
-	<a href="#group-right-info-popover-content"><div class="col-md-4 text-center">
-		<h4 class="text-success"><fmt:message key="jsp.home.explore.group-right-info" /></h4>
-		<p><span class="fa fa-file-text-o fa-5x" id="group-right-info"  data-placement="left"></span> <span class="badge"><%= totGroupRight %></span></p>
-		<small class="label label-success"><fmt:message key="jsp.home.explore.title.group-right-info" /></small>
-	</div></a>
+	<!-- CENTRALNI BLOK PROJEKTI -->
+	
+	<div class="col-md-4 text-center">
+		<div id="group-center-info-popover-content">
+			<ul class="list-group">
+				<%
+				if(facetsGlobalConf!=null) {
+					for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
+					{
+						String f = facetConf.getIndexFieldName();
+						List<FacetResult> facet = mapGlobalFacetes.get(f);
+						if(facet!=null) {
+							for (FacetResult fvalue : facet)
+							{ 
+								if(mapFacetFirstLevel.containsKey(fvalue.getAuthorityKey())) {
+									if(mapFacetFirstLevel.get(fvalue.getAuthorityKey()).equals("group-center")) {
+									
+									/* MORAM OVAKO JER SU STRING VARIJABLE VEZANE ZA BLOKOVE */ 
+										
+									String fkey =  "jsp.home.group-" + (fvalue.getAuthorityKey().equals("datasets") ? "right" : "center") + "-info."+fvalue.getAuthorityKey();
+
+							%>
+			
+							<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath() %>/simple-search?query=&location=<%=fvalue.getAuthorityKey()%>"><fmt:message key="<%= fkey %>"/></a></li>
+					<%
+									}
+								}
+							}
+						}	    		    
+						
+					}
+				
+				%>
+				<%
+					for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
+					{
+						String f = facetConf.getIndexFieldName();   
+						if(mapFacetSecondLevel.containsKey(f)) {
+							if(mapFacetFirstLevel.get(mapFacetSecondLevel.get(f)).equals("group-center")) {
+								%>
+								<li role="presentation" class="dropdown-header"><fmt:message key="jsp.home.group.dropdown.header.secondlevel"/></li>
+								<%
+						List<FacetResult> facet = mapGlobalFacetes.get(f);
+						if(facet!=null) {
+							for (FacetResult fvalue : facet)
+							{ 
+							%>
+			
+							<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath()
+								+ "/simple-search?filterquery="+URLEncoder.encode(fvalue.getAsFilterQuery(),"UTF-8")
+								+ "&amp;filtername="+URLEncoder.encode(f,"UTF-8")
+								+ "&amp;filtertype="+URLEncoder.encode(fvalue.getFilterType(),"UTF-8") %>"
+								title="<fmt:message key="jsp.search.facet.narrow"><fmt:param><%=fvalue.getDisplayedValue() %></fmt:param></fmt:message>">
+								<%= StringUtils.abbreviate(fvalue.getDisplayedValue(),36) %></a></li>
+					<%
+							}
+						}
+						}
+						}	    		    
+						
+					}
+				}
+				%>
+				</ul>
+		</div>
+	</div>
+	
+	<!-- CENTRALNI BLOK OSTALO -->
+	
+	<div class="col-md-4 text-center">
+		<div id="group-right-info-popover-content">
+			<ul class="list-group">
+				<%
+				if(facetsGlobalConf!=null) {
+					for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
+					{
+						String f = facetConf.getIndexFieldName();
+						List<FacetResult> facet = mapGlobalFacetes.get(f);
+						if(facet!=null) {
+							for (FacetResult fvalue : facet)
+							{ 
+								if(mapFacetFirstLevel.containsKey(fvalue.getAuthorityKey())) {
+									if(mapFacetFirstLevel.get(fvalue.getAuthorityKey()).equals("group-right")) {
+									String fkey =  "jsp.home.group-right-info."+fvalue.getAuthorityKey();
+							%>
+			
+							<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath() %>/simple-search?query=&location=<%=fvalue.getAuthorityKey()%>"><fmt:message key="<%= fkey %>"/></a></li>
+					<%
+									}
+								}
+							}
+						}
+								
+						
+					}
+				
+				%>
+						<%
+					for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
+					{
+						String f = facetConf.getIndexFieldName();   
+						if(mapFacetSecondLevel.containsKey(f)) {
+							if(mapFacetFirstLevel.get(mapFacetSecondLevel.get(f)).equals("group-right")) {
+								%>
+								<li role="presentation" class="dropdown-header"><fmt:message key="jsp.home.group.dropdown.header.secondlevel"/></li>
+								<%
+						List<FacetResult> facet = mapGlobalFacetes.get(f);
+						if(facet!=null) {
+							for (FacetResult fvalue : facet)
+							{ 
+							%>
+			
+							<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath()
+								+ "/simple-search?filterquery="+URLEncoder.encode(fvalue.getAsFilterQuery(),"UTF-8")
+								+ "&amp;filtername="+URLEncoder.encode(f,"UTF-8")
+								+ "&amp;filtertype="+URLEncoder.encode(fvalue.getFilterType(),"UTF-8") %>"
+								title="<fmt:message key="jsp.search.facet.narrow"><fmt:param><%=fvalue.getDisplayedValue() %></fmt:param></fmt:message>">
+								<%= StringUtils.abbreviate(fvalue.getDisplayedValue(),36) %></a></li>
+					<%
+							}
+						}
+						}		    		    		    
+						}
+					}
+				}
+				%>
+				</ul>
+		</div>
+	</div>
+	
 </div>
 
 
 <hr/>
-
-<div id="group-left-info-popover-head" class="hide">
-	<fmt:message key="jsp.home.group-left.head"/>
-</div>
-<div id="group-center-info-popover-head" class="hide">
-	<fmt:message key="jsp.home.group-center.head"/>
-</div>
-<div id="group-right-info-popover-head" class="hide">
-	<fmt:message key="jsp.home.group-right.head"/>
-</div>
-
-<div id="group-left-info-popover-content" class="hide">
-	<ul class="list-group">
-        <%
-		if(facetsGlobalConf!=null) {
-			for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
-			{
-		    	String f = facetConf.getIndexFieldName();   	
-		    	List<FacetResult> facet = mapGlobalFacetes.get(f);
-		    	if(facet!=null) {
-				    for (FacetResult fvalue : facet)
-			    	{ 
-				    	if(mapFacetFirstLevel.containsKey(fvalue.getAuthorityKey())) {
-							if(mapFacetFirstLevel.get(fvalue.getAuthorityKey()).equals("group-left")) {	
-				    		String fkey =  "jsp.home.group-left-info."+fvalue.getAuthorityKey();
-			        %>
-	
-					<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath() %>/simple-search?query=&location=<%=fvalue.getAuthorityKey()%>"><fmt:message key="<%= fkey %>"/></a></li>
-			<%
-					    	}
-				    	}
-			    	}
-		    	}	    		    
-		    	
-			}
 		
-		%>
-		<%
-			for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
-			{
-		    	String f = facetConf.getIndexFieldName();   
-		    	if(mapFacetSecondLevel.containsKey(f)) {
-		    		if(mapFacetFirstLevel.get(mapFacetSecondLevel.get(f)).equals("group-left")) {
-		    			%>
-		    			<li role="presentation" class="dropdown-header"><fmt:message key="jsp.home.group.dropdown.header.secondlevel"/></li>
-		    			<%
-		    	List<FacetResult> facet = mapGlobalFacetes.get(f);
-		    	if(facet!=null) {
-				    for (FacetResult fvalue : facet)
-			    	{ 
-			        %>
-	
-					<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath()
-			            + "/simple-search?filterquery="+URLEncoder.encode(fvalue.getAsFilterQuery(),"UTF-8")
-		                + "&amp;filtername="+URLEncoder.encode(f,"UTF-8")
-		                + "&amp;filtertype="+URLEncoder.encode(fvalue.getFilterType(),"UTF-8") %>"
-		                title="<fmt:message key="jsp.search.facet.narrow"><fmt:param><%=fvalue.getDisplayedValue() %></fmt:param></fmt:message>">
-		                <%= StringUtils.abbreviate(fvalue.getDisplayedValue(),36) %></a></li>
-			<%
-					}
-		    	}
-		    	}
-		    	}	    		    
-		    	
-			}
-		}
-		%>
-		</ul>
-</div>		
-
-<div id="group-center-info-popover-content" class="hide">
-	<ul class="list-group">
-        <%
-		if(facetsGlobalConf!=null) {
-			for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
-			{
-		    	String f = facetConf.getIndexFieldName();
-		    	List<FacetResult> facet = mapGlobalFacetes.get(f);
-		    	if(facet!=null) {
-				    for (FacetResult fvalue : facet)
-			    	{ 
-				    	if(mapFacetFirstLevel.containsKey(fvalue.getAuthorityKey())) {
-							if(mapFacetFirstLevel.get(fvalue.getAuthorityKey()).equals("group-center")) {
-				    		String fkey =  "jsp.home.group-center-info."+fvalue.getAuthorityKey();
-			        %>
-	
-					<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath() %>/simple-search?query=&location=<%=fvalue.getAuthorityKey()%>"><fmt:message key="<%= fkey %>"/></a></li>
-			<%
-				    		}
-				    	}
-			    	}
-		    	}	    		    
-		    	
-			}
-		
-		%>
-		<%
-			for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
-			{
-		    	String f = facetConf.getIndexFieldName();   
-		    	if(mapFacetSecondLevel.containsKey(f)) {
-		    		if(mapFacetFirstLevel.get(mapFacetSecondLevel.get(f)).equals("group-center")) {
-		    			%>
-		    			<li role="presentation" class="dropdown-header"><fmt:message key="jsp.home.group.dropdown.header.secondlevel"/></li>
-		    			<%
-		    	List<FacetResult> facet = mapGlobalFacetes.get(f);
-		    	if(facet!=null) {
-				    for (FacetResult fvalue : facet)
-			    	{ 
-			        %>
-	
-					<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath()
-			            + "/simple-search?filterquery="+URLEncoder.encode(fvalue.getAsFilterQuery(),"UTF-8")
-		                + "&amp;filtername="+URLEncoder.encode(f,"UTF-8")
-		                + "&amp;filtertype="+URLEncoder.encode(fvalue.getFilterType(),"UTF-8") %>"
-		                title="<fmt:message key="jsp.search.facet.narrow"><fmt:param><%=fvalue.getDisplayedValue() %></fmt:param></fmt:message>">
-		                <%= StringUtils.abbreviate(fvalue.getDisplayedValue(),36) %></a></li>
-			<%
-					}
-		    	}
-		    	}
-		    	}	    		    
-		    	
-			}
-		}
-		%>
-		</ul>
-</div>		
-
-<div id="group-right-info-popover-content" class="hide">
-	<ul class="list-group">
-        <%
-		if(facetsGlobalConf!=null) {
-			for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
-			{
-		    	String f = facetConf.getIndexFieldName();
-		    	List<FacetResult> facet = mapGlobalFacetes.get(f);
-		    	if(facet!=null) {
-				    for (FacetResult fvalue : facet)
-			    	{ 
-				    	if(mapFacetFirstLevel.containsKey(fvalue.getAuthorityKey())) {
-							if(mapFacetFirstLevel.get(fvalue.getAuthorityKey()).equals("group-right")) {
-				    		String fkey =  "jsp.home.group-right-info."+fvalue.getAuthorityKey();
-			        %>
-	
-					<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath() %>/simple-search?query=&location=<%=fvalue.getAuthorityKey()%>"><fmt:message key="<%= fkey %>"/></a></li>
-			<%
-				    		}
-				    	}
-			    	}
-		    	}
-		    		    
-		    	
-			}
-		
-		%>
-				<%
-			for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
-			{
-		    	String f = facetConf.getIndexFieldName();   
-		    	if(mapFacetSecondLevel.containsKey(f)) {
-		    		if(mapFacetFirstLevel.get(mapFacetSecondLevel.get(f)).equals("group-right")) {
-		    			%>
-		    			<li role="presentation" class="dropdown-header"><fmt:message key="jsp.home.group.dropdown.header.secondlevel"/></li>
-		    			<%
-		    	List<FacetResult> facet = mapGlobalFacetes.get(f);
-		    	if(facet!=null) {
-				    for (FacetResult fvalue : facet)
-			    	{ 
-			        %>
-	
-					<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath()
-			            + "/simple-search?filterquery="+URLEncoder.encode(fvalue.getAsFilterQuery(),"UTF-8")
-		                + "&amp;filtername="+URLEncoder.encode(f,"UTF-8")
-		                + "&amp;filtertype="+URLEncoder.encode(fvalue.getFilterType(),"UTF-8") %>"
-		                title="<fmt:message key="jsp.search.facet.narrow"><fmt:param><%=fvalue.getDisplayedValue() %></fmt:param></fmt:message>">
-		                <%= StringUtils.abbreviate(fvalue.getDisplayedValue(),36) %></a></li>
-			<%
-					}
-		    	}
-		    	}		    		    		    
-		    	}
-			}
-		}
-		%>
-		</ul>
-</div>		

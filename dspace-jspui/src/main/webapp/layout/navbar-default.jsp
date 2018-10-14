@@ -98,7 +98,7 @@
        </div>
        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
          <ul id="top-menu" class="nav navbar-nav navbar-<%= isRtl ? "right":"left"%>">
-           <li class="pull-<%= isRtl ? "right":"left"%>"><a class="navbar-brand" href="<%= request.getContextPath() %>/"><img height="25" src="<%= request.getContextPath() %>/image/dspace-logo-only.png" alt="DSpace logo" /></a></li>
+           <li class="pull-<%= isRtl ? "right":"left"%>"><a class="navbar-brand" href="<%= request.getContextPath() %>/"><img src="<%= request.getContextPath() %>/image/uns-logo.png" alt="UNS logo" /></a></li>
            <li id="home-top-menu" class="pull-<%= isRtl ? "right":"left"%>   <%= currentPage.endsWith("/home.jsp")? 
         		   "active" : "" %>"><a href="<%= request.getContextPath() %>/"><fmt:message key="jsp.layout.navbar-default.home"/></a></li>
 		  <% if(showCommList){ %>
@@ -139,13 +139,42 @@
           <li id="help-top-menu" class="<%= ( currentPage.endsWith( "/help" ) ? "active" : "" ) %>"><dspace:popup page="<%= LocaleSupport.getLocalizedMessage(pageContext, \"help.index\") %>"><fmt:message key="jsp.layout.navbar-default.help"/></dspace:popup></li>
        </ul>
 
- <%-- if (supportedLocales != null && supportedLocales.length > 1)
-     {
+        <div class="nav navbar-nav navbar-<%= isRtl ? "left" : "right" %>">
+		<ul id="linkDesno" class="nav navbar-nav navbar-<%= isRtl ? "left" : "right" %>">
+ 		
+		<!-- IKONICA ZA PRETRAGU -->
+		
+		 <li id="search-top-menu" class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-search"></span></a>
+          <div class="dropdown-menu">
+          
+	<%-- Search Box --%>
+	<form id="formsearch-top-menu" method="get" action="<%= request.getContextPath() %>/global-search" class="navbar-form navbar-<%= isRtl ? "left" : "right" %>" scope="search">		
+	    <div class="form-group">
+          <input type="text" class="form-control" placeholder="<fmt:message key="jsp.layout.navbar-default.search"/>" name="query" id="tequery" size="25"/>
+			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+<%--               <br/><a href="<%= request.getContextPath() %>/advanced-search"><fmt:message key="jsp.layout.navbar-default.advanced"/></a>
+<%
+			if (ConfigurationManager.getBooleanProperty("webui.controlledvocabulary.enable"))
+			{
+%>        
+              <br/><a href="<%= request.getContextPath() %>/subject-search"><fmt:message key="jsp.layout.navbar-default.subjectsearch"/></a>
+<%
+            }
+%> --%>
+	</form>
+	
+          </div>
+          </li>
+		 
+		 <!-- IKONICA ZA JEZIKE -->
+		
+		<% if (supportedLocales != null && supportedLocales.length > 1 )
+     { %>
  
-    <div class="nav navbar-nav navbar-<%= isRtl ? "left" : "right" %>">
-	 <ul class="nav navbar-nav navbar-<%= isRtl ? "left" : "right" %>">
       <li id="language-top-menu" class="dropdown">
-       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="jsp.layout.navbar-default.language"/><b class="caret"></b></a>
+       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-globe"></span></a>
         <ul class="dropdown-menu">
  <%
     for (int i = supportedLocales.length-1; i >= 0; i--)
@@ -163,37 +192,13 @@
  %>
      </ul>
     </li>
-    </ul>
-  </div>
+
  <%
    }
  %>
- --%>
-       <div class="nav navbar-nav navbar-<%= isRtl ? "left" : "right" %>">
-		<ul class="nav navbar-nav navbar-<%= isRtl ? "left" : "right" %>">
-                    <li id="search-top-menu" class="dropdown">
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-search"></span><b class="caret"></b></a>
-          <div class="dropdown-menu">
-          
-	<%-- Search Box --%>
-	<form id="formsearch-top-menu" method="get" action="<%= request.getContextPath() %>/global-search" class="navbar-form navbar-<%= isRtl ? "left" : "right" %>" scope="search">		
-	    <div class="form-group">
-          <input type="text" class="form-control" placeholder="<fmt:message key="jsp.layout.navbar-default.search"/>" name="query" id="tequery" size="25"/>
-        </div>
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-<%--               <br/><a href="<%= request.getContextPath() %>/advanced-search"><fmt:message key="jsp.layout.navbar-default.advanced"/></a>
-<%
-			if (ConfigurationManager.getBooleanProperty("webui.controlledvocabulary.enable"))
-			{
-%>        
-              <br/><a href="<%= request.getContextPath() %>/subject-search"><fmt:message key="jsp.layout.navbar-default.subjectsearch"/></a>
-<%
-            }
-%> --%>
-	</form>
-	
-          </div>
-          </li>
+		  
+		  <!-- IKONICA ZA KORISNIKA -->
+		  
          <%
     if (user != null)
     {
@@ -206,7 +211,9 @@
     } else {
 		%>
 			<li id="user-top-menu" class="dropdown">
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <fmt:message key="jsp.layout.navbar-default.sign"/> <b class="caret"></b></a>
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>
+			 <!-- <fmt:message key="jsp.layout.navbar-default.sign"/> --> 
+			 <b class="caret"></b></a>
 	<% } %>             
              <ul class="dropdown-menu">
                <li><a href="<%= request.getContextPath() %>/mydspace"><fmt:message key="jsp.layout.navbar-default.users"/></a></li>

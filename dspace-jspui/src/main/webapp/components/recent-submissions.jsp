@@ -11,15 +11,15 @@
 if (submissions != null && submissions.count() > 0)
 {
 %>
-        <div class="panel panel-info vertical-carousel" data-itemstoshow="3">        
+        <div class="panel panel-primary vertical-carousel" data-itemstoshow="3">        
         <div class="panel-heading">
           <h3 class="panel-title">
-          		<fmt:message key="jsp.collection-home.recentsub"/>
+          		<a href="JavaScript:otvoriBlok('RecSub');"><fmt:message key="jsp.collection-home.recentsub"/><i id="faRecSub" class="fa fa-angle-double-up"></i></a>
           </h3>
        </div>   
-	   <div class="panel-body">
+	   <div class="panel-body panDesno" id="blokRecSub">
 	<%
-    if(feedEnabled)
+    if(feedEnabled && false) /* PRIVREMENO CEMO SKLONITI RSS */
     {
     	%>
     	<div class="row">

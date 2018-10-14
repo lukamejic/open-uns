@@ -51,10 +51,12 @@
     }
 %>
 </div>
+
 <br/>
 </main>
             <%-- Page footer --%>
-            <footer class="navbar navbar-inverse navbar-bottom navbar-square">
+            <footer class="navbar navbar-inverse navbar-bottom navbar-square" style="background:#fff;margin-bottom:0;">
+			<!-- NE ZNAM CEMU OVO KADA POSTOJI MENI
              <div class="container">
 	             <div class="row">
 					<div class="col-md-3 col-sm-6">
@@ -82,17 +84,17 @@
 	             		<%= footerNews %>
 	             	</div>
 	            </div> 
-            </div>
+            </div> -->
 			<div class="container-fluid extra-footer row">
-      			<div id="footer_feedback" class="col-sm-4 pull-<%= isRtl ? "right":"left" %>">                                    
+      			<!-- <div id="footer_feedback" class="col-sm-4 pull-<%= isRtl ? "right":"left" %>">                                    
                      <a href="<%= request.getContextPath() %>/feedback"><fmt:message key="jsp.layout.footer-default.feedback"/></a>
-                </div>
+                </div> -->
 	           	<div id="designedby" class="col-sm-8 text-<%= isRtl ? "left": "right" %>">
             	 	<fmt:message key="jsp.layout.footer-default.text"/> - 
             	 	<fmt:message key="jsp.layout.footer-default.version-by"/> 
             	 	<a href="http://www.4science.it/en/dspace-and-dspace-cris-services/">
             	 		<img src="<%= request.getContextPath() %>/image/logo-4science-small.png"
-                                    alt="Logo 4SCIENCE" height="32px"/></a>
+                                    alt="Logo 4SCIENCE" height="18px"/></a>
 				</div>
 			</div>
 	    </footer>

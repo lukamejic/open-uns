@@ -72,8 +72,14 @@
 <dspace:layout locbar="nolink" titlekey="jsp.home.title" feedData="<%= feedData %>">
 <div class="row">
 	<div class="col-md-8 sm-12 pull-<%= isRtl? "right":"left" %>">
-        <%= topNews %>
-
+	<div class="div-logo-poruka">
+		<div class="div-logo">
+			<img src="image/uns-logo-boja.png">
+		</div>
+		<div class="div-poruka">
+			<%= topNews %>
+		</div>
+	</div>
 	<%
     	int discovery_panel_cols = 8;
     	int discovery_facet_cols = 4;
@@ -86,9 +92,12 @@
 	<% } %>        
 		  </div>
 	<div class="col-md-4 sm-12 pull-<%= isRtl? "left":"right" %>">
-    <%@ include file="components/recent-submissions.jsp" %>
+		<%@ include file="components/most-viewed.jsp" %>
+		<%@ include file="components/most-downloaded.jsp" %>
+		<%@ include file="components/most-cited.jsp" %>		
+		<%@ include file="components/recent-submissions.jsp" %>
 	</div>
-</div>
+</div> <!-- BLOKOVE SAM PREBACIO GORE DESNO NA HARMONIKU 
 <div class="row">
 	<div class="col-md-4 <%= isRtl ? "pull-right":""%>">
 		<%@ include file="components/most-viewed.jsp" %>	
@@ -100,8 +109,8 @@
 	<%= sideNews %>
 	<%-- <%@ include file="discovery/static-tagcloud-facet.jsp" %> --%>
 	<%-- <%@ include file="components/most-cited.jsp" %> --%>
-	</div>
-</div>
+	<!-- </div>
+</div> -->
 <%
 if (communities != null && communities.length != 0)
 {
@@ -155,4 +164,27 @@ if (communities != null && communities.length != 0)
 <div class="row">
 	<%@ include file="discovery/static-tagcloud-facet.jsp" %>
 </div>
+<script type="text/javascript">
+
+	function otvoriBlok (koji) {
+		
+		$(".panDesno").each(function() {
+			
+			idObj = $(this).attr("id");
+			
+			if(idObj == "blok"+koji) {
+				$(this).slideToggle(300);
+				$("#fa"+koji).toggleClass("fa-angle-double-down");
+				$("#fa"+koji).toggleClass("fa-angle-double-up");
+			}
+			else {
+				$(this).slideUp(300);
+				$("#fa"+idObj).removeClass("fa-angle-double-up fa-angle-double-down").addClass("fa-angle-double-down");
+			}
+		
+		});
+		
+	}
+
+</script>
 </dspace:layout>

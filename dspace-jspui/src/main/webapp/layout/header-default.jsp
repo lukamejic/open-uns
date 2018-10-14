@@ -67,18 +67,19 @@
         <link rel="shortcut icon" href="<%= request.getContextPath() %>/favicon.ico" type="image/x-icon"/>
 	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/jquery-ui-1.10.3.custom/redmond/jquery-ui-1.10.3.custom.css" type="text/css" />
 	    <link href="<%= request.getContextPath() %>/css/researcher.css" type="text/css" rel="stylesheet" />
-       <link href="<%= request.getContextPath() %>/css/jdyna.css" type="text/css" rel="stylesheet" />
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/bootstrap.min.css" type="text/css" />
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/bootstrap-theme.min.css" type="text/css" />
+		<link href="<%= request.getContextPath() %>/css/jdyna.css" type="text/css" rel="stylesheet" />
+	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-bootstrap.css" type="text/css" /> <!-- bio je .min -->
+	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-bootstrap-theme.css" type="text/css" /> <!-- bio je .min -->
 	    <link href="<%= request.getContextPath() %>/static/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 		<link href="<%= request.getContextPath() %>/static/css/jstree/themes/default/style.min.css" rel="stylesheet"/>
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/dspace-theme.css" type="text/css" />
+	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-dspace-theme.css" type="text/css" />
 	    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/orcid.css" type="text/css" />
 	    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/static/css/dataTables.bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/static/css/buttons.bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/static/css/responsive.bootstrap.min.css"/>
-		<link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/dspace-theme.css" type="text/css" />
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-dspace-theme.css" type="text/css" />
 		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/bootstrap-datetimepicker.min.css" />
+		<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:400,700&amp;subset=cyrillic-ext,latin-ext" rel="stylesheet">
 <%
     if (!"NONE".equals(feedRef))
     {
@@ -197,12 +198,12 @@
     <%-- HACK: marginwidth, marginheight: for non-CSS compliant Netscape browser --%>
     <body class="undernavigation" dir="<%= LocaleUIHelper.ifLtr(request, "ltr","rtl") %>">
 <a class="sr-only" href="#content">Skip navigation</a>
-<header class="navbar navbar-inverse navbar-square">    
+<header class="navbar navbar-inverse navbar-square meniGore"> 
     <%
     if (!navbar.equals("off"))
     {
 %>
-            <div class="container-fluid">
+            <div class="container-fluid col-sm-10 center">
                 <dspace:include page="<%= navbar %>" />
             </div>
 <%
@@ -246,33 +247,11 @@ window.cookieconsent.initialise({
 </header>
 
 <main id="content" role="main">
+
+<!-- INFORMACIJA O DSPACE-CRIS
+
 <div class="container banner">
 	<div class="row">
-		<div class="col-sm-12">
-<% if (supportedLocales != null && supportedLocales.length > 1)
-     {
- %>
-	 <ul class="nav navbar-nav navbar-<%= isRtl ? "left" : "right" %>">
-      
- <%
-    for (int i = supportedLocales.length-1; i >= 0; i--)
-     {
- %>
-        <li><a onclick="javascript:document.repost.locale.value='<%=supportedLocales[i].toString()%>';
-                  document.repost.submit();" href="?locale=<%=supportedLocales[i].toString()%>">
-          <%= LocaleSupport.getLocalizedMessage(pageContext, "jsp.layout.navbar-default.language."+supportedLocales[i].toString()) %>                  
-       </a></li>
- <%
-     }
- %>
-     </ul>
- <%
-   }
- %>		
-		
-		
-		
-		</div>
 		  <div class="col-sm-8 brand pull-<%= isRtl ?"right" :"left" %>">
 		<h1><fmt:message key="jsp.layout.header-default.brand.heading" /></h1>
         <fmt:message key="jsp.layout.header-default.brand.description" /> 
@@ -281,7 +260,7 @@ window.cookieconsent.initialise({
         </div>
 	</div>
 </div>	
-<br/>
+<br/>-->
                 <%-- Location bar --%>
 <%
     if (locbar)
@@ -289,7 +268,7 @@ window.cookieconsent.initialise({
 %>
 <div class="container">
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-sm-11 center">
                 <dspace:include page="/layout/location-bar.jsp" />
         </div>        
     </div>
@@ -301,7 +280,8 @@ window.cookieconsent.initialise({
 
 
         <%-- Page contents --%>
-<div class="container fullheight">
+<div class="container fullheight">	<div class="row">
+		<div class="col-sm-11 center">
 <% if (request.getAttribute("dspace.layout.sidebar") != null) { %>
 	<div class="row">
 		<div class="col-md-9 <%= isRtl ? "pull-right":"" %>">
