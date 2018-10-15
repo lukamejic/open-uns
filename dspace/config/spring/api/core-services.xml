@@ -17,6 +17,8 @@
 		<property name="acceptableFilenames">
 			<list>
 				<value>news-top.html</value>
+				<value>news-top_sr_LAT.html</value>
+				<value>news-top_sr_CYR.html</value>
 				<value>news-side.html</value>
 				<value>news-footer.html</value>
 			</list>
