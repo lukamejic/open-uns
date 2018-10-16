@@ -2137,7 +2137,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 
 						var myObjectOblasti = {
 							1 : '1 - Prirodno-matematicke i medicinske',
-							2 : '2 - Tehnicko-tehnoloske - biotehnicke',
+							2 : '2 - Tehnicko-tehnoloske i biotehnicke',
 							3 : '3 - Drustvene',
 							4 : '4 - Humanisticke'
 						};
@@ -2190,7 +2190,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 					
 						var myObjectOblasti = {
 								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske - biotehnicke',
+								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
 								3 : '3 - Drustvene',
 								4 : '4 - Humanisticke'
 						};
@@ -2238,7 +2238,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 					
 						var myObjectOblasti = {
 								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske - biotehnicke',
+								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
 								3 : '3 - Drustvene',
 								4 : '4 - Humanisticke'
 						};
@@ -2287,7 +2287,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						
 						var myObjectOblasti = {
 								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske - biotehnicke',
+								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
 								3 : '3 - Drustvene',
 								4 : '4 - Humanisticke'
 						};
@@ -2333,7 +2333,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						
 						var myObjectOblasti = {
 								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske - biotehnicke',
+								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
 								3 : '3 - Drustvene',
 								4 : '4 - Humanisticke'
 						};
@@ -2382,7 +2382,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						
 						var myObjectOblasti = {
 								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske - biotehnicke',
+								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
 								3 : '3 - Drustvene',
 								4 : '4 - Humanisticke'
 						};
@@ -2436,7 +2436,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 						
 						var myObjectOblasti = {
-								2 : '2 - Tehnicko-tehnoloske - biotehnicke'
+								2 : '2 - Tehnicko-tehnoloske i biotehnicke'
 						};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
@@ -2482,7 +2482,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 					
 						var myObjectOblasti = {
-								2 : '2 - Tehnicko-tehnoloske - biotehnicke'
+								2 : '2 - Tehnicko-tehnoloske i biotehnicke'
 						};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
@@ -2610,7 +2610,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						
 						var myObjectOblasti = {
 								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske - biotehnicke',
+								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
 								3 : '3 - Drustvene',
 								4 : '4 - Humanisticke'
 						};
@@ -2650,7 +2650,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 				
 				var myObjectOblasti = {
 						1 : '1 - Prirodno-matematicke i medicinske',
-						2 : '2 - Tehnicko-tehnoloske - biotehnicke',
+						2 : '2 - Tehnicko-tehnoloske i biotehnicke',
 						3 : '3 - Drustvene',
 						4 : '4 - Humanisticke'
 				};
