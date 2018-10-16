@@ -100,8 +100,8 @@
 <hr/>
 <div class="row">
 <form id="searchglobalprocessor" name="searchglobalprocessor" class="col-md-10 col-md-offset-1" action="<%= request.getContextPath() %>/simple-search" method="get">
-<div class="input-group"><br/>
-    <input type="text" class="form-control" name="query" placeholder=<fmt:message key="jsp.controlledvocabulary.search.searchbutton"/>><br/><br/>
+<div class="input-group">
+    <input type="text" class="form-control" name="query" placeholder="<fmt:message key="jsp.controlledvocabulary.search.term"/>">
     <span class="input-group-btn">
         <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
     </span>    
