@@ -73,9 +73,9 @@
 <div class="row">
 	<div class="col-md-8 sm-12 pull-<%= isRtl? "right":"left" %>">
 	<div class="div-logo-poruka">
-		<div class="div-logo">
+		<%--<div class="div-logo">
 			<img src="image/uns-logo-boja.png">
-		</div>
+		</div>--%>
 		<div class="div-poruka">
 			<%= topNews %>
 		</div>
