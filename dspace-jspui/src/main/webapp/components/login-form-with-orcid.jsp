@@ -17,7 +17,7 @@
 	<div class="row">
     <div class="col-md-6">
      <form name="loginform" class="form-horizontal" id="loginform" method="post" action="<%= request.getContextPath() %>/password-login">  
-      <p><strong><a href="<%= request.getContextPath() %>/register"><fmt:message key="jsp.components.login-form.newuser"/></a></strong></p>
+      <%--<p><strong><a href="<%= request.getContextPath() %>/register"><fmt:message key="jsp.components.login-form.newuser"/></a></strong></p>--%>
 	  <p><fmt:message key="jsp.components.login-form.enter"/></p>
 		<div class="form-group">
             <label class="col-md-offset-1 col-md-4 control-label" for="tlogin_email"><fmt:message key="jsp.components.login-form.email"/></label>
@@ -37,7 +37,7 @@
         </div>
       </form>
       </div>
-      <div class="col-md-6">
+      <%--<div class="col-md-6">
       <h3 class="text-success"><fmt:message key="jsp.components.login-form.orcid-heading" /></h3>
       <p><fmt:message key="jsp.components.login-form.orcid-description"/></p>
       <p class="text-center">
@@ -46,7 +46,7 @@
       	<fmt:message key="jsp.components.login-form.orcid-login"/>
       	<img src="<%= request.getContextPath() %>/image/orcid_64x64.png" title="ORCID Authentication" />
       </button></a></p>
-      </div>
+      </div>--%>
       </div>
       <script type="text/javascript">
 		document.loginform.login_email.focus();

@@ -2120,14 +2120,14 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddVrsta.options.length = 0;
 
 						var myObject = {
-							m11 : 'M11 - Istaknuta monografija medjunarodnog znacaja',
-							m12 : 'M12 - Monografija medjunarodnog znacaja',
-							m13 : 'M13 - Monografska studija/poglavlje u knjizi M11 ili rad u tematskom zborniku vodeceg medjunarodnog znacaja',
-							m14 : 'M14 - Monografska studija/poglavlje u knjizi M12 ili rad u tematskom zborniku medjunarodnog znacaja',
-							m15 : 'M15 - Leksikografska jedinica ili karta u naucnoj publikaciji vodeceg medjunarodnog znacaja',
-							m16 : 'M16 - Leksikografska jedinica ili karta u publikaciji medjunarodnog znacaja',
-							m17 : 'M17 - Uredjivanje tematskog zbornika leksikografske ili kartografske publikacije vodeceg medjunarodnog znacaja',
-							m18 : 'M18 - Uredjivanje tematskog zbornika, leksikografske ili kartografske publikacije medjunarodnog znacaja'
+							m11 : 'M11 - Istaknuta monografija međunarodnog značaja',
+							m12 : 'M12 - Monografija međunarodnog značaja',
+							m13 : 'M13 - Monografska studija/poglavlje u knjizi M11 ili rad u tematskom zborniku vodećeg međunarodnog značaja',
+							m14 : 'M14 - Monografska studija/poglavlje u knjizi M12 ili rad u tematskom zborniku međunarodnog značaja',
+							m15 : 'M15 - Leksikografska jedinica ili karta u naučnoj publikaciji vodećeg međunarodnog značaja',
+							m16 : 'M16 - Leksikografska jedinica ili karta u publikaciji međunarodnog značaja',
+							m17 : 'M17 - Uređivanje tematskog zbornika leksikografske ili kartografske publikacije vodećeg međunarodnog značaja',
+							m18 : 'M18 - Uređivanje tematskog zbornika, leksikografske ili kartografske publikacije međunarodnog značaja'
 						};
 						for (index in myObject){
 							ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
@@ -2136,10 +2136,10 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 
 						var myObjectOblasti = {
-							1 : '1 - Prirodno-matematicke i medicinske',
-							2 : '2 - Tehnicko-tehnoloske i biotehnicke',
-							3 : '3 - Drustvene',
-							4 : '4 - Humanisticke'
+							1 : '1 - prirodno-matematičke i medicinske',
+							2 : '2 - tehničko-tehnološke i biotehničke',
+							3 : '3 - društvene',
+							4 : '4 - humanističke'
 						};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
@@ -2168,19 +2168,19 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddVrsta.options.length = 0;
 					
 						var myObject = {
-								m21a : 'M21a - Rad u vrhunskom medjunarodnom casopisu',
-								m21 : 'M21 - Rad u vrhunskom medjunarodnom casopisu',
-								m22 : 'M22 - Rad u istaknutom medjunarodnom casopisu',
-								m23 : 'M23 - Rad u medjunarodnom casopisu',
-								m24 : 'M24 - Rad u casopisu medjunarodnog znacaja verifikovanog posebnom odlukom',
-								m25 : 'M25 - Naucna kritika i polemika u istaknutom medjunarodnom casopisu',
-								m26 : 'M26 - Naucna kritika i polemika u medjunarodnom casopisu',
-								m27 : 'M27 - Naucna kritika i polemika u casopisu ranga M24',
-								m28a : 'M28a - a) Glavni odgovorni urednik istaknutog medjunarodnog naucnog casopisa ili publikacije sa monografskim delima kategorije M13',
-								m28b : 'M28b - b) Uredjivanje istaknutog medjunarodnog naucnog casopisa (gost urednik) ili publikacije sa monografskim delima kategorije M14',
-								m29a : 'M29a - a) Uredjivanje medjunarodnog naucnog casopisa; Uredjivanje tematskih monografija',
-								m29b : 'M29b - b) Glavni i odgovorni urednik nacionalnog casopisa',
-								m29v : 'M29v - v) Uredjivanje nacionalnog naucnog casopisa; Uredjivanje tematskih monografija'
+								m21a : 'M21a - Rad u vrhunskom međunarodnom časopisu',
+								m21 : 'M21 - Rad u vrhunskom međunarodnom časopisu',
+								m22 : 'M22 - Rad u istaknutom međunarodnom časopisu',
+								m23 : 'M23 - Rad u međunarodnom časopisu',
+								m24 : 'M24 - Rad u časopisu međunarodnog značaja verifikovanog posebnom odlukom',
+								m25 : 'M25 - Naučna kritika i polemika u istaknutom međunarodnom časopisu',
+								m26 : 'M26 - Naučna kritika i polemika u međunarodnom časopisu',
+								m27 : 'M27 - Naučna kritika i polemika u časopisa ranga M24',
+								m28a : 'M28a - a) Glavni odgovorni urednik istaknutog međunarodnog naučnog časopisa ili publikacije sa monografskim delima kategorije M13',
+								m28b : 'M28b - b) Uređivanje istaknutog međunarodnog naučnog časopisa (gost urednik) ili publikacije sa monografskim delima kategorije M14',
+								m29a : 'M29a - a) Uređivanje međunarodnog naučnog časopisa; Uređivanje tematskih monografija',
+								m29b : 'M29b - b) Glavni i odgovorni urednik nacionalnog časopisa',
+								m29v : 'M29v - v) Uređivanje nacionalnog naučnog časopisa; Uređivanje tematskih monografija'
 						};
 						for (index in myObject){
 							ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
@@ -2189,11 +2189,11 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 					
 						var myObjectOblasti = {
-								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
-								3 : '3 - Drustvene',
-								4 : '4 - Humanisticke'
-						};
+								1 : '1 - prirodno-matematičke i medicinske',
+								2 : '2 - tehničko-tehnološke i biotehničke',
+								3 : '3 - društvene',
+								4 : '4 - humanističke'
+							};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 						}
@@ -2221,12 +2221,12 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddVrsta.options.length = 0;
 						
 						var myObject = {
-								m31 : 'M31 - Predavanje po pozivu sa medjunarodnog skupa stampano u celini (neophodno pozivno pismo)',
-								m32 : 'M32 - Predavanje po pozivu sa medjunarodnog skupa stampano u izvodu',
-								m33 : 'M33 - Saopstenje sa medjunarodnog skupa stampano u celini',
-								m34 : 'M34 - Saopstenje sa medjunarodnog skupa stampano u izvodu',
-								m35 : 'M35 - Autorizovana diskusija sa medjunarodnog skupa',
-								m36 : 'M36 - Uredjivanje zbornika saopstenja medjunarodnog naucnog skupa'
+								m31 : 'M31 - Predavanje po pozivu sa međunarodnog skupa štampano u celini (neophodno pozivno pismo)',
+								m32 : 'M32 - Predavanje po pozivu sa međunarodnog skupa štampano u izvodu',
+								m33 : 'M33 - Saopštenje sa međunarodnog skupa štampano u celini',
+								m34 : 'M34 - Saopštenje sa međunarodnog skupa štampano u izvodu',
+								m35 : 'M35 - Autorizovana diskusija sa međunarodnog skupa',
+								m36 : 'M36 - Uređivanje zbornika saopštenja međunarodnog naučnog skupa'
 						};
 						for (index in myObject){
 							
@@ -2237,11 +2237,11 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 					
 						var myObjectOblasti = {
-								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
-								3 : '3 - Drustvene',
-								4 : '4 - Humanisticke'
-						};
+								1 : '1 - prirodno-matematičke i medicinske',
+								2 : '2 - tehničko-tehnološke i biotehničke',
+								3 : '3 - društvene',
+								4 : '4 - humanističke'
+							};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 						}
@@ -2269,15 +2269,15 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddVrsta.options.length = 0;
 						
 						var myObject = {
-								m41 : 'M41 - Istaknuta monografija nacionalnog znacaja',
-								m42 : 'M42 - Monografija nacionalnog znacaja',
+								m41 : 'M41 - Istaknuta monografija nacionalnog značaja',
+								m42 : 'M42 - Monografija nacionalnog značaja',
 								m43 : 'M43 - Monografska bibliografska publikacija ili monografska studija',
-								m44 : 'M44 - Poglavlje u knjizi M41 ili rad u istaknutom tematskom zborniku vodeceg nacionalnog znacaja',
-								m45 : 'M45 - Poglavlje u knjizi M42 ili rad u tematskom zborniku nacionalnog znacaja',
-								m46 : 'M46 - Leksikografska jedinica u naucnoj publikaciji vodeceg nacionalnog znacaja, karta u naucnoj publikaciji nacionalnog znacaja, kriticko izdanje gradje u naucnoj publikaciji',
-								m47 : 'M47 - Leksikografsa jedinica u naucnoj publikaciji nacionalnog znacaja',
-								m48 : 'M48 - Uredjivanje tematskog zbornika, leksikografske ili kartografske publikacije vodeceg nacionalnog znacaja',
-								m49 : 'M49 - Uredjivanje tematskog zbornika, leksikografske ili kartografske publikacije nacionalnog znacaja'
+								m44 : 'M44 - Poglavlje u knjizi M41 ili rad u istaknutom tematskom zborniku vodećeg nacionalnog značaja',
+								m45 : 'M45 - Poglavlje u knjizi M42 ili rad u tematskom zborniku nacionalnog značaja',
+								m46 : 'M46 - Leksikografska jedinica u naučnoj publikaciji vodećeg nacionalnog značaja, karta u naučnoj publikaciji nacionalnog značaja, kritičko izdanje građe u naučnoj publikaciji',
+								m47 : 'M47 - Leksikografska jedinica u naučnoj publikaciji nacionalnog značaja',
+								m48 : 'M48 - Uređivanje tematskog zbornika, leksikografske ili kartografske publikacije vodećeg nacionalnog značaja',
+								m49 : 'M49 - Uređivanje tematskog zbornika, leksikografske ili kartografske publikacije nacionalnog značaja'
 						};
 						for (index in myObject){
 							ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
@@ -2286,11 +2286,11 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 						
 						var myObjectOblasti = {
-								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
-								3 : '3 - Drustvene',
-								4 : '4 - Humanisticke'
-						};
+								1 : '1 - prirodno-matematičke i medicinske',
+								2 : '2 - tehničko-tehnološke i biotehničke',
+								3 : '3 - društvene',
+								4 : '4 - humanističke'
+							};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 						}
@@ -2317,13 +2317,13 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddVrsta.options.length = 0;
 					
 						var myObject = {
-								m51 : 'M51 - Rad u vodecem casopisu nacionalnog znacaja',
-								m52 : 'M52 - Rad u casopisu nacionalnog znacaja',
-								m53 : 'M53 - Rad u naucnom casopisu',
-								m54 : 'M54 - Uredjivanje vodeceg naucnog casopisa nacionalnog znacaja (na godisnjem nivou)',
-								m55 : 'M55 - Uredjivanje naucnog casopisa nacionalnog znacaja (na godisnjem nivou)',
-								m56 : 'M56 - Naucna kritika u casopisu ranga M51',
-								m57 : 'M57 - Naucna kritika u casopisu ranga M52'
+								m51 : 'M51 - Rad u vodećem časopisu nacionalnog značaja',
+								m52 : 'M52 - Rad u časopisu nacionalnog značaja',
+								m53 : 'M53 - Rad u naučnom časopisu',
+								m54 : 'M54 - Uređivanje vodećeg naučnog časopisa nacionalnog značaja (na godišnjem nivou)',
+								m55 : 'M55 - Uređivanje naučnog časopisa nacionalnog značaja (na godišnjem nivou)',
+								m56 : 'M56 - Naučna kritika u časopisu ranga M51',
+								m57 : 'M57 - Naučna kritika u časopisu ranga M52'
 						};
 						for (index in myObject){
 							ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
@@ -2332,11 +2332,11 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 						
 						var myObjectOblasti = {
-								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
-								3 : '3 - Drustvene',
-								4 : '4 - Humanisticke'
-						};
+								1 : '1 - prirodno-matematičke i medicinske',
+								2 : '2 - tehničko-tehnološke i biotehničke',
+								3 : '3 - društvene',
+								4 : '4 - humanističke'
+							};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 						}
@@ -2364,15 +2364,15 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddVrsta.options.length = 0;
 						
 						var myObject = {
-								m61 : 'M61 - Predavanje po pozivu sa skupa nacionalnog znacaja stampano u celini',
-								m62 : 'M62 - Predavanje po pozivu sa skupa nacionalnog znacaja stampano u izvodu',
-								m63 : 'M63 - Saopstenje sa skupa nacionalnog znacaja stampano u celini',
-								m64 : 'M64 - Saopstenje sa skupa  nacionalnog znacaja stampano u izvodu',
+								m61 : 'M61 - Predavanje po pozivu sa skupa nacionalnog značaja štampano u celini',
+								m62 : 'M62 - Predavanje po pozivu sa skupa nacionalnog značaja štampano u izvodu',
+								m63 : 'M63 - Saopštenje sa skupa nacionalnog značaja štampano u celini',
+								m64 : 'M64 - Saopštenje sa skupa nacionalnog značaja štampano u izvodu',
 								m65 : 'M65 - Autorizovana diskusija sa nacionalnog skupa',
-								m66 : 'M66 - Uredjivanje zbornika saopstenja skupa nacionalnog znacaja',
-								m67 : 'M67 - Monografsko izdanje gradje, prevod izvornog teksta u obliku monografije (samo za stare jezike)',
-								m68 : 'M68 - Prevod izvornog teksta u obliku studije, poglavlja ili clanka, prevod ili strucna redakcija prevoda naucne monografske knjige (samo za stare jezike)',
-								m69 : 'M69 - Kriticko izdanje dela/autora'
+								m66 : 'M66 - Uređivanje zbornika saopštenja skupa nacionalnog značaja',
+								m67 : 'M67 - Monografsko izdanje građe, prevod izvornog teksta u obliku monografije (samo za stare jezike)',
+								m68 : 'M68 - Prevod izvornog teksta u obliku studije, poglavlja ili članka, prevod ili stručna redakcija prevoda naučne monografske knjige (samo za stare jezike)',
+								m69 : 'M69 - Kritičko izdanje dela/autora'
 						};
 						for (index in myObject){
 							ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
@@ -2381,11 +2381,11 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 						
 						var myObjectOblasti = {
-								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
-								3 : '3 - Drustvene',
-								4 : '4 - Humanisticke'
-						};
+								1 : '1 - prirodno-matematičke i medicinske',
+								2 : '2 - tehničko-tehnološke i biotehničke',
+								3 : '3 - društvene',
+								4 : '4 - humanističke'
+							};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 						}
@@ -2421,13 +2421,13 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddVrsta.options.length = 0;
 						
 						var myObject = {
-								m81 : 'M81 - Novo tehnicko resenje primenjeno na medjunarodnom nivou',
-								m82 : 'M82 - Novo tehnicko resenje (metoda) primenjeno na nacionalnom nivou',
-								m83 : 'M83 - Bitno poboljsano tehnicko resenje na medjunarodnom nivou',
-								m84 : 'M84 - Bitno poboljsano tehnicko resenje na nacionalnom nivou',
-								m85 : 'M85 - Novo tehnicko resenje (nije komercijalizovano)',
-								m86 : 'M86 - Prijava medjunarodnog patenta',
-								m87 : 'M87 - Prijava domaceg patenta'
+								m81 : 'M81 - Novo tehničko rešenje primenjeno na međunarodnom nivou',
+								m82 : 'M82 - Novo tehničko rešenje (metoda) primenjeno na nacionalnom nivou',
+								m83 : 'M83 - Bitno poboljšano tehničko rešenje na međunarodnom nivou',
+								m84 : 'M84 - Bitno poboljšano tehničko rešenje na nacionalnom nivou',
+								m85 : 'M85 - Novo tehničko rešenje (nije komercijalizovano)',
+								m86 : 'M86 - Prijava međunarodnog patenta',
+								m87 : 'M87 - Prijava domaćeg patenta'
 						};
 						for (index in myObject){
 							ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
@@ -2436,7 +2436,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 						
 						var myObjectOblasti = {
-								2 : '2 - Tehnicko-tehnoloske i biotehnicke'
+								2 : '2 - tehničko-tehnološke i biotehničke'
 						};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
@@ -2465,15 +2465,15 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddVrsta.options.length = 0;
 						
 						var myObject = {
-								m91 : 'M91 - Registrovan patent na medjunarodnom nivou',
+								m91 : 'M91 - Registrovan patent na međunarodnom nivou',
 								m92 : 'M92 - Registorvan patent na nacionalnom nivou',
-								m93 : 'M93 - Objavljen patent na medjunarodnom nivou',
+								m93 : 'M93 - Objavljen patent na međunarodnom nivou',
 								m94 : 'M94 - Objavljen patent na nacionalnom nivou',
-								m95 : 'M95 - Realizovana sorta, rasa ili soj na medjunarodnom nivou',
+								m95 : 'M95 - Realizovana, sorta, rasa ili soj na međunarodnom nivou',
 								m96 : 'M96 - Realizovana sorta, rasa ili soj na nacionalnom nivou',
-								m97 : 'M97 - Priznata sorta, rasa ili soj na medjunarodnom nivou',
+								m97 : 'M97 - Priznata sorta, rasa ili soj na međunarodnom nivou',
 								m98 : 'M98 - Priznata sorta, rasa ili soj na nacionalnom nivou',
-								m99 : 'M99 - Autorska izlozba sa katalogom uz naucnu recenziju'
+								m99 : 'M99 - Autorska izložba sa katalogom uz naučnu recenziju'
 						};
 						for (index in myObject){
 							ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
@@ -2482,7 +2482,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 					
 						var myObjectOblasti = {
-								2 : '2 - Tehnicko-tehnoloske i biotehnicke'
+								2 : '2 - tehničko-tehnološke i biotehničke'
 						};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
@@ -2514,9 +2514,9 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 								m101 : 'M101 - Izvedeno (autorsko) delo',
 								m102 : 'M102 - Nagrada na konkursu',
 								m103 : 'M103 - Studija, ekspertiza',
-								m104 : 'M104 - Nagrada na izlozbi',
-								m105 : 'M105 - Ucesce na izlozbi',
-								m106 : 'M106 - Ziriranje',
+								m104 : 'M104 - Nagrada na izložbi',
+								m105 : 'M105 - Učešće na izložbi',
+								m106 : 'M106 - Žiriranje',
 								m107 : 'M107 - Kustoski rad'
 						};
 						for (index in myObject){
@@ -2526,7 +2526,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 						
 						var myObjectOblasti = {
-								4 : '4 - Humanisticke'
+								4 : '4 - humanističke'
 						};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
@@ -2555,11 +2555,11 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddVrsta.options.length = 0;
 						
 						var myObject = {
-								m108 : 'M108 - Izvedeno (autorsko) delo sa publikacijom u nacionalnom casopisu',
+								m108 : 'M108 - Izvedeno (autorsko) delo sa publikacijom u nacionalnom časopisu',
 								m109 : 'M109 - Nagrada na konkursu u Republici',
 								m110 : 'M110 - Studija ekspertiza, u Republici, regionima,...',
-								m111 : 'M111 - Nagrada na nacionalnoj izlozbi',
-								m112 : 'M112 - Ucesce na nacionalnoj izlozbi'
+								m111 : 'M111 - Nagrada na nacionalnoj izložbi',
+								m112 : 'M112 - Učešće na nacionalnoj izložbi'
 						};
 						for (index in myObject){
 							ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
@@ -2568,7 +2568,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 						
 						var myObjectOblasti = {
-								4 : '4 - Humanisticke'
+								4 : '4 - humanističke'
 						};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
@@ -2597,10 +2597,10 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddVrsta.options.length = 0;
 						
 						var myObject = {
-								m121 : 'M121 - Strateski dokument nacionalnog ili supra-nacionalnog nivoa narucen od odgovarajuceg organa javne vlasti koji je prihvacen na odgovarajucem naucnom/nastavno-naucnom vecu',
-								m122 : 'M122 - Strateski dokument nacionalnog nivoa narucen od odgovarajuceg organa javne vlasti ili organa teritorijalne autonomije koji je prihvacen na odgovarajucem naucnom/nastavno-naucnom vecu',
-								m123 : 'M123 - Studija ili analiza javne politike koja je prihvacena na odgovarajucem naucnom/nastavno-naucnom vecu',
-								m124 : 'M124 - Analiza uticaja efekata, prihvacena na naucnom/nastavno-naucnom vecu'
+								m121 : 'M121 - Strateški dokument nacionalnog ili supra-nacionalnog nivoa naručen od odgovarajućeg organa javne vlasti koji je prihvaćen na odgovarajućem naučnom/nastavno-naučnom veću',
+								m122 : 'M122 - Strateški dokument regionalnog nivoa naručen od odgovarajućeg organa javne vlasti ili organa teritorijalne autonomije koji je prihvaćen na odgovarajućem naučnom/nastavno-naučnom veću',
+								m123 : 'M123 - Studija i analiza javne politike koja je prihvaćena na odgovarajućem naučnom/nastavno-naučnom veću',
+								m124 : 'M124 - Analiza uticaja efekata, prihvaćena na naučnom/nastavnonaučnom veću'
 						};
 						for (index in myObject){
 							ddVrsta.options[ddVrsta.options.length] = new Option(myObject[index], index);
@@ -2609,11 +2609,11 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 						ddOblNauke.options.length = 0;
 						
 						var myObjectOblasti = {
-								1 : '1 - Prirodno-matematicke i medicinske',
-								2 : '2 - Tehnicko-tehnoloske i biotehnicke',
-								3 : '3 - Drustvene',
-								4 : '4 - Humanisticke'
-						};
+								1 : '1 - prirodno-matematičke i medicinske',
+								2 : '2 - tehničko-tehnološke i biotehničke',
+								3 : '3 - društvene',
+								4 : '4 - humanističke'
+							};
 						for (index in myObjectOblasti){
 							ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 						}
@@ -2638,7 +2638,7 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 				ddOblNauke.options.length = 0;
 				
 				var myObjectOblasti = {
-						4 : '4 - Humanisticke'
+						4 : '4 - humanističke'
 				};
 				for (index in myObjectOblasti){
 					ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
@@ -2649,11 +2649,11 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 				ddOblNauke.options.length = 0;
 				
 				var myObjectOblasti = {
-						1 : '1 - Prirodno-matematicke i medicinske',
-						2 : '2 - Tehnicko-tehnoloske i biotehnicke',
-						3 : '3 - Drustvene',
-						4 : '4 - Humanisticke'
-				};
+						1 : '1 - prirodno-matematičke i medicinske',
+						2 : '2 - tehničko-tehnološke i biotehničke',
+						3 : '3 - društvene',
+						4 : '4 - humanističke'
+					};
 				for (index in myObjectOblasti){
 					ddOblNauke.options[ddOblNauke.options.length] = new Option(myObjectOblasti[index], index);
 				}
