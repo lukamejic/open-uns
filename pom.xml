@@ -4,7 +4,7 @@
    <groupId>org.dspace</groupId>
    <artifactId>dspace-parent</artifactId>
    <packaging>pom</packaging>
-   <version>CRIS-5.8.1-SNAPSHOT</version>
+   <version>CRIS-5.10.0-SNAPSHOT</version>
    <name>DSpace Parent Project</name>
    <url>https://github.com/4Science/DSpace</url>
    <description>
@@ -54,6 +54,9 @@
         <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
         <jackson.version>2.8.5</jackson.version>
         <java.version>1.7</java.version>
+        <!-- Added maven compiler version for eclipse setting -->
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <lucene.version>4.10.2</lucene.version>
         <solr.version>4.10.2</solr.version>
         <jena.version>2.12.0</jena.version>
@@ -902,8 +905,8 @@
          <modules>
             <module>dspace-api</module>
             <module>dspace-jspui</module>
-            <!-- <module>dspace-xmlui</module>
-            <module>dspace-lni</module>  -->
+            <module>dspace-xmlui</module>
+            <module>dspace-lni</module>
             <module>dspace-oai</module>
             <module>dspace-cris-ametrics</module>
             <module>dspace-cris</module>

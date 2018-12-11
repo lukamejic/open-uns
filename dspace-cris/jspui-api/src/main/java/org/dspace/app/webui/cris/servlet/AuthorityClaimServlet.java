@@ -2,7 +2,9 @@ package org.dspace.app.webui.cris.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
@@ -22,13 +24,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.spell.JaroWinklerDistance;
 import org.dspace.app.cris.integration.BindItemToRP;
+import org.dspace.app.cris.model.ResearcherPage;
+import org.dspace.app.cris.service.ApplicationService;
 import org.dspace.app.cris.util.Researcher;
 import org.dspace.app.cris.util.ResearcherPageUtils;
 import org.dspace.app.webui.servlet.DSpaceServlet;
 import org.dspace.app.webui.util.JSPManager;
 import org.dspace.app.webui.util.UIUtil;
 import org.dspace.authorize.AuthorizeException;
+import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
 import org.dspace.content.MetadataField;
 import org.dspace.content.MetadataSchema;
@@ -42,9 +48,14 @@ import org.dspace.core.I18nUtil;
 import org.dspace.core.LogManager;
 import org.dspace.core.Utils;
 import org.dspace.discovery.SearchServiceException;
+import org.dspace.discovery.SearchUtils;
+import org.dspace.discovery.configuration.DiscoveryViewAndHighlightConfiguration;
 import org.dspace.eperson.EPerson;
 import org.dspace.eperson.Group;
 import org.dspace.handle.HandleManager;
+import org.dspace.utils.DSpace;
+
+import it.cilea.osd.common.constants.Constants;
 
 public class AuthorityClaimServlet extends DSpaceServlet
 {
@@ -58,8 +69,17 @@ public class AuthorityClaimServlet extends DSpaceServlet
 
     private static final String PUBLICATION_CLAIMED_USER = "publication-claimed-user";
 
+    private static final SimpleDateFormat sdf = new SimpleDateFormat(
+            "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
     private Logger log = Logger.getLogger(AuthorityClaimServlet.class);
 
+    private DSpace dspace = new DSpace();
+    
+    private ApplicationService applicationService = dspace.getServiceManager()
+            .getServiceByName("applicationService",
+                    ApplicationService.class);
+    
     @Override
     protected void doDSGet(Context context, HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException,
@@ -67,11 +87,103 @@ public class AuthorityClaimServlet extends DSpaceServlet
     {
 
         String handle = request.getParameter("handle");
-        String crisID = context.getCrisID();
+        String crisID = (String) request
+                .getAttribute("requesterMapPublication");
 
-        Map<String, List<String[]>> result = new HashMap<String, List<String[]>>();
-        Map<String, Boolean> haveSimilar = new HashMap<String, Boolean>();
+        // find list of match
+        DiscoveryViewAndHighlightConfiguration discoveryViewAndHighlightConfigurationByName = SearchUtils
+                .getDiscoveryViewAndHighlightConfigurationByName("global");
 
+        request.setAttribute("viewMetadata",
+                discoveryViewAndHighlightConfigurationByName
+                        .getViewConfiguration());
+        request.setAttribute("selectorViewMetadata",
+                discoveryViewAndHighlightConfigurationByName.getSelector());
+
+        if (StringUtils.isBlank(crisID))
+        {
+            crisID = context.getCrisID();
+        }
+        List<Item> publications = (List<Item>) request
+                .getAttribute("publicationList");
+        if (publications != null)
+        {
+            showListClaim(context, request, response, crisID, publications);
+        }
+        else
+        {
+            Map<String, List<String[]>> result = new HashMap<String, List<String[]>>();
+            Map<String, Boolean> haveSimilar = new HashMap<String, Boolean>();
+            showAuthorityClaim(context, request, response, handle, crisID,
+                    result, haveSimilar);
+        }
+
+    }
+
+    private void showListClaim(Context context, HttpServletRequest request,
+            HttpServletResponse response, String crisID,
+            List<Item> publications)
+            throws SQLException, ServletException, IOException
+    {
+        Map<String, Map<String, List<String[]>>> mapResult = new HashMap<String, Map<String, List<String[]>>>();
+        Map<String, Map<String, Boolean>> haveSimilarResult = new HashMap<String, Map<String, Boolean>>();
+        Map<String, DSpaceObject> mapItem = new HashMap<String, DSpaceObject>();
+        ResearcherPage rp = applicationService.getEntityByCrisId(crisID, ResearcherPage.class);
+        for (Item ii : publications)
+        {
+            Map<String, List<String[]>> result = new HashMap<String, List<String[]>>();
+            Map<String, Boolean> haveSimilar = new HashMap<String, Boolean>();
+            String handle = ii.getHandle();
+            internalDoResult(context, handle, crisID, result, haveSimilar, rp);
+            mapResult.put(handle, result);
+            mapItem.put(handle, HandleManager.resolveToObject(context, handle));
+            haveSimilarResult.put(handle, haveSimilar);
+        }
+
+        log.info(LogManager.getHeader(context, "show_authority_claim_list",
+                null));
+        request.setAttribute("items", mapItem);
+        request.setAttribute("result", mapResult);
+        request.setAttribute("haveSimilar", haveSimilarResult);
+        request.setAttribute("crisID", crisID);
+
+        JSPManager.showJSP(request, response,
+                "/tools/authority-claim-list.jsp");
+
+    }
+
+    private void showAuthorityClaim(Context context, HttpServletRequest request,
+            HttpServletResponse response, String handle, String crisID,
+            Map<String, List<String[]>> result,
+            Map<String, Boolean> haveSimilar)
+            throws SQLException, ServletException, IOException
+    {
+
+        ResearcherPage rp = applicationService.getEntityByCrisId(crisID, ResearcherPage.class);
+        
+        internalDoResult(context, handle, crisID, result, haveSimilar, rp);
+
+        request.setAttribute("item",
+                HandleManager.resolveToObject(context, handle));
+        request.setAttribute("result", result);
+        request.setAttribute("handle", handle);
+        request.setAttribute("haveSimilar", haveSimilar);
+        request.setAttribute("crisID", crisID);
+
+        log.info(LogManager.getHeader(context, "show_authority_claim",
+                "#keys: " + result.size()));
+
+        JSPManager.showJSP(request, response, "/tools/authority-claim.jsp");
+    }
+
+    private void internalDoResult(Context context, String handle, String crisID,
+            Map<String, List<String[]>> result,
+            Map<String, Boolean> haveSimilar, ResearcherPage rp) throws SQLException
+    {
+        
+        JaroWinklerDistance jaroWinklerDistance = new JaroWinklerDistance();
+        double checksimilarity = 0.9;
+        
         if (StringUtils.isNotBlank(handle))
         {
 
@@ -93,6 +205,8 @@ public class AuthorityClaimServlet extends DSpaceServlet
                 Metadatum[] metadatum = item
                         .getMetadataByMetadataString(standardizeField);
 
+                haveSimilar.put(field, false);
+
                 for (Metadatum meta : metadatum)
                 {
                     String similar = null;
@@ -111,15 +225,16 @@ public class AuthorityClaimServlet extends DSpaceServlet
                     {
                         if (choices.total > 0)
                         {
-                            for (Choice choice : choices.values)
+                            choice : for (Choice choice : choices.values)
                             {
-                                if (crisID.equals(choice.authority))
-                                {
-                                    similar = choice.value;
-                                    haveSimilar.put(field, true);
-                                    break;
+                                for(String allname : rp.getAllNames()) {
+                                    if (crisID.equals(choice.authority) || allname.equals(choice.value) || jaroWinklerDistance.getDistance(allname,choice.value)>checksimilarity)
+                                    {
+                                        similar = meta.value;
+                                        haveSimilar.put(field, true);
+                                        break choice;
+                                    }
                                 }
-                                haveSimilar.put(field, false);
                             }
                         }
                     }
@@ -144,15 +259,6 @@ public class AuthorityClaimServlet extends DSpaceServlet
             }
 
         }
-
-        request.setAttribute("result", result);
-        request.setAttribute("handle", handle);
-        request.setAttribute("haveSimilar", haveSimilar);
-
-        log.info(LogManager.getHeader(context, "show_authority_claim",
-                "#keys: " + result.size()));
-
-        JSPManager.showJSP(request, response, "/tools/authority-claim.jsp");
     }
 
     protected void doDSPost(Context context, HttpServletRequest request,
@@ -162,16 +268,11 @@ public class AuthorityClaimServlet extends DSpaceServlet
         context.turnOffAuthorisationSystem();
 
         final Date now = new Date();
-        
-        String templateEmail = null;
-        String templateEmailParam0 = null;
-        String templateEmailParam1 = null;
-        String templateEmailParam2 = null;
-        String templateEmailParam3 = null;
         final String submitButton = UIUtil.getSubmitButton(request,
                 "submit_cancel");
 
         String handle = request.getParameter("handle");
+        String crisID = context.getCrisID();
 
         // retrieve Group users to send notification; Default is Administrator
         // Group
@@ -199,198 +300,290 @@ public class AuthorityClaimServlet extends DSpaceServlet
             }
         }
 
-        String crisID = context.getCrisID();
-
         if (!"submit_cancel".equals(submitButton))
         {
-
-            ChoiceAuthorityManager cam = ChoiceAuthorityManager.getManager();
-
-            List<String> choices = new ArrayList<String>();
-
-            Enumeration e = request.getParameterNames();
-
-            while (e.hasMoreElements())
+            Context subcontext = null;
+            try
             {
-                String parameterName = (String) e.nextElement();
+                subcontext = new Context();
+                subcontext.turnOffAuthorisationSystem();
+                subcontext.setDispatcher("onlyindex");
+                subcontext.setCurrentUser(context.getCurrentUser());
+                subcontext.setCurrentLocale(context.getCurrentLocale());
+                int[] selectedIds = UIUtil.getIntParameters(request,
+                        "selectedId");
 
-                // sequencenumber_schema_element_qualifier ->
-                // 00_dc_contributor.author
-                if (parameterName.startsWith("userchoice"))
+                String message = null;
+                int failures = 0;
+                int successes = 0;
+                int discarded = 0;
+                for (int selectedId : selectedIds)
                 {
-                    choices.add(request.getParameter(parameterName));
+                    try
+                    {
+                        String selectedHandle = request
+                                .getParameter("handle_" + selectedId);
+                        workNow(subcontext, request, now, selectedHandle,
+                                crisID, notifyGroupSelfClaim, selfClaim,
+                                selectedId, submitButton);
+                        if ("submit_approve".equalsIgnoreCase(submitButton))
+                        {
+                            successes++;
+                        } else {
+                            discarded++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        failures++;
+                        log.error(ex.getMessage(), ex);
+                    }
+                }
+
+                if (failures > 0)
+                {
+                    if ("submit_approve".equalsIgnoreCase(submitButton))
+                    {
+                        message = I18nUtil.getMessage(
+                                "jsp.dspace.authority-listclaim.failure.success",
+                                new Object[] { successes, failures },
+                                context.getCurrentLocale(), false);
+                    } else {
+                        message = I18nUtil.getMessage(
+                                "jsp.dspace.authority-listclaim.failure.reject",
+                                new Object[] { discarded, failures },
+                                context.getCurrentLocale(), false);
+                    }
+                }
+                else
+                {
+                    if (successes > 0)
+                    {
+                        message = I18nUtil.getMessage(
+                                "jsp.dspace.authority-listclaim.success",
+                                new Object[] { successes },
+                                context.getCurrentLocale(), false);
+                    }
+                    else
+                    {
+                        message = I18nUtil.getMessage(
+                                "jsp.dspace.authority-listclaim.reject",
+                                new Object[] { selectedIds.length },
+                                context.getCurrentLocale(), false);
+                    }
+                }
+                if (StringUtils.isNotBlank(message))
+                {
+                    request.getSession().setAttribute(Constants.MESSAGES_KEY,
+                            Arrays.asList(message));
+                }
+                subcontext.complete();
+            }
+            catch (Exception ex)
+            {
+                log.error(ex.getMessage(), ex);
+            }
+            finally
+            {
+                if (subcontext != null && subcontext.isValid())
+                {
+                    subcontext.abort();
                 }
             }
+        }
 
-            for (String choice : choices)
+        if (StringUtils.isBlank(handle))
+        {
+            response.sendRedirect(
+                    request.getContextPath() + "/cris/rp/" + crisID);
+        }
+        else
+        {
+            response.sendRedirect(
+                    request.getContextPath() + "/handle/" + handle);
+        }
+
+        context.restoreAuthSystemState();
+    }
+
+    private void workNow(Context context, HttpServletRequest request,
+            final Date now, String handle, String crisID,
+            String notifyGroupSelfClaim, boolean selfClaim, int selectedId,
+            String submitMode) throws SQLException, AuthorizeException
+    {
+
+        String templateEmail = null;
+        String templateEmailParam0 = null;
+        String templateEmailParam1 = null;
+        String templateEmailParam2 = null;
+        String templateEmailParam3 = null;
+
+        ChoiceAuthorityManager cam = ChoiceAuthorityManager.getManager();
+
+        List<String> choices = new ArrayList<String>();
+
+        Enumeration e = request.getParameterNames();
+
+        // find user choice
+        while (e.hasMoreElements())
+        {
+            String parameterName = (String) e.nextElement();
+
+            // userchoice_<identifier>_schema_element_qualifier ->
+            // userchoice_16_dc_contributor_author
+            if (parameterName.startsWith("userchoice_" + selectedId))
             {
-                String[] arrayChoices = null;
-                if (StringUtils.isNotBlank(choice))
+                // <sequencenumber>_<identifier>_schema_element_qualifier ->
+                // 00_16_dc_contributor_author
+                choices.add(request.getParameter(parameterName));
+            }
+        }
+
+        // for each publication try to accept/reject
+        for (String choice : choices)
+        {
+            String[] arrayChoices = null;
+            if (StringUtils.isNotBlank(choice))
+            {
+                arrayChoices = choice.split("_", 2);
+            }
+
+            // the choice sequence by the end user -> 00
+            String sequenceChoice = arrayChoices[0];
+            // the field with the identifier as prefix ->
+            // 16_dc_contributor_author
+            String fieldChoice = arrayChoices[1];
+
+            // try to retrieve the text note ->
+            // requestNote_16_dc_contributor_author
+            String note = request.getParameter("requestNote_" + fieldChoice);
+
+            Set<Integer> itemRejectedIDs = new HashSet<Integer>();
+            if (StringUtils.isNotBlank(fieldChoice))
+            {
+                Item item = (Item) HandleManager.resolveToObject(context,
+                        handle);
+                String[] metadata = fieldChoice.split("_");
+                // skip item id ---> e.g. 01_dc_contributor_author
+                item.clearMetadata(metadata[1], metadata[2],
+                        metadata.length > 3 ? metadata[3] : null, Item.ANY);
+
+                // process update
+                Enumeration unsortedParamNames = request.getParameterNames();
+
+                // Put them in a list
+                List<String> sortedParamNames = new LinkedList<String>();
+
+                while (unsortedParamNames.hasMoreElements())
                 {
-                    arrayChoices = choice.split("_", 2);
+                    sortedParamNames
+                            .add((String) unsortedParamNames.nextElement());
                 }
 
-                String sequenceChoice = arrayChoices[0];
-                String fieldChoice = arrayChoices[1];
+                // Sort the list
+                Collections.sort(sortedParamNames);
 
-                String note = request
-                        .getParameter("requestNote_" + fieldChoice);
-
-                if (sequenceChoice.equals("dolater"))
+                for (String p : sortedParamNames)
                 {
-                    continue;
-                }
-
-                Set<Integer> itemRejectedIDs = new HashSet<Integer>();
-                if (StringUtils.isNotBlank(fieldChoice))
-                {
-                    Item item = (Item) HandleManager.resolveToObject(context,
-                            handle);
-                    String[] metadata = fieldChoice.split("_");
-                    item.clearMetadata(metadata[0], metadata[1],
-                            metadata.length > 2 ? metadata[2] : null, Item.ANY);
-
-                    // process update
-                    Enumeration unsortedParamNames = request
-                            .getParameterNames();
-
-                    // Put them in a list
-                    List<String> sortedParamNames = new LinkedList<String>();
-
-                    while (unsortedParamNames.hasMoreElements())
+                    // e.g. value_3_dc_contributor_author_00
+                    if (p.startsWith("value_" + selectedId))
                     {
-                        sortedParamNames
-                                .add((String) unsortedParamNames.nextElement());
-                    }
+                        /*
+                         * It's a metadata value - it will be of the form
+                         * value_element_1 OR value_element_qualifier_2 (the
+                         * number being the sequence number) We use a
+                         * StringTokenizer to extract these values
+                         */
+                        StringTokenizer st = new StringTokenizer(p, "_");
 
-                    // Sort the list
-                    Collections.sort(sortedParamNames);
+                        st.nextToken(); // Skip "value"
+                        st.nextToken(); // Skip "id"
 
-                    for (String p : sortedParamNames)
-                    {
-                        if (p.startsWith("value"))
+                        String schema = st.nextToken();
+
+                        String element = st.nextToken();
+
+                        String qualifier = null;
+
+                        if (st.countTokens() == 2)
                         {
-                            /*
-                             * It's a metadata value - it will be of the form
-                             * value_element_1 OR value_element_qualifier_2 (the
-                             * number being the sequence number) We use a
-                             * StringTokenizer to extract these values
-                             */
-                            StringTokenizer st = new StringTokenizer(p, "_");
+                            qualifier = st.nextToken();
+                        }
 
-                            st.nextToken(); // Skip "value"
-
-                            String schema = st.nextToken();
-
-                            String element = st.nextToken();
-
-                            String qualifier = null;
-
-                            if (st.countTokens() == 2)
+                        String[] checkTokenized = Utils.tokenize(fieldChoice
+                                .substring(fieldChoice.indexOf("_") + 1));
+                        if (schema.equals(checkTokenized[0]))
+                        {
+                            if (element.equals(checkTokenized[1]))
                             {
-                                qualifier = st.nextToken();
-                            }
-
-                            String[] checkTokenized = Utils
-                                    .tokenize(fieldChoice);
-                            if (schema.equals(checkTokenized[0]))
-                            {
-                                if (element.equals(checkTokenized[1]))
+                                if (qualifier != null
+                                        && checkTokenized.length == 3)
                                 {
-                                    if (qualifier != null
-                                            && checkTokenized.length == 3)
+                                    if (qualifier.equals(checkTokenized[2]))
                                     {
-                                        if (qualifier.equals(checkTokenized[2]))
+                                        String sequenceNumber = st.nextToken();
+
+                                        // Get a string with "element" for
+                                        // unqualified or
+                                        // "element_qualifier"
+                                        String key = MetadataField.formKey(
+                                                schema, element, qualifier);
+
+                                        // Get the language
+                                        String language = request.getParameter(
+                                                "language_" + fieldChoice + "_"
+                                                        + sequenceNumber);
+
+                                        // trim language and set empty
+                                        // string language =
+                                        // null
+                                        if (language != null)
                                         {
-                                            String sequenceNumber = st
-                                                    .nextToken();
-
-                                            // Get a string with "element" for
-                                            // unqualified or
-                                            // "element_qualifier"
-                                            String key = MetadataField.formKey(
-                                                    schema, element, qualifier);
-
-                                            // Get the language
-                                            String language = request
-                                                    .getParameter("language_"
-                                                            + key + "_"
-                                                            + sequenceNumber);
-
-                                            // trim language and set empty
-                                            // string language =
-                                            // null
-                                            if (language != null)
+                                            language = language.trim();
+                                            if (language.equals(""))
                                             {
-                                                language = language.trim();
-                                                if (language.equals(""))
-                                                {
-                                                    language = null;
-                                                }
+                                                language = null;
                                             }
+                                        }
 
-                                            // Get the authority key if any
-                                            String authority = request
-                                                    .getParameter("choice_"
-                                                            + key
-                                                            + "_authority_"
-                                                            + sequenceNumber);
+                                        // Get the authority key if any
+                                        String authority = request.getParameter(
+                                                "choice_" + fieldChoice
+                                                        + "_authority_"
+                                                        + sequenceNumber);
 
-                                            // Get the authority confidence
-                                            // value, passed as
-                                            // symbolic name
-                                            String sconfidence = request
-                                                    .getParameter("choice_"
-                                                            + key
-                                                            + "_confidence_"
-                                                            + sequenceNumber);
-                                            int confidence = (StringUtils
-                                                    .isBlank(sconfidence))
-                                                            ? Choices.CF_NOVALUE
-                                                            : Integer.parseInt(
-                                                                    sconfidence);
+                                        // Get the authority confidence
+                                        // value, passed as
+                                        // symbolic name
+                                        String sconfidence = request
+                                                .getParameter("choice_"
+                                                        + fieldChoice
+                                                        + "_confidence_"
+                                                        + sequenceNumber);
+                                        int confidence = (StringUtils
+                                                .isBlank(sconfidence))
+                                                        ? Choices.CF_NOVALUE
+                                                        : Integer.parseInt(
+                                                                sconfidence);
 
-                                            // Get the value
-                                            String value = request
-                                                    .getParameter(p).trim();
+                                        // Get the value
+                                        String value = request.getParameter(p)
+                                                .trim();
 
-                                            if (StringUtils.isBlank(authority))
+                                        if (StringUtils.isBlank(authority))
+                                        {
+                                            if (sequenceNumber
+                                                    .equals(sequenceChoice))
                                             {
-                                                if (sequenceNumber
-                                                        .equals(sequenceChoice))
-                                                {
-                                                    authority = crisID;
-                                                    if (selfClaim)
-                                                    {
-                                                        confidence = Choices.CF_ACCEPTED;
-                                                    }
-                                                    else
-                                                    {
-                                                        confidence = Choices.CF_UNCERTAIN;
-                                                        templateEmail = PUBLICATION_CLAIMED_UNCERTAIN;
-                                                        templateEmailParam0 = key;
-                                                        templateEmailParam1 = value;
-                                                        templateEmailParam2 = authority;
-                                                        templateEmailParam3 = ""
-                                                                + confidence;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    authority = null;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                if (authority.equals(crisID)
-                                                        && selfClaim)
+                                                authority = crisID;
+                                                if (selfClaim)
                                                 {
                                                     confidence = Choices.CF_ACCEPTED;
                                                 }
-                                                else if (sequenceNumber
-                                                        .equals(sequenceChoice))
+                                                else
                                                 {
-                                                    templateEmail = PUBLICATION_REQUEST_FOR_CLAIM;
+                                                    confidence = Choices.CF_UNCERTAIN;
+                                                    templateEmail = PUBLICATION_CLAIMED_UNCERTAIN;
                                                     templateEmailParam0 = key;
                                                     templateEmailParam1 = value;
                                                     templateEmailParam2 = authority;
@@ -398,31 +591,43 @@ public class AuthorityClaimServlet extends DSpaceServlet
                                                             + confidence;
                                                 }
                                             }
-
-                                            if ("none".equalsIgnoreCase(
-                                                    sequenceChoice))
+                                            else
                                             {
-                                                if (StringUtils
-                                                        .isNotBlank(authority)
-                                                        && crisID.equals(
-                                                                authority))
-                                                {
-                                                    item.addMetadata(schema,
-                                                            element, qualifier,
-                                                            language, value,
-                                                            null,
-                                                            Choices.CF_REJECTED);
-                                                    itemRejectedIDs
-                                                            .add(item.getID());
-                                                }
-                                                else
-                                                {
-                                                    item.addMetadata(schema,
-                                                            element, qualifier,
-                                                            language, value,
-                                                            authority,
-                                                            confidence);
-                                                }
+                                                authority = null;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (authority.equals(crisID)
+                                                    && selfClaim)
+                                            {
+                                                confidence = Choices.CF_ACCEPTED;
+                                            }
+                                            else if (sequenceNumber
+                                                    .equals(sequenceChoice))
+                                            {
+                                                templateEmail = PUBLICATION_REQUEST_FOR_CLAIM;
+                                                templateEmailParam0 = key;
+                                                templateEmailParam1 = value;
+                                                templateEmailParam2 = authority;
+                                                templateEmailParam3 = ""
+                                                        + confidence;
+                                            }
+                                        }
+
+                                        if ("submit_reject"
+                                                .equalsIgnoreCase(submitMode))
+                                        {
+                                            if (StringUtils
+                                                    .isNotBlank(authority)
+                                                    && crisID.equals(authority))
+                                            {
+                                                item.addMetadata(schema,
+                                                        element, qualifier,
+                                                        language, value, null,
+                                                        Choices.CF_REJECTED);
+                                                itemRejectedIDs
+                                                        .add(item.getID());
                                             }
                                             else
                                             {
@@ -431,65 +636,73 @@ public class AuthorityClaimServlet extends DSpaceServlet
                                                         language, value,
                                                         authority, confidence);
                                             }
-
                                         }
-                                    }
+                                        else
+                                        {
+                                            item.addMetadata(schema, element,
+                                                    qualifier, language, value,
+                                                    authority, confidence);
+                                        }
 
+                                    }
                                 }
 
                             }
 
                         }
                     }
-
-                    if (!note.isEmpty())
-                    {
-                        item.addMetadata(METADATA_MESSAGE[0],
-                                METADATA_MESSAGE[1], METADATA_MESSAGE[2],
-                                Item.ANY, now + ":" + fieldChoice + ":" + note);
-                    }
-                    item.update();
-                    context.commit();
-                    if (itemRejectedIDs.size() > 0)
-                    {
-                        // notify reject
-                        int[] ids = new int[itemRejectedIDs.size()];
-                        Iterator<Integer> iter = itemRejectedIDs.iterator();
-                        int i = 0;
-                        while (iter.hasNext())
-                        {
-                            ids[i] = (Integer) iter.next();
-                            i++;
-                        }
-
-                        String[] splitted = fieldChoice.split("_");
-                        String schema = splitted[0];
-                        String element = splitted[1];
-                        String qualifier = (splitted.length == 3) ? splitted[2]
-                                : null;
-                        cam.notifyReject(ids, schema, element, qualifier,
-                                crisID);
-                    }
                 }
 
                 if (StringUtils.isNotBlank(templateEmail))
                 {
-                    sendEmail(context, templateEmail, notifyGroupSelfClaim,
-                            null, templateEmailParam0, templateEmailParam1,
-                            templateEmailParam2, templateEmailParam3, note,
-                            handle, crisID);
+                    item.addMetadata(METADATA_MESSAGE[0], METADATA_MESSAGE[1],
+                            METADATA_MESSAGE[2], Item.ANY,
+                            sdf.format(now) + "|||" + crisID + "|||"
+                                    + submitMode + "|||" + templateEmail + "|||"
+                                    + fieldChoice.substring(
+                                            fieldChoice.indexOf("_") + 1)
+                                    + "|||" + note);
                 }
 
-                sendEmail(context, PUBLICATION_CLAIMED_USER, null,
-                        context.getCurrentUser().getEmail(),
+                item.update();
+                context.commit();
+                if (itemRejectedIDs.size() > 0)
+                {
+                    // notify reject
+                    int[] ids = new int[itemRejectedIDs.size()];
+                    Iterator<Integer> iter = itemRejectedIDs.iterator();
+                    int i = 0;
+                    while (iter.hasNext())
+                    {
+                        ids[i] = (Integer) iter.next();
+                        i++;
+                    }
+
+                    String[] splitted = fieldChoice.split("_");
+                    // skip item id ---> e.g. 01_dc_contributor_author
+                    String schema = splitted[1];
+                    String element = splitted[2];
+                    String qualifier = (splitted.length == 4) ? splitted[3]
+                            : null;
+                    cam.notifyReject(ids, schema, element, qualifier, crisID);
+                }
+            }
+
+            if (StringUtils.isNotBlank(templateEmail))
+            {
+                sendEmail(context, templateEmail, notifyGroupSelfClaim, null,
                         templateEmailParam0, templateEmailParam1,
                         templateEmailParam2, templateEmailParam3, note, handle,
                         crisID);
             }
+
+            sendEmail(context, PUBLICATION_CLAIMED_USER, null,
+                    context.getCurrentUser().getEmail(), templateEmailParam0,
+                    templateEmailParam1, templateEmailParam2,
+                    templateEmailParam3, note, handle, crisID);
+
         }
 
-        response.sendRedirect(request.getContextPath() + "/handle/" + handle);
-        context.restoreAuthSystemState();
     }
 
     private void sendEmail(Context context, String templateEmail,

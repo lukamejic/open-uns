@@ -8,13 +8,13 @@
 
 --%>
 <% if(mostViewedBitstream != null && mostViewedBitstream.getItems().size()!=0){ %>
-        <div class="panel panel-primary vertical-carousel" data-itemstoshow="3">      
+        <div class="panel panel-primary vertical-carousel" data-itemstoshow="3">        
         <div class="panel-heading">
           <h3 class="panel-title">
-          		<a href="JavaScript:otvoriBlok('MostDown')"><fmt:message key="jsp.components.most-downloaded"/><i id="faMostDown" class="fa fa-angle-double-down"></i></a>
+          		<fmt:message key="jsp.components.most-downloaded"/>
           </h3>
        </div>   
-	   <div class="panel-body panDesno hideNi" id="blokMostDown">
+	   <div class="panel-body">
 	   		<div class="list-groups">
 <% for(MostViewedItem mvi : mostViewedBitstream.getItems()){
 		IGlobalSearchResult item = mvi.getItem();

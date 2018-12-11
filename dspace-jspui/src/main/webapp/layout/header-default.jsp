@@ -121,6 +121,7 @@
 	<script type="text/javascript" src="<%= request.getContextPath() %>/js/buttons.html5.min.js"></script>
 	<script type="text/javascript" src="<%= request.getContextPath() %>/js/dataTables.responsive.min.js"></script>	
 	<script type="text/javascript" src="<%= request.getContextPath() %>/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="<%= request.getContextPath() %>/static/js/dataTables.select.min.js"></script>
 	<script type="text/javascript" src="<%= request.getContextPath() %>/js/jszip.min.js"></script>
 	<script type='text/javascript'>
 		var j = jQuery.noConflict();

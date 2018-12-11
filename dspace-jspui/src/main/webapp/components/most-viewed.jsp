@@ -11,10 +11,10 @@
         <div class="panel panel-primary vertical-carousel" data-itemstoshow="3">        
         <div class="panel-heading">
           <h3 class="panel-title">
-          		<a href="JavaScript:otvoriBlok('MostView')"><fmt:message key="jsp.components.most-viewed"/><i id="faMostView" class="fa fa-angle-double-down"></i></a>
+          		<fmt:message key="jsp.components.most-viewed"/>
           </h3>
        </div>   
-	   <div class="panel-body panDesno hideNi" id="blokMostView">
+	   <div class="panel-body">
 	   		<div class="list-groups">
 <% for(MostViewedItem mvi : mostViewedItem.getItems()){
 		IGlobalSearchResult item = mvi.getItem();
