@@ -899,10 +899,10 @@
 		<url-pattern>/profile</url-pattern>
 	</servlet-mapping>
 
-	<servlet-mapping>
+	<!-- <servlet-mapping>
 		<servlet-name>register</servlet-name>
 		<url-pattern>/register</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 
 	<servlet-mapping>
 		<servlet-name>retrieve</servlet-name>
