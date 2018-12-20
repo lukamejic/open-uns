@@ -114,7 +114,7 @@ public class ScopusService
                 boolean lastPageReached= false;
                 while(!lastPageReached){
                         // open session
-		                method = new GetMethod(ENDPOINT_SEARCH_SCOPUS + "?httpAccept=application/xml&apiKey="+ apiKey +"&view=COMPLETE&start="+start+"&query="+URLEncoder.encode(query));
+		                method = new GetMethod(ENDPOINT_SEARCH_SCOPUS + "?httpAccept=application/xml&apiKey="+ apiKey +"&view=STANDARD&start="+start+"&query="+URLEncoder.encode(query));
 		
 		                // Execute the method.
 		                int statusCode = client.executeMethod(method);
