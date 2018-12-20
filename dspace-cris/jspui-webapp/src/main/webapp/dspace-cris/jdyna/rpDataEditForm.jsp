@@ -126,6 +126,27 @@
             j("#ajaxBusy").hide();
         }
     });
+
+	var showPlaceholder = function() {
+
+		if (document.getElementById('anagraficaProperties[preferredName][0]') !== null) {
+			document.getElementById('anagraficaProperties[preferredName][0]').placeholder = "<fmt:message
+				key="cris.rp.edit.creditname.placeholder" />";
+		} 
+		<%--
+		if (document.getElementById('anagraficaProperties[fullName][0]') !== null) {
+			document.getElementById('anagraficaProperties[fullName][0]').placeholder = "e.g. \"Doe, John\"";
+		} 
+
+		if (document.getElementById('anagraficaProperties[translatedName][0]') !== null) {
+			document.getElementById('anagraficaProperties[translatedName][0]').placeholder = "e.g. \"Doe, John\"";
+		} 
+
+		if (document.getElementById('anagraficaProperties[variants][0]') !== null) {
+			document.getElementById('anagraficaProperties[variants][0]').placeholder = "e.g. \"Doe, J.\"";
+		}
+		--%>
+	}
     	    	
     	var activeTab = function(){
     		j(".box:not(.expanded)").accordion({
@@ -437,7 +458,7 @@
 			activePointer();
 			activeCustomPointer();
 			activeTree();
-			
+			showPlaceholder();
 		});
 
 		
