@@ -248,6 +248,16 @@
 			});
 
 			activeTab();
+			
+			j('#link-owner-button').on('click', function() {
+				<fmt:message key="jsp.layout.navbar-hku.staff-mode.edit.primary-data" var="editLabel"/>
+				<fmt:message key="jsp.layout.hku.label.eperson" var="ownerLabel"/>
+				<fmt:message key="cris.rp.information.instructions.text" var="txt">
+					<fmt:param value="${editLabel}"/>
+					<fmt:param value="${ownerLabel}"/>
+				</fmt:message>
+				alert("${txt}");
+			});
 		});
 		-->
 	</script>
@@ -271,6 +281,11 @@
 							${entity.fullName}
 						</c:otherwise>
 					</c:choose>
+					<c:if test="${canEdit}">
+						<button id="link-owner-button" class="btn btn-default">
+							<fmt:message key="cris.rp.information.instructions.label"/>
+						</button>
+					</c:if>
 				</h1>
 				<%
 		    	if (isAdmin) {

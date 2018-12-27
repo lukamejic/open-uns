@@ -181,6 +181,14 @@
                };
 
                myRP('status');
+               
+               j('#helpButton').on('click', function() {
+            	  <fmt:message key="jsp.mydspace.cris.create-new-rp" var="createButtonLabel"/>
+                  <fmt:message key="cris.rs.status.instructions.text" var="txt">
+                  		<fmt:param value="${createButtonLabel}"/>
+                  </fmt:message>
+            	  alert("${txt}"); 
+               });
        });
     -->
     </script>
@@ -228,7 +236,11 @@
 		<!-- No researcher profile available for the currently logged in user, so show a suggestion list or ask him to create an RP -->
         <h2 id="h2-cris-rp-status-undefined" class="cris-rp-status" style="display:none;">
         	<fmt:message key="jsp.mydspace.cris.rp-status-label"/>
-           <fmt:message key="jsp.mydspace.cris.rp-status-undefined"/></h2>
+           	<fmt:message key="jsp.mydspace.cris.rp-status-undefined"/>
+           	<button id="helpButton" class="btn btn-info">
+           		<fmt:message key="cris.rs.status.instructions.label"/>
+           	</button>
+        </h2>
 
 <div id="cris-rp-choice" class="panel-group" style="display:none;">
     <div class="panel panel-default">
