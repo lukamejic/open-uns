@@ -28,7 +28,6 @@
 
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="java.util.Map" %>
 
 <%@ page import="javax.servlet.jsp.jstl.fmt.LocaleSupport" %>
 <%@ page import="javax.servlet.jsp.PageContext" %>
@@ -434,33 +433,21 @@
     // Keep a count of the number of values of each element+qualifier
     // key is "element" or "element_qualifier" (String)
     // values are Integers - number of values that element/qualifier so far
-    Map<String, Integer> dcCounter = new HashMap<String, Integer>();
+    HashMap<String, Integer> dcCounter = new HashMap<String, Integer>();
     
     for (int i = 0; i < dcv.length; i++)
     {
         // Find out how many values with this element/qualifier we've found
-
         String key = ChoiceAuthorityManager.makeFieldKey(dcv[i].schema, dcv[i].element, dcv[i].qualifier);
-
-        Integer count = dcCounter.get(key);
-        if (count == null)
-        {
-            count = new Integer(0);
-        }
         
         // Increment counter in map
-        dcCounter.put(key, new Integer(count.intValue() + 1));
-
+        dcCounter.put(key, (dcCounter.containsKey(key) ? dcCounter.get(key) : 0) + 1);
+		
         // We will use two digits to represent the counter number in the parameter names.
         // This means a string sort can be used to put things in the correct order even
         // if there are >= 10 values for a particular element/qualifier.  Increase this to
         // 3 digits if there are ever >= 100 for a single element/qualifer! :)
-        String sequenceNumber = count.toString();
-        
-        while (sequenceNumber.length() < 2)
-        {
-            sequenceNumber = "0" + sequenceNumber;
-        }
+        String sequenceNumber = StringUtils.leftPad(dcCounter.get(key).toString(), 2, "0");
  %>
             <tr>
                 <td headers="t0" class="<%= row %>RowOddCol"><%=dcv[i].schema %></td>

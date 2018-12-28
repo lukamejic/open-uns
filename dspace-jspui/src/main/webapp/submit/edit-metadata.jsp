@@ -1184,18 +1184,17 @@
     {
     	Metadatum[] unfiltered = item.getMetadata(schema, element, Item.ANY, Item.ANY);
     	// filter out both unqualified and qualified values occurring elsewhere in inputs
-    	List<Metadatum> filtered = new ArrayList<Metadatum>();
-    	for (int i = 0; i < unfiltered.length; i++)
-    	{
-    		String unfilteredFieldName = unfiltered[i].element;
-    		if(unfiltered[i].qualifier != null && unfiltered[i].qualifier.length()>0)
-    			unfilteredFieldName += "." + unfiltered[i].qualifier;
-    		if ( ! inputs.isFieldPresent(unfilteredFieldName) )
-    		{
-    			filtered.add( unfiltered[i] );
+    	ArrayList<Metadatum> filtered = new ArrayList<Metadatum>(unfiltered.length);
+    	for (Metadatum m : unfiltered) {
+    		String unfilteredFieldName = m.element;
+    		if (StringUtils.isNotBlank(m.qualifier)) {
+    			unfilteredFieldName += "." + m.qualifier;
+    		}
+    		if (!inputs.isFieldPresent(unfilteredFieldName)) {
+    			filtered.add(m);
    			}
       	}
-      	Metadatum[] defaults = filtered.toArray(new Metadatum[0]);
+      	Metadatum[] defaults = filtered.toArray(new Metadatum[filtered.size()]);
 
       	int fieldCount = defaults.length + fieldCountIncr;
       	StringBuffer sb = new StringBuffer();
@@ -1215,8 +1214,7 @@
       	{
       		if (j < defaults.length)
 	   	  	{
-      			currentQual = defaults[j].qualifier;
-              	if(currentQual==null) currentQual="";
+      			currentQual = StringUtils.defaultString(defaults[j].qualifier);
               	currentVal = defaults[j].value;
              	currentAuth = defaults[j].authority;
               	currentConf = defaults[j].confidence;
@@ -1724,11 +1722,9 @@
 
        repeatable = inputs[z].getRepeatable();
        fieldCountIncr = 0;
-       if (repeatable && !readonly)
-       {
+       if (repeatable && !readonly) {
          fieldCountIncr = 1;
-         if (si.getMoreBoxesFor() != null && si.getMoreBoxesFor().equals(fieldName))
-             {
+         if (StringUtils.equals(si.getMoreBoxesFor(), fieldName)) {
            fieldCountIncr = 2;
          }
        }
