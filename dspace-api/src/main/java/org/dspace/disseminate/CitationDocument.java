@@ -7,6 +7,15 @@
  */
 package org.dspace.disseminate;
 
+import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.exceptions.COSVisitorException;
@@ -18,17 +27,15 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.authorize.AuthorizeManager;
-import org.dspace.content.*;
+import org.dspace.content.Bitstream;
 import org.dspace.content.Collection;
+import org.dspace.content.Community;
+import org.dspace.content.DSpaceObject;
+import org.dspace.content.Item;
+import org.dspace.content.Metadatum;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
-
-import java.awt.*;
-import java.io.*;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.List;
 
 /**
  * The Citation Document produces a dissemination package (DIP) that is different that the archival package (AIP).
@@ -313,27 +320,22 @@ public class CitationDocument {
      * @throws org.dspace.authorize.AuthorizeException
      */
     public File makeCitedDocument(Bitstream bitstream)
-            throws IOException, SQLException, AuthorizeException, COSVisitorException {
-        PDDocument document = new PDDocument();
-        PDDocument sourceDocument = new PDDocument();
-        try {
-            Item item = (Item) bitstream.getParentObject();
-            sourceDocument = sourceDocument.load(bitstream.retrieve());
-            PDPage coverPage = new PDPage(PDPage.PAGE_SIZE_LETTER);
-            generateCoverPage(document, coverPage, item);
-            addCoverPageToDocument(document, sourceDocument, coverPage);
-
-            document.save(tempDir.getAbsolutePath() + "/bitstream.cover.pdf");
-            return new File(tempDir.getAbsolutePath() + "/bitstream.cover.pdf");
-        } finally {
-            sourceDocument.close();
-            document.close();
+            throws IOException, SQLException, AuthorizeException {
+        try (PDDocument sourceDocument = PDDocument.load(bitstream.retrieve());
+        		PDDocument targetDocument = new PDDocument()) {
+            PDPage coverPage = new PDPage(PDPage.PAGE_SIZE_A4);
+            generateCoverPage(targetDocument, coverPage, (Item) bitstream.getParentObject());
+            addCoverPageToDocument(targetDocument, sourceDocument, coverPage);
+            File tempFile = new File(tempDir, "bitstream.cover." + System.nanoTime() + ".pdf");
+            targetDocument.save(tempFile);
+            return tempFile;
+        } catch (COSVisitorException e) {
+        	throw new IOException(e);
         }
     }
-
+    
     private void generateCoverPage(PDDocument document, PDPage coverPage, Item item) throws IOException, COSVisitorException {
-        PDPageContentStream contentStream = new PDPageContentStream(document, coverPage);
-        try {
+        try (PDPageContentStream contentStream = new PDPageContentStream(document, coverPage)) {
             int ypos = 760;
             int xpos = 30;
             int xwidth = 550;
@@ -393,28 +395,21 @@ public class CitationDocument {
             contentStream.moveTextPositionByAmount(xpos, ypos);
             contentStream.drawString(footer);
             contentStream.endText();
-        } finally {
-            contentStream.close();
         }
     }
 
-    private void addCoverPageToDocument(PDDocument document, PDDocument sourceDocument, PDPage coverPage) {
-        List<PDPage> sourcePageList = sourceDocument.getDocumentCatalog().getAllPages();
-
-        if (isCitationFirstPage()) {
-            //citation as cover page
-            document.addPage(coverPage);
-            for (PDPage sourcePage : sourcePageList) {
-                document.addPage(sourcePage);
-            }
-        } else {
-            //citation as tail page
-            for (PDPage sourcePage : sourcePageList) {
-                document.addPage(sourcePage);
-            }
+    @SuppressWarnings("unchecked")
+	private void addCoverPageToDocument(PDDocument document, PDDocument sourceDocument, PDPage coverPage) {
+    	boolean citationFirstPage = isCitationFirstPage();
+        if (citationFirstPage) {
             document.addPage(coverPage);
         }
-        sourcePageList.clear();
+        for (PDPage page : (List<PDPage>) sourceDocument.getDocumentCatalog().getAllPages()) {
+        	document.addPage(page);
+        }
+        if (!citationFirstPage) {
+        	document.addPage(coverPage);
+        }
     }
 
     public int drawStringWordWrap(PDPage page, PDPageContentStream contentStream, String text,

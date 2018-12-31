@@ -7,6 +7,8 @@
  */
 package org.dspace.app.webui.servlet;
 
+import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -16,6 +18,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpHeaders;
 import org.apache.log4j.Logger;
 import org.dspace.app.util.IViewer;
 import org.dspace.app.webui.util.JSPManager;
@@ -32,6 +36,7 @@ import org.dspace.core.Context;
 import org.dspace.core.LogManager;
 import org.dspace.core.PluginManager;
 import org.dspace.core.Utils;
+import org.dspace.disseminate.CitationDocument;
 import org.dspace.handle.HandleManager;
 import org.dspace.plugin.BitstreamHomeProcessor;
 import org.dspace.usage.UsageEvent;
@@ -49,7 +54,10 @@ import org.dspace.utils.DSpace;
  */
 public class BitstreamServlet extends DSpaceServlet
 {
-    /** log4j category */
+
+	private static final long serialVersionUID = 1L;
+
+	/** log4j category */
     private static Logger log = Logger.getLogger(BitstreamServlet.class);
 
     /**
@@ -222,27 +230,46 @@ public class BitstreamServlet extends DSpaceServlet
         
         preProcessBitstreamHome(context, request, response, bitstream);
         
-        // Pipe the bits
-        InputStream is = bitstream.retrieve();
-     
 		// Set the response MIME type
         response.setContentType(bitstream.getFormat().getMIMEType());
-
-        // Response length
-        response.setHeader("Content-Length", String
-                .valueOf(bitstream.getSize()));
 
 		if(threshold != -1 && bitstream.getSize() >= threshold)
 		{
 			UIUtil.setBitstreamDisposition(bitstream.getName(), request, response);
 		}
-
-        //DO NOT REMOVE IT - WE NEED TO FREE DB CONNECTION TO AVOID CONNECTION POOL EXHAUSTION FOR BIG FILES AND SLOW DOWNLOADS
-        context.complete();
-
-        Utils.bufferedCopy(is, response.getOutputStream());
-        is.close();
-        response.getOutputStream().flush();
+		
+		try {
+			if (CitationDocument.isCitationEnabledForBitstream(bitstream, context)) {
+	        	makeCitation(bitstream, response);
+	        } else {
+	        	makeCopy(bitstream, response);
+	        }
+		} finally {
+	        // DO NOT REMOVE IT - WE NEED TO FREE DB CONNECTION TO AVOID CONNECTION POOL EXHAUSTION FOR BIG FILES AND SLOW DOWNLOADS
+	        context.complete();
+		}
+    }
+    
+    private void makeCitation(Bitstream bitstream, HttpServletResponse response) 
+    		throws AuthorizeException, SQLException, IOException {
+    	File file = null;
+    	try {
+			file = new CitationDocument().makeCitedDocument(bitstream);
+			response.setHeader(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()));
+			try (InputStream input = new BufferedInputStream(FileUtils.openInputStream(file))) {
+				Utils.bufferedCopy(input, response.getOutputStream());
+			}
+		} finally {
+			FileUtils.deleteQuietly(file);
+		}
+    }
+    
+    private void makeCopy(Bitstream bitstream, HttpServletResponse response) 
+    		throws AuthorizeException, SQLException, IOException {
+    	response.setHeader(HttpHeaders.CONTENT_LENGTH, String.valueOf(bitstream.getSize()));
+    	try (InputStream input = bitstream.retrieve()) {
+    		Utils.bufferedCopy(input, response.getOutputStream());
+    	}
     }
     
     private void preProcessBitstreamHome(Context context, HttpServletRequest request,
