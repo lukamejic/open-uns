@@ -19,6 +19,7 @@ import java.util.List;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.io.RandomAccessBufferedFileInputStream;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
@@ -294,7 +295,7 @@ public class PDFPackager
 
         try
         {
-            PDFParser parser = new PDFParser(metadata);
+            PDFParser parser = new PDFParser(new RandomAccessBufferedFileInputStream(metadata));
             parser.parse();
             cos = parser.getDocument();
 

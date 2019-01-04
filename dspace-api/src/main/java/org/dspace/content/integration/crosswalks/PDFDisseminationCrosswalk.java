@@ -19,11 +19,10 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.dspace.app.util.MetadataExposure;
@@ -63,14 +62,9 @@ implements StreamGenericDisseminationCrosswalk, FileNameDisseminator {
 		createPage(context, dso, document, page, new HashMap<String, Integer>());
 
 		// Save the results and ensure that the document is properly closed:
-		try
-
-		{
-			// Finally Let's save the PDF
-			document.save(out);
-		} catch (COSVisitorException e) {
-			log.error(e.getMessage(), e);
-		}
+		
+		// Finally Let's save the PDF
+		document.save(out);
 
 		document.close();
 	}
@@ -85,7 +79,7 @@ implements StreamGenericDisseminationCrosswalk, FileNameDisseminator {
 		// Start a new content stream which will "hold" the to be created content
 		PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-		PDRectangle mediabox = page.findMediaBox();
+		PDRectangle mediabox = page.getMediaBox();
 
 		float margin = 30;
 		float yCordinate = mediabox.getUpperRightY() - margin;
@@ -250,12 +244,9 @@ implements StreamGenericDisseminationCrosswalk, FileNameDisseminator {
 		}
 
 		// Save the results and ensure that the document is properly closed:
-		try {
-			// Finally Let's save the PDF
-			document.save(out);
-		} catch (COSVisitorException e) {
-			log.error(e.getMessage(), e);
-		}
+		
+		// Finally Let's save the PDF
+		document.save(out);
 
 		document.close();
 	}

@@ -175,13 +175,12 @@ public class BitstreamServlet extends DSpaceServlet
                     + idString));
             JSPManager.showInvalidIDError(request, response, idString,
                     Constants.BITSTREAM);
-
             return;
         }
 
         log.info(LogManager.getHeader(context, "view_bitstream",
                 "bitstream_id=" + bitstream.getID()));
- 
+        
 		if (bitstream.getMetadataValue(IViewer.METADATA_STRING_PROVIDER).contains(IViewer.STOP_DOWNLOAD)
 				&& !AuthorizeManager.isAdmin(context, bitstream)) {
 			throw new AuthorizeException("Download not allowed by viewer policy");

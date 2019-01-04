@@ -18,13 +18,12 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.authorize.AuthorizeManager;
 import org.dspace.content.Bitstream;
@@ -323,27 +322,25 @@ public class CitationDocument {
             throws IOException, SQLException, AuthorizeException {
         try (PDDocument sourceDocument = PDDocument.load(bitstream.retrieve());
         		PDDocument targetDocument = new PDDocument()) {
-            PDPage coverPage = new PDPage(PDPage.PAGE_SIZE_A4);
+            PDPage coverPage = new PDPage(sourceDocument.getPage(0).getMediaBox());
             generateCoverPage(targetDocument, coverPage, (Item) bitstream.getParentObject());
             addCoverPageToDocument(targetDocument, sourceDocument, coverPage);
             File tempFile = new File(tempDir, "bitstream.cover." + System.nanoTime() + ".pdf");
             targetDocument.save(tempFile);
             return tempFile;
-        } catch (COSVisitorException e) {
-        	throw new IOException(e);
         }
     }
     
-    private void generateCoverPage(PDDocument document, PDPage coverPage, Item item) throws IOException, COSVisitorException {
+    private void generateCoverPage(PDDocument document, PDPage coverPage, Item item) throws IOException {
         try (PDPageContentStream contentStream = new PDPageContentStream(document, coverPage)) {
             int ypos = 760;
             int xpos = 30;
             int xwidth = 550;
             int ygap = 20;
 
-            PDFont fontHelvetica = PDType1Font.HELVETICA;
-            PDFont fontHelveticaBold = PDType1Font.HELVETICA_BOLD;
-            PDFont fontHelveticaOblique = PDType1Font.HELVETICA_OBLIQUE;
+            PDFont fontHelvetica = PDType0Font.load(document, CitationDocument.class.getResourceAsStream("/fonts/FreeSans.ttf"));
+            PDFont fontHelveticaBold = PDType0Font.load(document, CitationDocument.class.getResourceAsStream("/fonts/FreeSansBold.ttf"));
+            PDFont fontHelveticaOblique = PDType0Font.load(document, CitationDocument.class.getResourceAsStream("/fonts/FreeSansOblique.ttf"));
             contentStream.setNonStrokingColor(Color.BLACK);
 
             String[][] content = {header1};
@@ -354,14 +351,16 @@ public class CitationDocument {
             drawTable(coverPage, contentStream, ypos, xpos, content2, fontHelveticaBold, 11, false);
             ypos -=ygap;
 
-            contentStream.fillRect(xpos, ypos, xwidth, 1);
+            contentStream.addRect(xpos, ypos, xwidth, 1);
+            contentStream.fill();
             contentStream.closeAndStroke();
 
             String[][] content3 = {{getOwningCommunity(item), getOwningCollection(item)}};
             drawTable(coverPage, contentStream, ypos, xpos, content3, fontHelvetica, 9, false);
             ypos -=ygap;
 
-            contentStream.fillRect(xpos, ypos, xwidth, 1);
+            contentStream.addRect(xpos, ypos, xwidth, 1);
+            contentStream.fill();
             contentStream.closeAndStroke();
             ypos -=(ygap*2);
 
@@ -377,7 +376,8 @@ public class CitationDocument {
                 }
 
                 if(field.equals("_line_")) {
-                    contentStream.fillRect(xpos, ypos, xwidth, 1);
+                    contentStream.addRect(xpos, ypos, xwidth, 1);
+                    contentStream.fill();
                     contentStream.closeAndStroke();
                     ypos -=(ygap);
 
@@ -392,19 +392,18 @@ public class CitationDocument {
 
             contentStream.beginText();
             contentStream.setFont(fontHelveticaOblique, 11);
-            contentStream.moveTextPositionByAmount(xpos, ypos);
-            contentStream.drawString(footer);
+            contentStream.newLineAtOffset(xpos, ypos);
+            contentStream.showText(footer);
             contentStream.endText();
         }
     }
 
-    @SuppressWarnings("unchecked")
 	private void addCoverPageToDocument(PDDocument document, PDDocument sourceDocument, PDPage coverPage) {
     	boolean citationFirstPage = isCitationFirstPage();
         if (citationFirstPage) {
             document.addPage(coverPage);
         }
-        for (PDPage page : (List<PDPage>) sourceDocument.getDocumentCatalog().getAllPages()) {
+        for (PDPage page : sourceDocument.getDocumentCatalog().getPages()) {
         	document.addPage(page);
         }
         if (!citationFirstPage) {
@@ -416,7 +415,7 @@ public class CitationDocument {
                                     int startX, int startY, PDFont pdfFont, float fontSize) throws IOException {
         float leading = 1.5f * fontSize;
 
-        PDRectangle mediabox = page.findMediaBox();
+        PDRectangle mediabox = page.getMediaBox();
         float margin = 72;
         float width = mediabox.getWidth() - 2*margin;
 
@@ -452,13 +451,13 @@ public class CitationDocument {
 
         contentStream.beginText();
         contentStream.setFont(pdfFont, fontSize);
-        contentStream.moveTextPositionByAmount(startX, startY);
+        contentStream.newLineAtOffset(startX, startY);
         int currentY = startY;
         for (String line: lines)
         {
-            contentStream.drawString(line);
+            contentStream.showText(line);
             currentY -= leading;
-            contentStream.moveTextPositionByAmount(0, -leading);
+            contentStream.newLineAtOffset(0, -leading);
         }
         contentStream.endText();
         return currentY;
@@ -516,7 +515,7 @@ public class CitationDocument {
         final int rows = content.length;
         final int cols = content[0].length;
         final float rowHeight = 20f;
-        final float tableWidth = page.findMediaBox().getWidth()-(2*margin);
+        final float tableWidth = page.getMediaBox().getWidth()-(2*margin);
         final float tableHeight = rowHeight * rows;
         final float colWidth = tableWidth/(float)cols;
         final float cellMargin=5f;
@@ -525,14 +524,18 @@ public class CitationDocument {
             //draw the rows
             float nexty = y ;
             for (int i = 0; i <= rows; i++) {
-                contentStream.drawLine(margin,nexty,margin+tableWidth,nexty);
+                contentStream.moveTo(margin,nexty);
+                contentStream.lineTo(margin+tableWidth,nexty);
+                contentStream.stroke();
                 nexty-= rowHeight;
             }
 
             //draw the columns
             float nextx = margin;
             for (int i = 0; i <= cols; i++) {
-                contentStream.drawLine(nextx,y,nextx,y-tableHeight);
+                contentStream.moveTo(nextx,y);
+                contentStream.lineTo(nextx,y-tableHeight);
+                contentStream.stroke();
                 nextx += colWidth;
             }
         }
@@ -546,8 +549,8 @@ public class CitationDocument {
             for(int j = 0 ; j < content[i].length; j++){
                 String text = content[i][j];
                 contentStream.beginText();
-                contentStream.moveTextPositionByAmount(textx,texty);
-                contentStream.drawString(text);
+                contentStream.newLineAtOffset(textx,texty);
+                contentStream.showText(text);
                 contentStream.endText();
                 textx += colWidth;
             }
