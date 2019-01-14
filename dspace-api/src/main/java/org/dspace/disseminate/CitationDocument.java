@@ -268,11 +268,13 @@ public class CitationDocument {
     public static Boolean isCitationEnabledForBitstream(Bitstream bitstream, Context context) throws SQLException {
         if(isCitationEnabledGlobally() || isCitationEnabledThroughCollection(bitstream)) {
 
-            boolean adminUser = AuthorizeManager.isAdmin(context);
-
-            if(!adminUser && canGenerateCitationVersion(bitstream)) {
-                return true;
-            }
+//            boolean adminUser = AuthorizeManager.isAdmin(context);
+//
+//            if(!adminUser && canGenerateCitationVersion(bitstream)) {
+//                return true;
+//            }
+        	
+        	return canGenerateCitationVersion(bitstream);
         }
 
         // If previous logic didn't return true, then we're false.
