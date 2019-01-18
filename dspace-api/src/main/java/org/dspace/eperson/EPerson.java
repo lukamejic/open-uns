@@ -597,6 +597,40 @@ public class EPerson extends DSpaceObject
         return e;
     }
 
+    public static void createFromImport(String email, String firstName, String lastName) {
+        try {
+            Context context = new Context();
+
+            context.turnOffAuthorisationSystem();
+
+            EPerson eperson = null;
+            eperson = create(context);
+
+            eperson.setCanLogIn(true);
+            eperson.setSelfRegistered(false);
+
+            eperson.setEmail(email);
+            eperson.setFirstName(firstName);
+            eperson.setLastName(lastName);
+            eperson.setLanguage("en");
+            eperson.setPassword("testpass");
+            eperson.setRequireCertificate(false);
+
+            try {
+                eperson.update();
+                context.commit();
+                log.info("Created EPerson " + eperson.getID());
+            } catch (SQLException ex) {
+                context.abort();
+                log.error(ex.getMessage());
+            } catch (AuthorizeException ex) { /* XXX SNH */ }
+        } catch (SQLException e) {
+            e.getMessage();
+        } catch (AuthorizeException e) {
+            e.getMessage();
+        }
+    }
+
     /**
      * Delete an eperson
      * 
