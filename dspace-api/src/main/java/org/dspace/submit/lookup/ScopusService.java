@@ -112,7 +112,7 @@ public class ScopusService
 			GetMethod method = null;
 			if (!demo) { // open session
 				try {
-					method = new GetMethod(String.format("%s?httpAccept=application/xml&apiKey=%s&view=STANDARD&start=%s&count=%s&query=%s", 
+					method = new GetMethod(String.format("%s?httpAccept=application/xml&apiKey=%s&view=COMPLETE&start=%s&count=%s&query=%s",
 							ENDPOINT_SEARCH_SCOPUS, apiKey, start, itemPerPage, URLEncoder.encode(query, StandardCharsets.UTF_8.displayName())));
 
 					// Execute the method.
