@@ -140,6 +140,17 @@ it, please enter the types and the actual numbers or codes.</hint>
        </field>
 
        <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>data</dc-element>
+         <dc-qualifier>url</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Primary research data</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the URL.</hint>
+         <required></required>
+       </field>
+
+       <field>
 		 <dc-schema>dc</dc-schema>
          <dc-element>type</dc-element>
          <dc-qualifier></dc-qualifier>
