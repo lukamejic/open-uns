@@ -1715,5 +1715,8 @@
     
     <bean id="org.dspace.app.cris.statistics.YearsAdditionalStatisticsData" 
     	class="org.dspace.app.cris.statistics.YearsAdditionalStatisticsData">
-    </bean>           
+    </bean>
+
+	<bean name="researcherMergeService" class="org.dspace.app.cris.rpdeduplication.service.impl.ResearcherMergeServiceImpl">
+	</bean>
 </beans>

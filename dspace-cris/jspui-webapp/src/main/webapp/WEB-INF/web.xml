@@ -610,6 +610,12 @@
    		<servlet-name>duplicatechecker</servlet-name>
    		<servlet-class>org.dspace.app.webui.cris.servlet.DuplicateCheckerServlet</servlet-class>
   	</servlet>
+
+	<!-- Researcher deduplication servlet -->
+	<servlet>
+		<servlet-name>rp-duplicate</servlet-name>
+		<servlet-class>org.dspace.app.webui.cris.servlet.ResearcherDeduplicationServlet</servlet-class>
+	</servlet>
   	
   	  <!-- Doi plugin -->
     <servlet>
@@ -678,7 +684,12 @@
   	 	<servlet-name>duplicatechecker</servlet-name>
    		<url-pattern>/tools/duplicate</url-pattern>
   	</servlet-mapping>
-  
+
+	<servlet-mapping>
+		<servlet-name>rp-duplicate</servlet-name>
+		<url-pattern>/tools/rp-duplicate</url-pattern>
+	</servlet-mapping>
+
   	<servlet-mapping>
     	<servlet-name>references</servlet-name>
     	<url-pattern>/references</url-pattern>
