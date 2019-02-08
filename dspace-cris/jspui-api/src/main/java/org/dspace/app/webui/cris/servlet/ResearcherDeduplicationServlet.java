@@ -5,11 +5,8 @@ import org.dspace.app.cris.model.dto.ResearcherPageDTO;
 import org.dspace.app.cris.rpdeduplication.service.ResearcherMergeService;
 import org.dspace.app.cris.rpdeduplication.service.impl.ResearcherMergeServiceImpl;
 import org.dspace.app.webui.discovery.DiscoverUtility;
-import org.dspace.app.webui.search.SearchProcessorException;
 import org.dspace.app.webui.servlet.DSpaceServlet;
 import org.dspace.app.webui.util.JSPManager;
-import org.dspace.authorize.AuthorizeException;
-import org.dspace.authorize.AuthorizeManager;
 import org.dspace.content.DSpaceObject;
 import org.dspace.core.Context;
 import org.dspace.discovery.DiscoverQuery;
@@ -23,22 +20,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResearcherDeduplicationServlet extends DSpaceServlet {
 
     @Override
-    protected void doDSGet(Context context, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    protected void doDSGet(Context context, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String query = request.getParameter("query");
 
         if (query != null && !query.isEmpty()) {
-            try {
-                doSimpleSearch(context, request, response);
-            } catch (SearchProcessorException e) {
-                e.printStackTrace();
+            List<ResearcherPageDTO> resultList = doSimpleSearch(context, request);
+
+            if (resultList != null && !resultList.isEmpty()) {
+                request.setAttribute("resultList", resultList);
             }
         }
 
@@ -47,7 +43,7 @@ public class ResearcherDeduplicationServlet extends DSpaceServlet {
     }
 
     @Override
-    protected void doDSPost(Context context, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    protected void doDSPost(Context context, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String original = request.getParameter("original");
         String duplikati = request.getParameter("duplikati");
 
@@ -64,45 +60,24 @@ public class ResearcherDeduplicationServlet extends DSpaceServlet {
                 "/rp-deduplication/researcher-deduplication.jsp");
     }
 
-    private void doSimpleSearch(Context context, HttpServletRequest request, HttpServletResponse response)
-            throws SearchProcessorException, IOException, ServletException {
-        String configurationName = "researcherprofiles";
+    private List<ResearcherPageDTO> doSimpleSearch(Context context, HttpServletRequest request) {
+        List<ResearcherPageDTO> resultList = null;
 
-        DSpaceObject scope = null;
+        String configurationName = "researcherprofiles";
 
         DiscoveryConfiguration discoveryConfiguration = SearchUtils.getDiscoveryConfigurationByName(configurationName);
 
-        DiscoverQuery queryArgs = DiscoverUtility.getDiscoverQuery(context, request, scope, configurationName, true);
+        DiscoverQuery queryArgs = DiscoverUtility.getDiscoverQuery(context, request, null, configurationName, true);
 
         queryArgs.setSpellCheck(discoveryConfiguration.isSpellCheckEnabled());
 
         // Perform the search
         DiscoverResult qResults = null;
         try {
-            qResults = SearchUtils.getSearchService().search(context, scope, queryArgs);
-
-//            // Pass in some page qualities
-//            // total number of pages
-//            long pageTotal = 1 + ((qResults.getTotalSearchResults() - 1) / qResults.getMaxResults());
-//
-//            // current page being displayed
-//            long pageCurrent = 1 + (qResults.getStart() / qResults.getMaxResults());
-//
-//            // pageLast = min(pageCurrent+3,pageTotal)
-//            long pageLast = ((pageCurrent + 3) > pageTotal) ? pageTotal : (pageCurrent + 3);
-//
-//            // pageFirst = max(1,pageCurrent-3)
-//            long pageFirst = ((pageCurrent - 3) > 1) ? (pageCurrent - 3) : 1;
-//
-//            // Pass the results to the display JSP
-//            request.setAttribute("pagetotal", new Long(pageTotal));
-//            request.setAttribute("pagecurrent", new Long(pageCurrent));
-//            request.setAttribute("pagelast", new Long(pageLast));
-//            request.setAttribute("pagefirst", new Long(pageFirst));
-//            request.setAttribute("spellcheck", qResults.getSpellCheckQuery());
+            qResults = SearchUtils.getSearchService().search(context, null, queryArgs);
 
             if (qResults.getDspaceObjects() != null && !qResults.getDspaceObjects().isEmpty()) {
-                List<ResearcherPageDTO> resultList = new ArrayList<>();
+                resultList = new ArrayList<>();
 
                 for (DSpaceObject dso : qResults.getDspaceObjects()) {
                     ResearcherPage rp = (ResearcherPage) dso;
@@ -117,22 +92,11 @@ public class ResearcherDeduplicationServlet extends DSpaceServlet {
                 request.setAttribute("resultList", resultList);
             }
 
-//            request.setAttribute("queryresults", qResults);
-
-            try {
-                if (AuthorizeManager.isAdmin(context)) {
-                    // Set a variable to create admin buttons
-                    request.setAttribute("admin_button", new Boolean(true));
-                }
-            } catch (SQLException e) {
-                throw new SearchProcessorException(e.getMessage(), e);
-            }
         } catch (SearchServiceException e) {
             request.setAttribute("search.error", true);
             request.setAttribute("search.error.message", e.getMessage());
         }
 
-        JSPManager.showJSP(request, response,
-                "/rp-deduplication/researcher-deduplication.jsp");
+        return resultList;
     }
 }
