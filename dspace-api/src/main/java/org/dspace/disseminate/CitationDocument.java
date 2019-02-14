@@ -395,6 +395,22 @@ public class CitationDocument {
                     text = text.replace("\n"," ");
 
                     ypos = drawStringWordWrap(coverPage, contentStream, text, xpos, ypos, font, fontSize);
+                } else if (field.contains("author")) {
+                  Metadatum[] authors = item.getMetadataByMetadataString("dc.contributor.author");
+                  String authorsString = "";
+
+                  for (Metadatum m : authors) {
+                      String author = m.value.replace(",","");
+
+                      if (authorsString.length() > 0) {
+                          authorsString = authorsString + ", " + author;
+                      } else {
+                          authorsString += author;
+                      }
+                  }
+
+                    ypos = drawStringWordWrap(coverPage, contentStream, authorsString, xpos, ypos, font, fontSize);
+
                 } else if(StringUtils.isNotEmpty(item.getMetadata(field))) {
                     ypos = drawStringWordWrap(coverPage, contentStream, item.getMetadata(field), xpos, ypos, font, fontSize);
                 }
