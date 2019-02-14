@@ -16,6 +16,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import de.undercouch.citeproc.CSL;
+import de.undercouch.citeproc.csl.CSLItemData;
+import de.undercouch.citeproc.csl.CSLItemDataBuilder;
+import de.undercouch.citeproc.csl.CSLNameBuilder;
+import de.undercouch.citeproc.csl.CSLType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -35,6 +40,7 @@ import org.dspace.content.Metadatum;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
+import org.joda.time.LocalDate;
 
 /**
  * The Citation Document produces a dissemination package (DIP) that is different that the archival package (AIP).
@@ -383,6 +389,12 @@ public class CitationDocument {
                     contentStream.closeAndStroke();
                     ypos -=(ygap);
 
+                } else if (field.contains("citation")) {
+                    String text = createCitation(item);
+
+                    text = text.replace("\n"," ");
+
+                    ypos = drawStringWordWrap(coverPage, contentStream, text, xpos, ypos, font, fontSize);
                 } else if(StringUtils.isNotEmpty(item.getMetadata(field))) {
                     ypos = drawStringWordWrap(coverPage, contentStream, item.getMetadata(field), xpos, ypos, font, fontSize);
                 }
@@ -411,6 +423,55 @@ public class CitationDocument {
         if (!citationFirstPage) {
         	document.addPage(coverPage);
         }
+    }
+
+    private String createCitation(Item _item) {
+        String text = "";
+
+        String title = _item.getMetadata("dc.title");
+        String dateIssued = _item.getMetadata("dc.date.issued");
+        Metadatum[] _authors = _item.getMetadataByMetadataString("dc.contributor.author");
+        List<String> authors = new ArrayList<>();
+        String uri = _item.getMetadata("dc.identifier.uri");
+
+        for (Metadatum m: _authors) {
+            authors.add(m.value);
+        }
+
+        CSLItemDataBuilder itemBuilder = new CSLItemDataBuilder()
+                .type(CSLType.ARTICLE)
+                .title(title)
+                .URL(uri);
+
+        for (String author : authors) {
+            itemBuilder.author(author, "");
+        }
+
+        String[] date = dateIssued.split("-");
+
+        switch(date.length) {
+            case 3: itemBuilder.issued(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
+                    break;
+            case 2: itemBuilder.issued(Integer.valueOf(date[0]), Integer.valueOf(date[1]));
+                    break;
+            case 1: itemBuilder.issued(Integer.valueOf(date[0]));
+                    break;
+        }
+
+        LocalDate currentDate = new LocalDate();
+
+        itemBuilder.accessed(currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDayOfMonth());
+
+        CSLItemData item = itemBuilder.build();
+
+        try {
+            //text = CSL.makeAdhocBibliography("ieee", item).makeString();
+            text = CSL.makeAdhocBibliography("ieee","text", item).makeString();
+        } catch (IOException e) {
+            e.getMessage();
+        }
+
+        return text;
     }
 
     public int drawStringWordWrap(PDPage page, PDPageContentStream contentStream, String text,

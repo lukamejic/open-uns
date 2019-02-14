@@ -1721,7 +1721,24 @@
 					<artifactId>logback-core</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>		
+		</dependency>
+
+          <dependency>
+              <groupId>de.undercouch</groupId>
+              <artifactId>citeproc-java</artifactId>
+              <version>1.0.1</version>
+          </dependency>
+          <dependency>
+              <groupId>org.citationstyles</groupId>
+              <artifactId>styles</artifactId>
+              <version>1.0.1-SNAPSHOT</version>
+          </dependency>
+          <dependency>
+              <groupId>org.citationstyles</groupId>
+              <artifactId>locales</artifactId>
+              <version>1.0.1-SNAPSHOT</version>
+          </dependency>
+
       </dependencies>
    </dependencyManagement>
 
@@ -2062,7 +2079,17 @@
 	         <name>Sonatype Releases Repository</name>
 	         <url>http://oss.sonatype.org/content/repositories/releases/</url>
 	    </repository>
-   
+
+
+       <repository>
+           <id>oss-snapshots-repo</id>
+           <name>Sonatype OSS Maven Repository</name>
+           <url>https://oss.sonatype.org/content/groups/public</url>
+           <snapshots>
+               <enabled>true</enabled>
+               <updatePolicy>always</updatePolicy>
+           </snapshots>
+       </repository>
    </repositories>
    
    <pluginRepositories>
