@@ -17,10 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import de.undercouch.citeproc.CSL;
-import de.undercouch.citeproc.csl.CSLItemData;
-import de.undercouch.citeproc.csl.CSLItemDataBuilder;
-import de.undercouch.citeproc.csl.CSLNameBuilder;
-import de.undercouch.citeproc.csl.CSLType;
+import de.undercouch.citeproc.csl.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -449,6 +446,7 @@ public class CitationDocument {
         Metadatum[] _authors = _item.getMetadataByMetadataString("dc.contributor.author");
         List<String> authors = new ArrayList<>();
         String uri = _item.getMetadata("dc.identifier.uri");
+        String journal = _item.getMetadata("dc.relation.ispartof");
 
         for (Metadatum m: _authors) {
             authors.add(m.value);
@@ -459,9 +457,17 @@ public class CitationDocument {
                 .title(title)
                 .URL(uri);
 
-        for (String author : authors) {
-            itemBuilder.author(author, "");
+        if (journal != null && !journal.isEmpty()) {
+            itemBuilder.journalAbbreviation(journal);
         }
+
+        CSLName[] nameBuilder = new CSLName[authors.size()];
+
+        for (String author : authors) {
+            nameBuilder[authors.indexOf(author)] = new CSLNameBuilder().given("").family(author).build();
+        }
+
+        itemBuilder.author(nameBuilder);
 
         String[] date = dateIssued.split("-");
 
