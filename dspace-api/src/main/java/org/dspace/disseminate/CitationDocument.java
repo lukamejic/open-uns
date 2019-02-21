@@ -447,13 +447,14 @@ public class CitationDocument {
         List<String> authors = new ArrayList<>();
         String uri = _item.getMetadata("dc.identifier.uri");
         String journal = _item.getMetadata("dc.relation.ispartof");
+        String type = _item.getMetadata("dc.type");
 
         for (Metadatum m: _authors) {
             authors.add(m.value);
         }
 
         CSLItemDataBuilder itemBuilder = new CSLItemDataBuilder()
-                .type(CSLType.ARTICLE)
+                .type(CSLType.ARTICLE_JOURNAL)
                 .title(title)
                 .URL(uri);
 
