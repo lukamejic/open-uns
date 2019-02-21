@@ -620,6 +620,7 @@ public class EPerson extends DSpaceObject
                 eperson.update();
                 context.commit();
                 log.info("Created EPerson " + eperson.getID());
+                context.complete();
             } catch (SQLException ex) {
                 context.abort();
                 log.error(ex.getMessage());
