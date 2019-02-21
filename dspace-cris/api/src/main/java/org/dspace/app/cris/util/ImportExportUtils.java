@@ -2631,7 +2631,9 @@ public class ImportExportUtils {
 				lastName = nameParts[1];
 			}
 
-			EPerson.createFromImport(email, firstName, lastName);
+			if (!email.trim().isEmpty()) {
+				EPerson.createFromImport(email, firstName, lastName);
+			}
 		}
 	}
 }
