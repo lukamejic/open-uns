@@ -141,6 +141,17 @@ it, please enter the types and the actual numbers or codes.</hint>
 
        <field>
          <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier>issn</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>ISSN</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the ISSN.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
          <dc-element>data</dc-element>
          <dc-qualifier>url</dc-qualifier>
          <repeatable>true</repeatable>

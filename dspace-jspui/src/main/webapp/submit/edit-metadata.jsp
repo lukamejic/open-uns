@@ -1819,7 +1819,7 @@
     <%  } else { %>
     		<div class="col-md-4 pull-right btn-group">
                 <input class="btn btn-default col-md-6" type="submit" name="<%=AbstractProcessingStep.CANCEL_BUTTON%>" value="<fmt:message key="jsp.submit.edit-metadata.cancelsave"/>"/>
-				<input class="btn btn-primary col-md-6" type="submit" name="<%=AbstractProcessingStep.NEXT_BUTTON%>" value="<fmt:message key="jsp.submit.edit-metadata.next"/>"/>
+				<input class="btn btn-primary col-md-6" type="submit" name="<%=AbstractProcessingStep.NEXT_BUTTON%>" value="<fmt:message key="jsp.submit.edit-metadata.next"/>" onclick="return issnRequired()"/>
     <%  }  %>
     		</div><br/>
 </div>    		
@@ -1833,7 +1833,7 @@ j(document).ready(
 		function()
 		{			
 			<%@ include file="/deduplication/javascriptDeduplication.jsp" %>
-		}		
+		}
 );
 
 window.onload = function() {checkGrupa(); setVrednostReadOnly();};
@@ -2685,6 +2685,26 @@ window.onload = function() {checkGrupa(); setVrednostReadOnly();};
 		setVrRezultata();
 		
 	}
+
+    function issnRequired() {
+        if (document.getElementById('dc_typeId') !== null &&document.getElementById('dc_identifier_issn') !== null ) {
+            var type = document.getElementById('dc_typeId');
+            var issn = document.getElementById('dc_identifier_issn');
+
+            if (type.options[type.selectedIndex].value === 'Article' && issn.value === '') {
+                var error_div = document.createElement("div");
+                error_div.className = "alert alert-warning";
+                error_div.innerText = "When item type 'Article' is selected ISSN is requred.";
+
+                issn.parentNode.insertBefore(error_div, issn.nextSibling);
+
+                return false;
+            }
+
+        }
+
+        return true;
+    }
 
 </script>
 <%@ include file="/deduplication/template.jsp" %>
