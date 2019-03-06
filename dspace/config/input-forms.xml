@@ -297,6 +297,50 @@ it, please enter the types and the actual numbers or codes.</hint>
          <hint> Enter the name of the conference where the item has been presented, if any.</hint>
          <required></required>
        </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>volume</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Volume</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the volume.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>issue</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Issue</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the issue.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>firstpage</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>First page</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the first page.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>lastpage</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Last page</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the last page.</hint>
+         <required></required>
+       </field>
        
        <field>
 		 <dc-schema>dc</dc-schema>
