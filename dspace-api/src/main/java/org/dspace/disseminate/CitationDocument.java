@@ -448,6 +448,10 @@ public class CitationDocument {
         String uri = _item.getMetadata("dc.identifier.uri");
         String journal = _item.getMetadata("dc.relation.ispartof");
         String type = _item.getMetadata("dc.type");
+        String volume = _item.getMetadata("dc.relation.volume");
+        String issue = _item.getMetadata("dc.relation.issue");
+        String firstPage = _item.getMetadata("dc.relation.firstpage");
+        String lastPage = _item.getMetadata("dc.relation.lastpage");
 
         for (Metadatum m: _authors) {
             authors.add(m.value);
@@ -460,6 +464,18 @@ public class CitationDocument {
 
         if (journal != null && !journal.isEmpty()) {
             itemBuilder.journalAbbreviation(journal);
+        }
+
+        if (volume != null && !volume.isEmpty()) {
+            itemBuilder.volume(volume);
+        }
+
+        if (issue != null && !issue.isEmpty()) {
+            itemBuilder.issue(issue);
+        }
+
+        if (firstPage != null && !firstPage.isEmpty() && lastPage != null && !lastPage.isEmpty()) {
+            itemBuilder.page(firstPage + "-" + lastPage);
         }
 
         CSLName[] nameBuilder = new CSLName[authors.size()];
