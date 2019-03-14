@@ -452,6 +452,7 @@ public class CitationDocument {
         String issue = _item.getMetadata("dc.relation.issue");
         String firstPage = _item.getMetadata("dc.relation.firstpage");
         String lastPage = _item.getMetadata("dc.relation.lastpage");
+        String doi = _item.getMetadata("dc.identifier.doi");
 
         for (Metadatum m: _authors) {
             authors.add(m.value);
@@ -476,6 +477,10 @@ public class CitationDocument {
 
         if (firstPage != null && !firstPage.isEmpty() && lastPage != null && !lastPage.isEmpty()) {
             itemBuilder.page(firstPage + "-" + lastPage);
+        }
+
+        if (doi != null && !doi.isEmpty()) {
+            itemBuilder.DOI(doi);
         }
 
         CSLName[] nameBuilder = new CSLName[authors.size()];
@@ -505,7 +510,7 @@ public class CitationDocument {
 
         try {
             //text = CSL.makeAdhocBibliography("ieee", item).makeString();
-            text = CSL.makeAdhocBibliography("ieee","text", item).makeString();
+            text = CSL.makeAdhocBibliography("asa-cssa-sssa","text", item).makeString();
         } catch (IOException e) {
             e.getMessage();
         }
