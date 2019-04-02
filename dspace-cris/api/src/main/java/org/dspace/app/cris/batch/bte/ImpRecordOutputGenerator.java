@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.LinkedHashSet;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -104,7 +105,7 @@ public class ImpRecordOutputGenerator implements OutputGenerator {
                 item.setSourceRef(providerName);
             }
             
-            Set<ImpRecordMetadata> val = new HashSet<ImpRecordMetadata>();
+            Set<ImpRecordMetadata> val = new LinkedHashSet<>();
             if (values != null && values.size() > 0)
             {
                 for (Value value : values)
