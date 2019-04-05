@@ -17,9 +17,9 @@ if (submissions != null && submissions.count() > 0)
           		<fmt:message key="jsp.collection-home.recentsub"/>
           </h3>
        </div>   
-	   <div class="panel-body">
+	   <div class="panel-body"> <!-- KO JOS KORISTI FEEDS? dole false -->
 	<%
-    if(feedEnabled)
+    if(feedEnabled && false)  
     {
     	%>
     	<div class="row">
@@ -45,7 +45,7 @@ if (submissions != null && submissions.count() > 0)
 	<%
 	    }
 %>
-	<div class="list-groups">
+	<div class="list-group">
 	<%	
 		for (IGlobalSearchResult obj : submissions.getRecentSubmissions()) {
 		%>

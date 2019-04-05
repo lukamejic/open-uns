@@ -37,12 +37,12 @@
 <%@ page import="org.dspace.content.Metadatum" %>
 <%@ page import="org.dspace.content.Item" %>
 <%@ page import="org.dspace.discovery.configuration.DiscoveryViewConfiguration" %>
-<%@page import="org.dspace.app.webui.components.MostViewedBean"%>
-<%@page import="org.dspace.app.webui.components.MostViewedItem"%>
-<%@page import="org.dspace.discovery.SearchUtils"%>
-<%@page import="org.dspace.discovery.IGlobalSearchResult"%>
-<%@page import="org.dspace.core.Utils"%>
-<%@page import="org.dspace.content.Bitstream"%>
+<%@ page import="org.dspace.app.webui.components.MostViewedBean"%>
+<%@ page import="org.dspace.app.webui.components.MostViewedItem"%>
+<%@ page import="org.dspace.discovery.SearchUtils"%>
+<%@ page import="org.dspace.discovery.IGlobalSearchResult"%>
+<%@ page import="org.dspace.core.Utils"%>
+<%@ page import="org.dspace.content.Bitstream"%>
 <%@ page import="org.dspace.app.webui.util.LocaleUIHelper" %>
 
 <%
@@ -71,46 +71,41 @@
 
 <dspace:layout locbar="nolink" titlekey="jsp.home.title" feedData="<%= feedData %>">
 <div class="row">
-	<div class="col-md-8 sm-12 pull-<%= isRtl? "right":"left" %>">
-	<div class="div-logo-poruka">
-		<%--<div class="div-logo">
-			<img src="image/uns-logo-boja.png">
-		</div>--%>
+	<div class="col-md-4 sm-12">
+		<div class="div-logo">
+			<img src="image/openuns.png">
+		</div>
 		<div class="div-poruka">
 			<%= topNews %>
 		</div>
+		<div>
+			<%
+				int discovery_panel_cols = 8;
+				int discovery_facet_cols = 4;
+				String processorSidebar = (String) request.getAttribute("processorSidebar");
+				String processorGlobal = (String) request.getAttribute("processorGlobal");
+				
+			if(processorGlobal!=null && processorGlobal.equals("global")) {
+				%>
+			<%@ include file="discovery/static-globalsearch-component-facet.jsp" %>
+			<% } %>        
+		</div>
 	</div>
-	<%
-    	int discovery_panel_cols = 8;
-    	int discovery_facet_cols = 4;
-    	String processorSidebar = (String) request.getAttribute("processorSidebar");
-    	String processorGlobal = (String) request.getAttribute("processorGlobal");
-          
-    if(processorGlobal!=null && processorGlobal.equals("global")) {
-		%>
-	<%@ include file="discovery/static-globalsearch-component-facet.jsp" %>
-	<% } %>        
-		  </div>
-	<div class="col-md-4 sm-12 pull-<%= isRtl? "left":"right" %>">
-		<%@ include file="components/most-viewed.jsp" %>
-		<%@ include file="components/most-downloaded.jsp" %>
-		<%@ include file="components/most-cited.jsp" %>		
+	<div class="col-md-4 sm-12">
 		<%@ include file="components/recent-submissions.jsp" %>
 	</div>
-</div> <!-- BLOKOVE SAM PREBACIO GORE DESNO NA HARMONIKU 
-<div class="row">
-	<div class="col-md-4 <%= isRtl ? "pull-right":""%>">
-		<%@ include file="components/most-viewed.jsp" %>	
+	<div class="col-md-4 sm-12">
+		<%@ include file="components/most-viewed.jsp" %>
 	</div>
-	<div class="col-md-4 <%= isRtl ? "pull-right":""%>">
+</div> 
+<div class="row">
+	<div class="col-md-12 <%= isRtl ? "pull-right":""%>">
+		<%@ include file="components/most-cited.jsp" %>
+	</div>
+	<div class="col-md-12 <%= isRtl ? "pull-right":""%>">
 		<%@ include file="components/most-downloaded.jsp" %>
 	</div>
-	<div class="col-md-4 <%= isRtl ? "pull-left":""%>">
-	<%= sideNews %>
-	<%-- <%@ include file="discovery/static-tagcloud-facet.jsp" %> --%>
-	<%-- <%@ include file="components/most-cited.jsp" %> --%>
-	<!-- </div>
-</div> -->
+</div>
 <%
 if (communities != null && communities.length != 0)
 {

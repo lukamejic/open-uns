@@ -99,18 +99,18 @@
 		
 <hr/>
 <div class="row">
-<form id="searchglobalprocessor" name="searchglobalprocessor" class="col-md-10 col-md-offset-1" action="<%= request.getContextPath() %>/simple-search" method="get">
-<div class="input-group">
-    <input type="text" class="form-control" name="query" placeholder="<fmt:message key="jsp.controlledvocabulary.search.term"/>">
+<form id="searchglobalprocessor" name="searchglobalprocessor" class="col-md-12" action="<%= request.getContextPath() %>/simple-search" method="get">
+<div class="input-group" style="padding: 10px 0px 10px 0px;">
+    <input type="text" class="form-control" name="query"  id="query" placeholder="<fmt:message key="jsp.controlledvocabulary.search.term"/>">
     <span class="input-group-btn">
-        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+        <button class="btn btn-primary btn-src" type="submit"><i class="fa fa-search"></i></button>
     </span>    
-    <div class="input-group-btn search-panel">
+	<!-- SVAKAKO SU IZLISTANE KATEGORIJE PA OVO NIJE POTEBNO
+		<div class="input-group-btn search-panel">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
         	<span id="search_concept">All</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b><span class="caret"></b>
         </button>
         <ul class="dropdown-menu menu-global-processor" role="menu">
-        
         <%
 		if(facetsGlobalConf!=null) {
 			for (DiscoverySearchFilterFacet facetConf : facetsGlobalConf)
@@ -137,13 +137,12 @@
         
         
         </ul>
-    </div>
+    </div>-->
     <input type="hidden" name="location" value="global" id="search_param">         
 </div>
 </form>
 </div>
 <br/>
-
 
 <%
 	long totGroupLeft = 0;
@@ -173,11 +172,12 @@
 			}
 		}
 %>
+
 <div class="row">
 
 	<!-- CENTRALNI BLOK ISTRAZIVACI -->
 	
-	<div class="col-md-4 text-center">
+	<div class="col-md-12 text-center">
 			<div id="group-left-info-popover-content">
 				<ul class="list-group">
 					<%
@@ -235,13 +235,13 @@
 					}
 					%>
 					</ul>
-			</div>	
+			</div>
 	</div>
 	
 	<!-- CENTRALNI BLOK PROJEKTI -->
 	
-	<div class="col-md-4 text-center">
-		<div id="group-center-info-popover-content">
+	<div class="col-md-12 text-center">
+		<div id="group-left-info-popover-content">
 			<ul class="list-group">
 				<%
 				if(facetsGlobalConf!=null) {
@@ -307,8 +307,8 @@
 	
 	<!-- CENTRALNI BLOK OSTALO -->
 	
-	<div class="col-md-4 text-center">
-		<div id="group-right-info-popover-content">
+	<div class="col-md-12 text-center">
+		<div id="group-left-info-popover-content">
 			<ul class="list-group">
 				<%
 				if(facetsGlobalConf!=null) {
@@ -324,7 +324,7 @@
 									String fkey =  "jsp.home.group-right-info."+fvalue.getAuthorityKey();
 							%>
 			
-							<li class="list-group-item"> <span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath() %>/simple-search?query=&location=<%=fvalue.getAuthorityKey()%>"><fmt:message key="<%= fkey %>"/></a></li>
+							<li class="list-group-item"><span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath() %>/simple-search?query=&location=<%=fvalue.getAuthorityKey()%>"><fmt:message key="<%= fkey %>"/></a></li>
 					<%
 									}
 								}
@@ -370,6 +370,6 @@
 	
 </div>
 
+<br>
 
-<hr/>
 		

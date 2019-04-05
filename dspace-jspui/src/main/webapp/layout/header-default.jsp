@@ -204,7 +204,7 @@
     if (!navbar.equals("off"))
     {
 %>
-            <div class="container-fluid col-sm-10 center">
+            <div class="container-fluid col-sm-12 center meniSir">
                 <dspace:include page="<%= navbar %>" />
             </div>
 <%
@@ -269,8 +269,8 @@ window.cookieconsent.initialise({
 %>
 <div class="container">
 	<div class="row">
-		<div class="col-sm-11 center">
-                <dspace:include page="/layout/location-bar.jsp" />
+		<div class="col-sm-12 center">
+            <dspace:include page="/layout/location-bar.jsp" />
         </div>        
     </div>
 </div>                
@@ -278,12 +278,11 @@ window.cookieconsent.initialise({
     }
 %>
 
-
-
-        <%-- Page contents --%>
-<div class="container fullheight">	<div class="row">
-		<div class="col-sm-11 center">
-<% if (request.getAttribute("dspace.layout.sidebar") != null) { %>
-	<div class="row">
-		<div class="col-md-9 <%= isRtl ? "pull-right":"" %>">
-<% } %>		
+<%-- Page contents --%>
+<div class="container fullheight">
+    <div class="row">
+		<div class="col-md-12 col-sm-12 center">
+        <% if (request.getAttribute("dspace.layout.sidebar") != null) { %>
+	        <div class="row">
+		        <div class="col-md-12 <%= isRtl ? "pull-right":"" %>">
+        <% } %>		

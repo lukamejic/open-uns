@@ -289,18 +289,18 @@ if(StringUtils.contains(searchScope, hdlPrefix) ){
     <%-- <h1>Search Results</h1> --%>
 
 
-<h2><fmt:message key="${searchinKey}"/> <%= dsoName %></h2>
+<!--<h2><fmt:message key="${searchinKey}"/> <%= dsoName %></h2>-->
 
-<div class="discovery-search-form">
+<div class="discovery-search-form"  style="padding-top: 20px;">
     <%-- Controls for a repeat search --%>
 	<div class="discovery-query">
      <form id="update-form" action="simple-search" method="get">
-     							<input name="location" type="hidden" value="<%=searchScope %>" />
-                                <label for="query"><fmt:message key="jsp.search.results.searchfor"/></label>
-                                <input type="text" size="50" id="query" name="query" value="<%= (query==null ? "" : Utils.addEntities(query)) %>"/>
-                                <input type="submit" id="main-query-submit" class="btn btn-primary" value="<fmt:message key="jsp.general.go"/>" />
-                                <a class="btn btn-default" href="<%= request.getContextPath()+"/global-search" %>"><fmt:message key="jsp.search.general.new-search" /></a>
-                               
+				<input name="location" type="hidden" value="<%=searchScope %>" />
+				<!--<label for="query"><fmt:message key="jsp.search.results.searchfor"/></label>-->
+				<input class="form-control" type="text" size="50" id="query" name="query" id="query" value="<%= (query==null ? "" : Utils.addEntities(query)) %>"/>
+				<button id="main-query-submit" class="btn btn-primary btn-src" type="submit" style="border-radius: 4px;"><i class="fa fa-search"></i></button>
+				<a href="<%= request.getContextPath()+"/global-search" %>" class="btn btn-primary btn-src" style="border-radius: 4px;"><i class="fa fa-trash-o"></i></a>
+				
 <% if (StringUtils.isNotBlank(spellCheckQuery)) {%>
 	<p class="lead"><fmt:message key="jsp.search.didyoumean"><fmt:param><a id="spellCheckQuery" data-spell="<%= Utils.addEntities(spellCheckQuery) %>" href="#"><%= spellCheckQuery %></a></fmt:param></fmt:message></p>
 <% } %>                  
@@ -494,14 +494,15 @@ else if( qResults != null)
 
 
 %>
-<hr/>
-<div class="discovery-result-pagination">
+<!--<hr/>-->
+<div class="discovery-result-pagination" style="padding-top: 20px;">
 <%
 	long lastHint = qResults.getStart()+qResults.getMaxResults() <= qResults.getTotalSearchResults()?
 	        qResults.getStart()+qResults.getMaxResults():qResults.getTotalSearchResults();
 %>
     <%-- <p align="center">Results <//%=qResults.getStart()+1%>-<//%=qResults.getStart()+qResults.getHitHandles().size()%> of --%>
-	<div class="alert alert-info"><fmt:message key="jsp.search.results.results">
+	<div class="alert alert-info row"><div class="col-md-6">
+		<fmt:message key="jsp.search.results.results">
         <fmt:param><%=qResults.getStart()+1%></fmt:param>
         <fmt:param><%=lastHint%></fmt:param>
         <fmt:param><%=qResults.getTotalSearchResults()%></fmt:param>
@@ -564,69 +565,66 @@ else if( qResults != null)
         %><input type="submit" class="btn btn-default" name="submit_export_metadata" value="<fmt:message key="jsp.general.metadataexport.button"/>" /><%
     }
 %>
-</form>
-    </div>
-    <div>
-    <p class="pagination">&nbsp;</p>
-    <ul class="pagination pull-right">
-	<%
-	if (pageFirst != pageCurrent)
-	{
-	    %><li><a href="<%= prevURL %>"><fmt:message key="jsp.search.general.previous" /></a></li><%
-	}
-	else
-	{
-	    %><li class="disabled"><span><fmt:message key="jsp.search.general.previous" /></span></li><%
-	}
-	
-	if (pageFirst != 1)
-	{
-	    %><li><a href="<%= firstURL %>">1</a></li><li class="disabled"><span>...</span></li><%
-	}
-	
-	for( long q = pageFirst; q <= pageLast; q++ )
-	{
-	    String myLink = "<li><a href=\""
-	                    + baseURL;
-	
-	
-	    if( q == pageCurrent )
-	    {
-	        myLink = "<li class=\"active\"><span>" + q + "</span></li>";
-	    }
-	    else
-	    {
-	        myLink = myLink
-	            + (q-1) * qResults.getMaxResults()
-	            + "\">"
-	            + q
-	            + "</a></li>";
-	    }
-	%>
-	
-	<%= myLink %>
+</form></div>
+<div class="col-md-6" style="text-align:right;">
+	<ul class="pagination">
+		<%
+		if (pageFirst != pageCurrent)
+		{
+			%><li><a href="<%= prevURL %>"><fmt:message key="jsp.search.general.previous" /></a></li><%
+		}
+		else
+		{
+			%><li class="disabled"><span><fmt:message key="jsp.search.general.previous" /></span></li><%
+		}
+		
+		if (pageFirst != 1)
+		{
+			%><li><a href="<%= firstURL %>">1</a></li><li class="disabled"><span>...</span></li><%
+		}
+		
+		for( long q = pageFirst; q <= pageLast; q++ )
+		{
+			String myLink = "<li><a href=\""
+							+ baseURL;
+		
+		
+			if( q == pageCurrent )
+			{
+				myLink = "<li class=\"active\"><span>" + q + "</span></li>";
+			}
+			else
+			{
+				myLink = myLink
+					+ (q-1) * qResults.getMaxResults()
+					+ "\">"
+					+ q
+					+ "</a></li>";
+			}
+		%>
+		
+		<%= myLink %>
 
-	<%
-	}
-	
-	if (pageTotal > pageLast)
-	{
-	    %><li class="disabled"><span>...</span></li><li><a href="<%= lastURL %>"><%= pageTotal %></a></li><%
-	}
-	if (pageTotal > pageCurrent)
-	{
-	    %><li><a href="<%= nextURL %>"><fmt:message key="jsp.search.general.next" /></a></li><%
-	}
-	else
-	{
-	    %><li class="disabled"><span><fmt:message key="jsp.search.general.next" /></span></li><%
-	}
-	%>
-	</ul>
+		<%
+		}
+		
+		if (pageTotal > pageLast)
+		{
+			%><li class="disabled"><span>...</span></li><li><a href="<%= lastURL %>"><%= pageTotal %></a></li><%
+		}
+		if (pageTotal > pageCurrent)
+		{
+			%><li><a href="<%= nextURL %>"><fmt:message key="jsp.search.general.next" /></a></li><%
+		}
+		else
+		{
+			%><li class="disabled"><span><fmt:message key="jsp.search.general.next" /></span></li><%
+		}
+		%>
+		</ul></div>
 	</div>
-<!-- give a content to the div -->
-</div>
-<div class="discovery-result-results">
+	<!-- give a content to the div -->
+<div class="discovery-result-results col-lg-9">
 <%
        Set<Integer> otherTypes = mapOthers.keySet();
        if (otherTypes != null && otherTypes.size() > 0)
@@ -636,7 +634,7 @@ else if( qResults != null)
                %>
                <c:set var="typeName"><%= ((ACrisObject) mapOthers.get(otype)[0].getBrowsableDSpaceObject()).getPublicPath() %></c:set>
                <div class="panel panel-info">
-               <div class="panel-heading"><h6><fmt:message key="jsp.search.results.cris.${typeName}"/></h6></div>
+               <!--<div class="panel-heading"><fmt:message key="jsp.search.results.cris.${typeName}"/></div>-->
                <dspace:browselist config="cris${typeName}" items="<%= mapOthers.get(otype) %>"  order="<%= order %>" sortBy="<%= sortIdx %>" />
                </div>
            <%
@@ -645,21 +643,21 @@ else if( qResults != null)
 %>
 <% if (communities.length > 0 ) { %>
     <div class="panel panel-info">
-    <div class="panel-heading"><fmt:message key="jsp.search.results.comhits"/></div>
+    <!--<div class="panel-heading"><fmt:message key="jsp.search.results.comhits"/></div>-->
     <dspace:communitylist  communities="<%= communities %>" />
     </div>
 <% } %>
 
 <% if (collections.length > 0 ) { %>
     <div class="panel panel-info">
-    <div class="panel-heading"><fmt:message key="jsp.search.results.colhits"/></div>
+    <!--<div class="panel-heading"><fmt:message key="jsp.search.results.colhits"/></div>-->
     <dspace:collectionlist collections="<%= collections %>" />
     </div>
 <% } %>
 
 <% if (items.length > 0) { %>
     <div class="panel panel-info">
-    <div class="panel-heading"><h6><fmt:message key="jsp.search.results.itemhits"/></h6></div>
+    <!--<div class="panel-heading"><fmt:message key="jsp.search.results.itemhits"/></div>-->
     
     <%  
 	if (exportBiblioEnabled && ( exportBiblioAll || user!=null ) ) {
@@ -687,7 +685,7 @@ else if( qResults != null)
 			<input type="checkbox" id="email" name="email" value="true"/><fmt:message key="exportcitation.option.email" />
 		</label>
 			<input id="export-submit-button" class="btn btn-default" type="submit" name="submit_export" value="<fmt:message key="exportcitation.option.submitexport" />" disabled/>
-		</div>	
+		</div>
 		<dspace:itemlist items="<%= items %>" authorLimit="<%= etAl %>" radioButton="false" inputName="item_id" order="<%= order %>" sortOption="<%= sortOption %>"/>
 		</form>
 <% } else { %>
@@ -773,7 +771,7 @@ else
 <dspace:sidebar>
 
 
-<h3 class="facets"><fmt:message key="jsp.search.facet.refine" /></h3>
+<!--<h3 class="facets"><fmt:message key="jsp.search.facet.refine" /></h3>-->
 
 <%
 		DiscoverySearchFilterFacet facetGlobalConf = (DiscoverySearchFilterFacet) request.getAttribute("facetGlobalConfig");
@@ -786,7 +784,7 @@ else
 		    %>
 		    <div id="globalFacet" class="facetsBox">
 		    <div id="facet_<%= fkeyGlobal %>" class="panel panel-primary">
-		    <div class="panel-heading"><h4><fmt:message key="<%= fkeyGlobal %>" /></h4></div>
+		    <div class="panel-heading"><fmt:message key="<%= fkeyGlobal %>" /></div>
 		    <ul class="list-group"><%
 		    boolean activeGlobalFacet = false;
 		    for (FacetResult fvalue : facetGlobal)
@@ -832,7 +830,7 @@ else
 	    
 	    String fkey = "jsp.search.facet.refine."+f;
 	    %><div id="facet_<%= f %>" class="panel panel-success">
-	    <div class="panel-heading"><h6><fmt:message key="<%= fkey %>" /></h6></div>
+	    <div class="panel-heading"><fmt:message key="<%= fkey %>" /></div>
 	    <ul class="list-group"><%
 	    int idx = 1;
 	    int currFp = UIUtil.getIntParameter(request, f+"_page");

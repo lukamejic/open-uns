@@ -179,16 +179,17 @@
 
     <%-- <h1>Search Results</h1> --%>
 
-<h2><fmt:message key="jsp.search.title"/></h2>
+<!--<h2><fmt:message key="jsp.search.title"/></h2>-->
 
-<div class="discovery-search-formt">
+<div class="discovery-search-form" style="padding-top: 20px;">
     <%-- Controls for a repeat search --%>
 	<div class="discovery-query">
      <form id="update-form" action="global-search" method="get">
 	 
-                                <label for="query"><fmt:message key="jsp.search.results.searchfor"/></label>
-                                <input type="text" size="50" id="query" name="query" value="<%= (query==null ? "" : Utils.addEntities(query)) %>"/>
-                                <input type="submit" id="main-query-submit" class="btn btn-primary" value="<fmt:message key="jsp.general.go"/>" />
+			<!--<label for="query"><fmt:message key="jsp.search.results.searchfor"/></label>-->
+			<input class="form-control" type="text" size="50" id="query" name="query" id="query" value="<%= (query==null ? "" : Utils.addEntities(query)) %>"/>
+			<button id="main-query-submit" class="btn btn-primary btn-src" type="submit" style="border-radius: 4px;"><i class="fa fa-search"></i></button>
+			
 <% if (StringUtils.isNotBlank(spellCheckQuery)) {%>
 	<p class="lead"><fmt:message key="jsp.search.didyoumean"><fmt:param><a id="spellCheckQuery" data-spell="<%= Utils.addEntities(spellCheckQuery) %>" href="#"><%= spellCheckQuery %></a></fmt:param></fmt:message></p>
 <% } %>                  
@@ -239,7 +240,8 @@
 		%>
 		</div>
 <% } %>
-<a class="btn btn-default" href="<%= request.getContextPath()+"/global-search" %>"><fmt:message key="jsp.search.general.new-search" /></a>	
+<a href="<%= request.getContextPath()+"/global-search" %>" class="btn btn-primary btn-src" style="border-radius: 4px;"><i class="fa fa-trash-o"></i></a>
+<!--<a class="btn btn-default" href="<%= request.getContextPath()+"/global-search" %>"><fmt:message key="jsp.search.general.new-search" /></a>	-->
 		</form>
 		</div>
 <% if (availableFilters.size() > 0) { %>
@@ -312,7 +314,7 @@ else if( qResults != null && collapsedResults != null)
 	
 %>
 
-<div class="discovery-result-results">
+<div class="discovery-result-results col-md-9 col-sm-12">
 		<%
 			Set<String> otherTypes = collapsedResults.keySet();
 					if (otherTypes != null && otherTypes.size() > 0) {
@@ -396,23 +398,23 @@ for (DiscoverySearchFilterFacet facetConf : facetsConf)
 }
 
 	    if (facetGlobal != null && facetGlobal.size() > 0) { %>
-	    <h3 class="facets"><fmt:message key="jsp.search.facet.refine" /></h3>
+	    <!--<h3 class="facets"><fmt:message key="jsp.search.facet.refine" /></h3>-->
 
-		<div id="globalFacet" class="facetsBox">
+		<div id="globalFacet" class="facestsBox">
 	    <div id="facet_<%= fkeyGlobal %>" class="panel panel-primary">
 	    <div class="panel-heading"><fmt:message key="<%= fkeyGlobal %>" /></div>
-	    <ul class="list-group"><%
-	    for (FacetResult fvalue : facetGlobal)
-	    { 
-	        %><li class="list-group-item"><span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath()
-                + "/simple-search?query="
-                + URLEncoder.encode(query,"UTF-8")
-                + httpFilters                
-                + "&amp;location="+URLEncoder.encode(fvalue.getAuthorityKey(),"UTF-8") %>"
-                title="<fmt:message key="jsp.search.facet.narrow"><fmt:param><%=fvalue.getDisplayedValue() %></fmt:param></fmt:message>">
-                <%= StringUtils.abbreviate(fvalue.getDisplayedValue(),36) %></a></li><%
-	    }
-	    %></ul></div>
+			<ul class="list-group"><%
+			for (FacetResult fvalue : facetGlobal)
+			{ 
+				%><li class="list-group-item"><span class="badge"><%= fvalue.getCount() %></span> <a href="<%= request.getContextPath()
+					+ "/simple-search?query="
+					+ URLEncoder.encode(query,"UTF-8")
+					+ httpFilters                
+					+ "&amp;location="+URLEncoder.encode(fvalue.getAuthorityKey(),"UTF-8") %>"
+					title="<fmt:message key="jsp.search.facet.narrow"><fmt:param><%=fvalue.getDisplayedValue() %></fmt:param></fmt:message>">
+					<%= StringUtils.abbreviate(fvalue.getDisplayedValue(),36) %></a></li><%
+			}
+			%></ul></div>
 	    </div>			
 <% }
 	if (brefine) {

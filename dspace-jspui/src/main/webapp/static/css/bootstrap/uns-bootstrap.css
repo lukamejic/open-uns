@@ -48,6 +48,7 @@ html {
 
 body {
   margin: 0;
+  overflow-y: scroll;
 }
 
 a:focus {
@@ -772,8 +773,8 @@ pre code {
 }
 
 .row {
-  margin-right: -15px;
-  margin-left: -15px;
+  /*margin-right: -15px;
+  margin-left: -15px;*/
 }
 
 .row:before,
@@ -846,8 +847,8 @@ pre code {
 .col-lg-12 {
   position: relative;
   min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 8px;
+  padding-left: 8px;
 }
 
 .col-xs-1,
@@ -914,6 +915,9 @@ pre code {
 
 @media (min-width: 768px) {
   .container {
+    max-width: 750px;
+  }
+  .meniSir {
     max-width: 750px;
   }
   .col-sm-1,
@@ -1068,6 +1072,9 @@ pre code {
 
 @media (min-width: 992px) {
   .container {
+    max-width: 970px;
+  }
+  .meniSir {
     max-width: 970px;
   }
   .col-md-1,
@@ -1231,6 +1238,9 @@ pre code {
 
 @media (min-width: 1200px) {
   .container {
+    max-width: 1170px;
+  }
+  .meniSir {
     max-width: 1170px;
   }
   .col-lg-1,
@@ -1399,6 +1409,13 @@ table {
 
 th {
   text-align: left;
+  background: #d9edf7;
+}
+th:first-child {
+  border-radius: 5px 0px 0px 5px;
+}
+th:last-child {
+  border-radius: 0px 5px 5px 0px;
 }
 
 .table {
@@ -1408,19 +1425,19 @@ th {
 
 .table thead > tr > th,
 .table tbody > tr > th,
-.table tfoot > tr > th,
+.table tfoot > tr > th {
+  padding: 12px;
+  line-height: 1.428571429;
+  vertical-align: top;
+  border-width: 0px;
+}
 .table thead > tr > td,
 .table tbody > tr > td,
 .table tfoot > tr > td {
   padding: 8px;
   line-height: 1.428571429;
   vertical-align: top;
-  border-top: 1px solid #dddddd;
-}
-
-.table thead > tr > th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #dddddd;
+  border-bottom: 1px solid #eeeeee;
 }
 
 .table caption + thead tr:first-child th,
@@ -4634,8 +4651,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .pagination {
   display: inline-block;
-  padding-left: 0;
-  margin: 20px 0;
+  padding-left: 0px;
+  margin-top: 0px;
   border-radius: 4px;
 }
 
@@ -4651,8 +4668,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-left: -1px;
   line-height: 1.428571429;
   text-decoration: none;
-  background-color: #ffffff;
-  border: 1px solid #dddddd;
+  background-color: #daecf5;
+  border: 1px solid #95c2d8;
 }
 
 .pagination > li:first-child > a,
@@ -4694,8 +4711,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pagination > .disabled > a:focus {
   color: #999999;
   cursor: not-allowed;
-  background-color: #ffffff;
-  border-color: #dddddd;
+  background-color: #cde5f1;
+  border-color: #95c2d8;
 }
 
 .pagination-lg > li > a,
@@ -4879,8 +4896,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .badge {
   display: inline-block;
-  width: 50px;
-  padding: 13px;
+  width: 55px;
+  padding: 13px 0px 13px 0px;
   margin-top: -11px;
   margin-right: -15px;
   font-size: 1.1em;
@@ -5243,14 +5260,14 @@ a.thumbnail:focus {
 
 .list-group {
   padding-left: 0;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
 .list-group-item {
   position: relative;
   display: block;
-  padding: 10px 15px;
-  margin-bottom: 5px;
+  padding: 10px 15px 10px 15px;
+  margin: 5px 0px 0px 0px;
   background-color: #ffffff;
   border: 1px solid #dddddd;
   text-align: left;
@@ -5297,6 +5314,7 @@ a.list-group-item:focus {
   color: #ffffff;
   background-color: #428bca;
   border-color: #428bca;
+  border-radius: 5px;
 }
 
 .list-group-item.active .list-group-item-heading,
@@ -5326,14 +5344,12 @@ a.list-group-item:focus {
 .panel {
   margin-top: 5px;
   background-color: #ffffff;
-  border: 1px solid transparent;
+  border: 0px solid transparent;
   border-radius: 4px;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .panel-body {
-  padding: 15px;
+  padding: 0px;
 }
 
 .panel-body:before,
@@ -5361,20 +5377,20 @@ a.list-group-item:focus {
 }
 
 .panel > .list-group .list-group-item {
-  border-width: 1px 0;
+  border-width: 1px;
 }
 
 .panel > .list-group .list-group-item:first-child {
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
+  /*border-top-right-radius: 0;
+  border-top-left-radius: 0;*/
 }
 
 .panel > .list-group .list-group-item:last-child {
-  border-bottom: 0;
+  border-width: 1px;
 }
 
 .panel-heading + .list-group .list-group-item:first-child {
-  border-top-width: 0;
+  border-width: 1px;
 }
 
 .panel > .table {
@@ -5386,10 +5402,9 @@ a.list-group-item:focus {
 }
 
 .panel-heading {
-  padding: 10px 15px;
+  padding: 12px 15px;
   border-bottom: 1px solid transparent;
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
+  border-radius: 5px;
 }
 
 .panel-title {
@@ -5532,7 +5547,7 @@ a.list-group-item:focus {
 
 .panel-info > .panel-heading {
   color: #3a87ad;
-  background-color: #d9edf7;
+  background-color: #444647;
   border-color: #bce8f1;
 }
 
