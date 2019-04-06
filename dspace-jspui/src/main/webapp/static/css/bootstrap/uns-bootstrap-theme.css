@@ -1,6 +1,37 @@
 
 /* tamno #3f6383 pozadina  #517492 */
 
+.profilgore {
+	padding: 15px 0px 0px 0px;
+	margin: 0px;
+  display: table;
+  margin-bottom: 20px;
+  min-height: 230px;
+  border: none;
+  display: none;
+}
+
+.profilgore #dumimg {
+  width: 180px;
+  min-width: 180px;
+  min-height: 230px;
+  display: table-cell;
+  background-image: url('/image/profil.png');
+  background-size: cover;
+}
+
+#dumimg {
+  border: 1px solid #a7c0d4;
+  margin-right: 10px;
+}
+
+.profime {
+  font-size: 2.3em;
+  font-weight: 700;
+  padding: 20px 0px 0px 10px; 
+  color: #355875;
+}
+
 #query {
   border-color: #a7c0d4;
   background: #faffed;
@@ -193,8 +224,8 @@
 }
 .navbar-nav {
 	display: table;
-  height: 60px;
 }
+
 #top-menu > li > a {
 	display: table-cell;
 	vertical-align: middle;
@@ -219,12 +250,43 @@
 	border: solid #839fb6;
 	border-width: 0px 1px 0px 0px;
 }
+
 #linkDesno > li > a {
 	padding-top: 20px;
 	height: 60px;
 }
 #linkDesno > li > a:hover {
 	background: rgba(81, 116, 146, 0.95);
+}
+
+@media (max-width: 767px) {
+  #linkDesno > li,
+  #linkDesno {
+    padding: 0px;
+    margin: 0px;
+  }
+  #linkDesno > li > a {
+    padding: 20px 20px 10px 20px;
+    height: 60px;
+  }
+  #linkDesno > li {
+    float: left;
+  }
+  #top-menu,
+  #top-menu > li {
+    width: 100%;
+    display:table;
+    border-width: 0px;
+  }
+  #top-menu > li > a {
+    display: table-cell;
+    height: 40px;
+    text-align: center;
+    line-height: 1em;
+    max-width: 5100px;
+    width: 100%;
+    border-width: 0px;
+  }
 }
 
 .navbar-inverse {

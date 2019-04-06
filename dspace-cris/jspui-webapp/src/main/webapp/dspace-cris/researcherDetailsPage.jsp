@@ -82,7 +82,7 @@
 <c:set var="dspace.cris.navbar" scope="request">
 
 </c:set>
-<c:set var="dspace.layout.head" scope="request">		
+<c:set var="dspace.layout.head" scope="request">	
 	<meta property="title" content="${metaprofilename}" />
 	<meta property="og:title" content="${metaprofilename}" />	
 	<meta property="og:type" content="profile" />
@@ -266,12 +266,12 @@
 
 <dspace:layout title="${metaprofilename}">
 
-<div id="content">
+<div id="content" style="padding: 0px;">
 <div class="row">
 	<div class="col-lg-12">
 		<div class="form-inline">
-	         <div class="form-group">
-			 	<h1>
+	         <div class="form-group" >
+							<div class="profime">
 				 	<fmt:message key="jsp.layout.detail.title-first" />
 				 	<c:choose>
 						<c:when test="${!empty entity.preferredName.value}">
@@ -286,7 +286,7 @@
 							<fmt:message key="cris.rp.information.instructions.label"/>
 						</button>
 					</c:if>
-				</h1>
+				</div>
 				<%
 		    	if (isAdmin) {
 				%>
@@ -433,11 +433,37 @@
 	</div>
 	<c:remove var="messages" scope="session" />
 	</c:if>
-	
 		<div id="researcher">
 			<jsp:include page="commonDetailsPage.jsp"></jsp:include>
 		</div>
 </div>
+
+<!-- DA LI POSTOJI PROFILNA SLIKA -->
+
+<script>
+
+$(document).ready(function() {
+
+    var $myDiv = $('#personalpictureDiv');
+
+	if ($myDiv.length > 0) {
+		$('#dumimg').css("background-image", "url(" + $("#picture").attr("src") + ")");
+		$myDiv.parent('div').hide();
+	}
+
+	$('.dynaLabel').css("min-height", "1em");
+	$('.dynaFieldValue').css("min-height", "1em");
+	$('.dynaField').css("min-height", "1.7em");
+	$('.panel').css("margin-top", "10px");
+	$('.profilgore').show();
+
+});
+
+</script>
+
+
+<!-- ISPOD SU RAZNI MODALNI PROZORI ZA OBAVESTENJA-->
+
 
 <div id="claimrp-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
