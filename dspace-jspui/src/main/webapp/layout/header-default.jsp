@@ -67,7 +67,7 @@
         <link rel="shortcut icon" href="<%= request.getContextPath() %>/favicon.ico" type="image/x-icon"/>
 	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/jquery-ui-1.10.3.custom/redmond/jquery-ui-1.10.3.custom.css" type="text/css" />
 	    <link href="<%= request.getContextPath() %>/css/researcher.css" type="text/css" rel="stylesheet" />
-		<link href="<%= request.getContextPath() %>/css/jdyna.css" type="text/css" rel="stylesheet" />
+		<link href="<%= request.getContextPath() %>/css/jdyna_custom.css" type="text/css" rel="stylesheet" />
 	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-bootstrap.css" type="text/css" /> <!-- bio je .min -->
 	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-bootstrap-theme.css" type="text/css" /> <!-- bio je .min -->
 	    <link href="<%= request.getContextPath() %>/static/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">

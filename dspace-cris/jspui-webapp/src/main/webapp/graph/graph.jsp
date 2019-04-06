@@ -71,7 +71,7 @@
 
 	<link href="<%=request.getContextPath()%>/favicon.ico" type="image/x-icon" rel="shortcut icon" />	
 	<link href="<%=request.getContextPath()%>/css/researcher.css" type="text/css"  rel="stylesheet" />	
-	<link href="<%=request.getContextPath()%>/css/jdyna.css" type="text/css"  rel="stylesheet" />
+	<link href="<%=request.getContextPath()%>/css/jdyna_custom.css" type="text/css"  rel="stylesheet" />
 	
 	<link href="<%=request.getContextPath()%>/static/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/static/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">

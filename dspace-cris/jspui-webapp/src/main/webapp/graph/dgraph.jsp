@@ -55,7 +55,7 @@
 
 	<link href="<%=request.getContextPath()%>/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />	
 	<link href="<%=request.getContextPath()%>/css/researcher.css" type="text/css"  rel="stylesheet" />	
-	<link href="<%=request.getContextPath()%>/css/jdyna.css" type="text/css"  rel="stylesheet" />
+	<link href="<%=request.getContextPath()%>/css/jdyna_custom.css" type="text/css"  rel="stylesheet" />
 	
 	<%--link href="<%=request.getContextPath()%>/css/smoothness/jquery-ui-1.8.18.custom.css" type="text/css" rel="stylesheet" /--%>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/smoothness/jquery-ui.css" />

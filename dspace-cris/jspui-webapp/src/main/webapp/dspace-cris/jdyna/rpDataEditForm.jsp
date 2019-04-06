@@ -67,7 +67,7 @@
     <link href="<%=request.getContextPath()%>/js/jscalendar/calendar-blue.css" type="text/css" rel="stylesheet" />
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/commons-edit-jquery-for-cris.css" type="text/css" />
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/researcher.css" type="text/css" />
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jdyna.css" type="text/css" />     
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jdyna_custom.css" type="text/css" />     
     <link href="<%= request.getContextPath() %>/css/select2/select2.css" type="text/css" rel="stylesheet" />
     <link href="<%= request.getContextPath() %>/css/select2/select2-bootstrap.css" type="text/css" rel="stylesheet" />
     <link href="<%= request.getContextPath() %>/css/jstree/themes/default/style.min.css" type="text/css" rel="stylesheet" />
