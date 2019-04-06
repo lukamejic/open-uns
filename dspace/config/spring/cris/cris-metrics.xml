@@ -39,12 +39,14 @@
    	</bean>
    	
    	
-   	<!-- <bean class="org.dspace.app.cris.statistics.plugin.StatsAggregateIndicatorsPlugin" name="RPStatsAggregatorScopusIndicatorsPlugin">
+	<bean class="org.dspace.app.cris.statistics.plugin.StatsAggregateIndicatorsPlugin" name="RPStatsAggregatorScopusIndicatorsPlugin">
    		<property name="name" value="RPStatsAggregatorScopusIndicatorsPlugin"/>
    		<property name="type" value="scopus"/>
    		<property name="crisEntityClazz" value="org.dspace.app.cris.model.ResearcherPage"/>
    		<property name="crisEntityTypeId" value="9"/>
    	</bean>
+
+	<!--
    	<bean class="org.dspace.app.cris.statistics.plugin.StatsAggregateIndicatorsPlugin" name="RPStatsAggregatorWOSIndicatorsPlugin">
    		<property name="name" value="RPStatsAggregatorWOSIndicatorsPlugin"/>
    		<property name="type" value="wos"/>
