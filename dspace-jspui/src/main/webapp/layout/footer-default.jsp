@@ -97,9 +97,9 @@
 			</div>
 		</footer>
 		<script>
-
+			(function($) { 	
 			$(document).ready(function() {
-		  
+
 			 var docHeight = $(window).height();
 			 var footerHeight = $('#futer').height()+15;
 			 var footerTop = $('#futer').position().top + footerHeight;
@@ -107,7 +107,8 @@
 			 if (footerTop < docHeight) {
 			  $('#futer').css('margin-top', (docHeight - footerTop) + 'px');
 			 }
-			});
+			});})(jQuery);
 		   </script>
+
     </body>
 </html>
