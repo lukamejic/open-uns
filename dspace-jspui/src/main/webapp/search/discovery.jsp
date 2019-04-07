@@ -294,13 +294,14 @@ if(StringUtils.contains(searchScope, hdlPrefix) ){
 <div class="discovery-search-form"  style="padding-top: 20px;">
     <%-- Controls for a repeat search --%>
 	<div class="discovery-query">
-     <form id="update-form" action="simple-search" method="get">
+		<div style="display:table;width:100%;">
+     <form id="update-form" action="simple-search" method="get" style="display:table;width:100%;">
 				<input name="location" type="hidden" value="<%=searchScope %>" />
 				<!--<label for="query"><fmt:message key="jsp.search.results.searchfor"/></label>-->
-				<input class="form-control" type="text" size="50" id="query" name="query" id="query" value="<%= (query==null ? "" : Utils.addEntities(query)) %>"/>
-				<button id="main-query-submit" class="btn btn-primary btn-src" type="submit" style="border-radius: 4px;"><i class="fa fa-search"></i></button>
-				<a href="<%= request.getContextPath()+"/global-search" %>" class="btn btn-primary btn-src" style="border-radius: 4px;"><i class="fa fa-trash-o"></i></a>
-				
+				<input style="display:table-cell;width:100%;" class="form-control" type="text" id="query" name="query" id="query" value="<%= (query==null ? "" : Utils.addEntities(query)) %>"/>
+				<div style="display:table-cell;width:120px;padding-left:5px;"><button id="main-query-submit" class="btn btn-primary btn-src" type="submit" style="border-radius: 4px;"><i class="fa fa-search"></i></button>
+				<a href="<%= request.getContextPath()+"/global-search" %>" class="btn btn-primary btn-src" style="border-radius: 4px;"><i class="fa fa-trash-o"></i></a></div>
+			</div>
 <% if (StringUtils.isNotBlank(spellCheckQuery)) {%>
 	<p class="lead"><fmt:message key="jsp.search.didyoumean"><fmt:param><a id="spellCheckQuery" data-spell="<%= Utils.addEntities(spellCheckQuery) %>" href="#"><%= spellCheckQuery %></a></fmt:param></fmt:message></p>
 <% } %>                  

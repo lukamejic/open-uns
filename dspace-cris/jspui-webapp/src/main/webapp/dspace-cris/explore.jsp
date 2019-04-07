@@ -99,21 +99,42 @@ function submitForm() {
 </c:set>
 <dspace:layout locbar="link" parenttitlekey="${fmtkey}" parentlink="/cris/explore/${location}" titlekey="${fmtkey}">
 <div class="row">
-	<div class="col-sm-4 col-md-3">
-		<h2><fmt:message key="jsp.general.browse" /></h2>
+	<div class="col-sm-4 col-md-2 col-lg-2">
+		<h3><fmt:message key="jsp.general.browse" /></h3>
 		<ul class="nav nav-pills nav-stacked cris-tabs-menu">
 		<c:forEach var="browse"  items="${browseNames}">
 			<li><a href="<%= request.getContextPath() %>/browse?type=${browse}"><fmt:message key="browse.menu.${browse}" /></a></li>
 		</c:forEach>
 		</ul>
 	</div>
-	<div class="col-sm-8 col-md-9">
-		<h2><fmt:message key="jsp.explore.${location}.search" /></h2>
+	<div class="col-sm-8 col-md-10 col-lg-10">
+		<h3><fmt:message key="jsp.explore.${location}.search" /></h3>
 		<form id="searchform" class="form-group" action="<%= request.getContextPath() %>/simple-search">
 			<input type="hidden" id="location" name="location" value="${location}" />
 			<input type="hidden" id="query" name="query" value="" />
 		<div class="row datainput">
-		<div class="col-xs-4 col-sm-3">
+		<div class="col-xs-2 col-sm-2">
+			<select class="index form-control">
+				<option value=""><fmt:message key="jsp.explore.index.all" /></option>
+			<c:forEach var="filter" items="${filters}">
+				<c:set var="i18nkey" value="jsp.search.filter.${filter.indexFieldName}" />
+				<option value="${filter.indexFieldName}"><fmt:message key="${i18nkey}" /></option>
+			</c:forEach>
+			</select>
+			</div>
+			<div class="col-xs-6 col-sm-6">
+			<input class="query form-control" type="text" size="60" />
+			</div>
+			<div class="col-xs-2">
+			<select class="conjuction form-control">
+				<option>AND</option>
+				<option>OR</option>
+				<option>NOT</option>
+			</select>
+			</div>
+		</div>
+		<!--<div class="row datainput">
+		<div class="col-xs-2 col-sm-2">
 		<select class="index form-control">
 			<option value=""><fmt:message key="jsp.explore.index.all" /></option>
 		<c:forEach var="filter" items="${filters}">
@@ -132,30 +153,9 @@ function submitForm() {
 			<option>NOT</option>
 		</select>
 		</div>
-		</div>
-		<div class="row datainput">
-		<div class="col-xs-4 col-sm-3">
-		<select class="index form-control">
-			<option value=""><fmt:message key="jsp.explore.index.all" /></option>
-		<c:forEach var="filter" items="${filters}">
-			<c:set var="i18nkey" value="jsp.search.filter.${filter.indexFieldName}" />
-			<option value="${filter.indexFieldName}"><fmt:message key="${i18nkey}" /></option>
-		</c:forEach>
-		</select>
-		</div>
-		<div class="col-xs-6 col-sm-7">
-		<input class="query form-control" type="text" size="60" />
-		</div>
-		<div class="col-xs-2">
-		<select class="conjuction form-control">
-			<option>AND</option>
-			<option>OR</option>
-			<option>NOT</option>
-		</select>
-		</div>
-		</div>
+		</div>-->
 		<div class="row datainput" id="lastRow">
-		<div class="col-xs-4 col-sm-3">
+		<div class="col-xs-2 col-sm-2">
 		<select class="index form-control">
 			<option value=""><fmt:message key="jsp.explore.index.all" /></option>
 		<c:forEach var="filter" items="${filters}">
@@ -164,16 +164,16 @@ function submitForm() {
 		</c:forEach>
 		</select>
 		</div>
-		<div class="col-xs-6 col-sm-7">
+		<div class="col-xs-6 col-sm-6">
 		<input class="query form-control" type="text" size="60" />
 		</div>
-		<div class="col-xs-2">
+		<div class="col-xs-1">
 			<button onclick="javascript:newRow()" type="button"
 				class="btn btn-info col-xs-12"><fmt:message key="jsp.explore.index.add" /></button>
 		</div>
 		</div>
 		<div class="row datainput template hidden ">
-		<div class="col-xs-4 col-sm-3">
+		<div class="col-xs-2 col-sm-2">
 		<select class="index form-control">
 			<option><fmt:message key="jsp.explore.index.all" /></option>
 		<c:forEach var="filter" items="${filters}">
@@ -182,7 +182,7 @@ function submitForm() {
 		</c:forEach>
 		</select>
 		</div>
-		<div class="col-xs-6 col-sm-7">
+		<div class="col-xs-6 col-sm-6">
 		<input class="query form-control" type="text" size="60" />
 		</div>
 		<div class="col-xs-2">
@@ -193,17 +193,16 @@ function submitForm() {
 		</select>
 		</div>
 		</div>
-		<div class="row">
-		<br/>
-		<div class="col-md-offset-6 col-md-3 col-sm-offset-4 col-sm-4 col-xs-6">
-			<input type="reset" onclick="javascript:resetForm()"
-				class="btn btn-default col-xs-12" value="<fmt:message key="jsp.explore.index.reset" />" />
-		</div>
-		<div class="col-md-3 col-sm-4 col-xs-6">
+		<div class="row" style="border:none;padding-top:15px;">
+	<div class="">
 			<input type="submit" onclick="javascript:submitForm()"
-				class="btn btn-primary col-xs-12" value="<fmt:message key="jsp.explore.index.search" />" />
+			style="margin:0px 10px 0px 10px;" class="btn btn-primary col-xs-3" value="<fmt:message key="jsp.explore.index.search" />" />
 		</div>
+		<div >
+			<input type="reset" onclick="javascript:resetForm()"
+			class="btn btn-default col-xs-3" value="<fmt:message key="jsp.explore.index.reset" />" />
 		</div>
+			</div>
 		</form>
 	</div>
 </div>
