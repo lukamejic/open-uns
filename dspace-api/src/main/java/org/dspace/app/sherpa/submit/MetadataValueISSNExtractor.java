@@ -32,9 +32,19 @@ public class MetadataValueISSNExtractor implements ISSNItemExtractor
             Metadatum[] Metadatums = item.getMetadataByMetadataString(metadata);
             for (Metadatum Metadatum : Metadatums)
             {
-                values.add(Metadatum.value);
+                String value = parseISSN(Metadatum.value);
+                values.add(value);
             }
         }
         return values;
+    }
+
+    private String parseISSN(String issn) {
+
+        if (issn.matches("^[0-9]{8}$")) {
+            return issn.substring(0,4) + "-" + issn.substring(4,8);
+        }
+
+        return issn;
     }
 }
