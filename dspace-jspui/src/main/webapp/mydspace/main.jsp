@@ -213,9 +213,11 @@
         	<span class="fa fa-edit"></span></a>
         </h2>
         <h2 id="h2-cris-rp-status-active" class="cris-rp-status" style="display:none;">
-        	<fmt:message key="jsp.mydspace.cris.rp-status-label"/> 
-        	<a href="#" class="cris-rp-status-active" data-toggle="modal" data-target="#cris-rp-change-active"><span class="cris-rp-status-value"><fmt:message key="jsp.mydspace.cris.rp-status-active"/></span>
-        	<span class="fa fa-edit"></span></a>
+            <fmt:message key="jsp.mydspace.cris.rp-status-label"/> 
+            <fmt:message key="jsp.mydspace.cris.rp-status-active"/>
+            <!-- <a href="#" class="cris-rp-status-active" data-toggle="modal" data-target="#cris-rp-change-active"><span class="cris-rp-status-value"><fmt:message key="jsp.mydspace.cris.rp-status-active"/></span> -->
+            <a href="#" class="btn btn-info myrpstatus-url"><fmt:message key="jsp.mydspace.cris.rp-status-change.go"/></a>
+        	<!-- <span class="fa fa-edit"></span></a> -->
         </h2>
 		<h2 id="h2-cris-rp-status-active-admin" class="cris-rp-status" style="display:none;">
         	<fmt:message key="jsp.mydspace.cris.rp-status-label"/> 
