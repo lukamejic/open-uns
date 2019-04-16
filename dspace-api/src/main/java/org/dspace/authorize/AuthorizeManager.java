@@ -497,7 +497,7 @@ public class AuthorizeManager
             return false; // anonymous users can't be librarians....
         } else
         {
-            return Group.isMember(c, 4);
+            return Group.isMember(c, 2);
         }
     }
 
