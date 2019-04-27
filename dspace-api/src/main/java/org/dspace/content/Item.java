@@ -325,6 +325,18 @@ public class Item extends DSpaceObject implements BrowsableDSpaceObject
         return new ItemIterator(context, rows);
     }
 
+    public static boolean existsByScopusIdentifier(Context context, String scopusId) throws SQLException{
+
+        String query = "SELECT i.* from item i " +
+                "LEFT JOIN metadatavalue m ON i.item_id=m.resource_id " +
+                "WHERE m.metadata_field_id=77 AND m.resource_type_id=2 " +
+                "AND m.text_value='" + scopusId + "'";
+
+        TableRowIterator rows = DatabaseManager.queryTable(context, "item", query);
+
+        return rows.hasNext();
+    }
+
     public static ItemIterator findByMetadataFieldAuthority(Context context, String mdString, String authority) throws SQLException, AuthorizeException, IOException {
         String[] elements = getElementsFilled(mdString);
         String schema = elements[0], element = elements[1], qualifier = elements[2];
