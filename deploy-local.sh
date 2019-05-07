@@ -2,11 +2,11 @@
 # DSpace deploy script
 
 #DSpace source
-DSPACE_SOURCE='/home/milos/workspace/BE-OPEN/'
+DSPACE_SOURCE='/home/milos/IdeaProjects/BE-OPEN/'
 #Dspace install
 DSPACE_INSTALL='/home/milos/dspace/'
 #Tomcat
-TOMCAT='/home/milos/programi/tomcat7/'
+TOMCAT='/home/milos/tomcat/'
 
 #Build projekta
 cd $DSPACE_SOURCE
