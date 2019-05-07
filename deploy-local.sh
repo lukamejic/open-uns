@@ -19,28 +19,6 @@ mvn clean package
 cd dspace/target/dspace-installer/
 ant update clean_backups
 
-#	TODO SKLONITI !!!!!
-#Postavljanje podesavanja za mail
-#echo 'Podesavanja za mail server ...'
-#echo 'mail.extraproperties = mail.smtp.socketFactory.port=465, \' >> $DSPACE_INSTALL/config/dspace.cfg
-#echo 'mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory, \' >> $DSPACE_INSTALL/config/dspace.cfg
-#echo 'mail.smtp.socketFactory.fallback=false' >> $DSPACE_INSTALL/config/dspace.cfg
-
-#	TODO Treba naci bolji nacin ...
-#Podesavanje https redirekcije
-#echo 'Podesavanja HTTPS redirekcije ...'
-#sed -i '$ d' $DSPACE_INSTALL/webapps/jspui/WEB-INF/web.xml
-#echo '<security-constraint>' >> $DSPACE_INSTALL/webapps/jspui/WEB-INF/web.xml
-#echo '<web-resource-collection>' >> $DSPACE_INSTALL/webapps/jspui/WEB-INF/web.xml
-#echo '<web-resource-name>Viewpoint Secure URLs</web-resource-name>' >> $DSPACE_INSTALL/webapps/jspui/WEB-INF/web.xml
-#echo '<url-pattern>/*</url-pattern>' >> $DSPACE_INSTALL/webapps/jspui/WEB-INF/web.xml
-#echo '</web-resource-collection>' >> $DSPACE_INSTALL/webapps/jspui/WEB-INF/web.xml
-#echo '<user-data-constraint>' >> $DSPACE_INSTALL/webapps/jspui/WEB-INF/web.xml
-#echo '<transport-guarantee>CONFIDENTIAL</transport-guarantee>' >> $DSPACE_INSTALL/webapps/jspui/WEB-INF/web.xml
-#echo '</user-data-constraint>' >> $DSPACE_INSTALL/webapps/jspui/WEB-INF/web.xml
-#echo '</security-constraint>' >> $DSPACE_INSTALL/webapps/jspui/WEB-INF/web.xml
-#echo '</web-app>' >> $DSPACE_INSTALL/webapps/jspui/WEB-INF/web.xml
-
 #Brisanje web aplikacije iz tomcat-a
 echo 'Brisanje web aplikacije iz tomcat-a ...'
 cd $TOMCAT/webapps/
