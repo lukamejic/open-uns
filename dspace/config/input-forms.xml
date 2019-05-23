@@ -173,6 +173,17 @@ it, please enter the types and the actual numbers or codes.</hint>
        </field>
 
        <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>version</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Status</label>
+         <input-type value-pairs-name="publication_status">dropdown</input-type>
+         <hint> Select the publication's status.</hint>
+         <required></required>
+       </field>
+
+       <field>
 		 <dc-schema>dc</dc-schema>
          <dc-element>language</dc-element>
          <dc-qualifier>iso</dc-qualifier>
@@ -1755,6 +1766,25 @@ it, please enter the types and the actual numbers or codes.</hint>
      <pair>
        <displayed-value>(Other)</displayed-value>
        <stored-value>other</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="publication_status" dc-term="description">
+     <pair>
+       <displayed-value>Unknown</displayed-value>
+       <stored-value>Unknown</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Author's version</displayed-value>
+       <stored-value>Author's version</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Accepted for publishing</displayed-value>
+       <stored-value>Accepted for publishing</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Published</displayed-value>
+       <stored-value>Published</stored-value>
      </pair>
    </value-pairs>
 
