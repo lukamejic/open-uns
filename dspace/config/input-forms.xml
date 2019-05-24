@@ -180,7 +180,7 @@ it, please enter the types and the actual numbers or codes.</hint>
          <label>Status</label>
          <input-type value-pairs-name="publication_status">dropdown</input-type>
          <hint> Select the publication's status.</hint>
-         <required></required>
+         <required>You must select the status of publication.</required>
        </field>
 
        <field>
