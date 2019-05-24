@@ -358,7 +358,7 @@ public class CitationDocument {
 
             if (coverPageLogo != null) {
                 String catalinaBase = System.getProperty("catalina.base");
-                String path = catalinaBase + "/webapps/jspui" + coverPageLogo;
+                String path = catalinaBase + "/webapps/ROOT" + coverPageLogo;
                 PDImageXObject pdImage = PDImageXObject.createFromFile(path, document);
                 float scale = 0.5f;
                 contentStream.drawImage(pdImage, 200, 720, pdImage.getWidth() * scale, pdImage.getHeight() * scale);
