@@ -66,21 +66,6 @@
 		<p class="help-block"><fmt:message key="jsp.submit.creative-commons.info1"/></p>
 
 	<div class="row">
-		<!-- <label class="col-md-2"><fmt:message key="jsp.submit.creative-commons.license"/></label>
-		<span class="col-md-8">
-			<select name="licenseclass_chooser" id="licenseclass_chooser" class="form-control">
-					<option
-						value="webui.Submission.submit.CCLicenseStep.select_change"><fmt:message key="jsp.submit.creative-commons.select_change"/></option>
-					<% if(cclicenses!=null) {
-							for(CCLicense cclicense : cclicenses) { %>
-								<option
-									value="<%= cclicense.getLicenseId()%>"><%= cclicense.getLicenseName()%></option>
-					<% 		}
-						}%>
-					<option
-						value="webui.Submission.submit.CCLicenseStep.no_license"><fmt:message key="jsp.submit.creative-commons.no_license"/></option>
-             </select>
-        </span> -->
         <table class="table">
             <thead>
               <tr>
@@ -149,9 +134,17 @@
 		</span>
 	</div>
 	<% } %>
+        <%--
 	<div style="display:none;" id="creativecommons_response">
 	</div>
+        --%>
 	<br/>
+        
+        <%-- Hidden inputs used for custom CC license step --%>
+        <input type="hidden" name="licenseclass_chooser" id="licenseclass_chooser"/>
+        <input type="hidden" name="commercial_chooser" id="commercial_chooser"/>
+        <input type="hidden" name="derivatives_chooser" id="derivatives_chooser"/>
+        
 		<%-- Hidden fields needed for SubmissionController servlet to know which step is next--%>
     <%= SubmissionController.getSubmissionParameters(context, request) %>
 
@@ -176,34 +169,49 @@
     </form>
     <script type="text/javascript">
 
-jQuery("#licenseclass_chooser").change(function() {
-    var make_id = jQuery(this).find(":selected").val();
-    var request = jQuery.ajax({
-        type: 'GET',
-        url: '<%=request.getContextPath()%>/json/creativecommons?license=' + make_id
-    });
-    request.done(function(data){
-    	jQuery("#creativecommons_response").empty();
-    	var result = data.result;
-        for (var i = 0; i < result.length; i++) {
-            var id = result[i].id;
-            var label = result[i].label;
-            var description = result[i].description;
-            var htmlCC = " <div class='form-group'><span class='help-block' title='"+description+"'>"+label+"&nbsp;<i class='glyphicon glyphicon-info-sign'></i></span>"
-            var typefield = result[i].type;
-            if(typefield=="enum") {
-            	jQuery.each(result[i].fieldEnum, function(key, value) {
-            		htmlCC += "<label class='radio-inline' for='"+id+"-"+key+"'>";
-            		htmlCC += "<input placeholder='"+value+"' type='radio' id='"+id+"-"+key+"' name='"+id+"_chooser' value='"+key+"' required/>"+value+ "</label>";
-            	});
-            }
-            htmlCC += "</div>";
-            jQuery("#creativecommons_response").append(htmlCC);
-        }
-
-        jQuery("#current_creativecommons").hide();
-        jQuery("#creativecommons_response").show();
-    });
+jQuery('input[type=radio][name=license-radio]').change(function() {
+  switch(this.value) {
+    case 'zero':
+        jQuery('#licenseclass_chooser').val('publicdomain');
+        jQuery('#commercial_chooser').val('');
+        jQuery('#derivatives_chooser').val('');
+        break;
+    case 'by':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('y');
+        jQuery('#derivatives_chooser').val('y');
+        break;
+    case 'by-sa':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('y');
+        jQuery('#derivatives_chooser').val('sa');
+        break;
+    case 'by-nd':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('y');
+        jQuery('#derivatives_chooser').val('n');
+        break;
+    case 'by-nc':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('n');
+        jQuery('#derivatives_chooser').val('y');
+        break;
+    case 'by-nc-sa':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('n');
+        jQuery('#derivatives_chooser').val('sa');
+        break;
+    case 'by-nc-nd':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('n');
+        jQuery('#derivatives_chooser').val('n');
+        break;
+    case 'none':
+        jQuery('#licenseclass_chooser').val('webui.Submission.submit.CCLicenseStep.no_license');
+        jQuery('#commercial_chooser').val('');
+        jQuery('#derivatives_chooser').val('');
+        break;
+  }
 });
 
 
