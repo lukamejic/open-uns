@@ -78,43 +78,43 @@
             <tbody>
               <tr>
                 <td><img src="image/creative-commons-zero.png" alt=""></td>
-                <td><a href="https://creativecommons.org/publicdomain/zero/1.0/"><fmt:message key="jsp.creative-commons.license.zero"/></a></td>
+                <td><a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank"><fmt:message key="jsp.creative-commons.license.zero"/></a></td>
                 <td><fmt:message key="jsp.creative-commons.description.zero"/></td>
                 <td><input type="radio" name="license-radio" value="zero"></td>
               </tr>
               <tr>
                 <td><img src="image/creative-commons-by.png" alt=""></td>
-                <td><a href="https://creativecommons.org/licenses/by/3.0/rs/deed.sr_LATN"><fmt:message key="jsp.creative-commons.license.by"/></a></td>
+                <td><a href="https://creativecommons.org/licenses/by/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by"/></a></td>
                 <td><fmt:message key="jsp.creative-commons.description.by"/></td>
                 <td><input type="radio" name="license-radio" value="by"></td>
               </tr>
               <tr>
                 <td><img src="image/creative-commons-by-sa.png" alt=""></td>
-                <td><a href="https://creativecommons.org/licenses/by-sa/3.0/rs/deed.sr_LATN"><fmt:message key="jsp.creative-commons.license.by-sa"/></a></td>
+                <td><a href="https://creativecommons.org/licenses/by-sa/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by-sa"/></a></td>
                 <td><fmt:message key="jsp.creative-commons.description.by-sa"/></td>
                 <td><input type="radio" name="license-radio" value="by-sa"></td>
               </tr>
               <tr>
                 <td><img src="image/creative-commons-by-nd.png" alt=""></td>
-                <td><a href="https://creativecommons.org/licenses/by-nd/3.0/rs/deed.sr_LATN"><fmt:message key="jsp.creative-commons.license.by-nd"/></a></td>
+                <td><a href="https://creativecommons.org/licenses/by-nd/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by-nd"/></a></td>
                 <td><fmt:message key="jsp.creative-commons.description.by-nd"/></td>
                 <td><input type="radio" name="license-radio" value="by-nd"></td>
               </tr>
               <tr>
                 <td><img src="image/creative-commons-by-nc.png" alt=""></td>
-                <td><a href="https://creativecommons.org/licenses/by-nc/3.0/rs/deed.sr_LATN"><fmt:message key="jsp.creative-commons.license.by-nc"/></a></td>
+                <td><a href="https://creativecommons.org/licenses/by-nc/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by-nc"/></a></td>
                 <td><fmt:message key="jsp.creative-commons.description.by-nc"/></td>
                 <td><input type="radio" name="license-radio" value="by-nc"></td>
               </tr>
               <tr>
                 <td><img src="image/creative-commons-by-nc-sa.png" alt=""></td>
-                <td><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/rs/deed.sr_LATN"><fmt:message key="jsp.creative-commons.license.by-nc-sa"/></a></td>
+                <td><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by-nc-sa"/></a></td>
                 <td><fmt:message key="jsp.creative-commons.description.by-nc-sa"/></td>
                 <td><input type="radio" name="license-radio" value="by-nc-sa"></td>
               </tr>
               <tr>
                 <td><img src="image/creative-commons-by-nc-nd.png" alt=""></td>
-                <td><a href="https://creativecommons.org/licenses/by-nc-nd/3.0/rs/deed.sr_LATN"><fmt:message key="jsp.creative-commons.license.by-nc-nd"/></a></td>
+                <td><a href="https://creativecommons.org/licenses/by-nc-nd/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by-nc-nd"/></a></td>
                 <td><fmt:message key="jsp.creative-commons.description.by-nc-nd"/></td>
                 <td ><input type="radio" name="license-radio" value="by-nc-nd"></td>
               </tr>
