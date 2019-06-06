@@ -10,6 +10,7 @@ package org.dspace.disseminate;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ import java.util.Set;
 
 import de.undercouch.citeproc.CSL;
 import de.undercouch.citeproc.csl.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -357,9 +359,10 @@ public class CitationDocument {
             contentStream.setNonStrokingColor(Color.BLACK);
 
             if (coverPageLogo != null) {
-                String catalinaBase = System.getProperty("catalina.base");
-                String path = catalinaBase + "/webapps/ROOT" + coverPageLogo;
-                PDImageXObject pdImage = PDImageXObject.createFromFile(path, document);
+                PDImageXObject pdImage = null;
+                try (InputStream stream = CitationDocument.class.getResourceAsStream("/images/" + coverPageLogo)) {
+                    pdImage = PDImageXObject.createFromByteArray(document, IOUtils.toByteArray(stream), coverPageLogo);
+                }
                 float scale = 0.5f;
                 contentStream.drawImage(pdImage, 200, 720, pdImage.getWidth() * scale, pdImage.getHeight() * scale);
             }
