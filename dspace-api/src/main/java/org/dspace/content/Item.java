@@ -1900,6 +1900,42 @@ public class Item extends DSpaceObject implements BrowsableDSpaceObject
 
         return false;
     }
+
+    /**
+     * return TRUE if current user one of item's authors
+     *
+     * @return boolean true = current user is one of authors
+     */
+    public boolean isCurrentUserAuthor() {
+        if (ourContext.getCurrentUser() == null) {
+            return false;
+        }
+
+        Metadatum[] authors = this.getMetadataByMetadataString("dc.contributor.author");
+
+        int epersonId = ourContext.getCurrentUser().getID();
+
+        String query = "SELECT crisid FROM cris_rpage WHERE epersonid =" + epersonId;
+
+        try {
+            TableRow rpResult = DatabaseManager.querySingle(ourContext, query);
+
+            if (rpResult != null) {
+                String crisid = rpResult.getStringColumn("crisid");
+
+                for (Metadatum md : authors) {
+                    if (md.authority != null && md.authority.equals(crisid)) {
+                        return true;
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            return false;
+        }
+
+        return false;
+    }
     
     /**
      * Check if the item is an inprogress submission
