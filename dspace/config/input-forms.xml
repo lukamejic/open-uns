@@ -1764,6 +1764,26 @@ it, please enter the types and the actual numbers or codes.</hint>
        <stored-value>tr</stored-value>
      </pair>
      <pair>
+       <displayed-value>Serbian</displayed-value>
+       <stored-value>sr</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Russian</displayed-value>
+       <stored-value>ru</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Hungarian</displayed-value>
+       <stored-value>hu</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Romanian</displayed-value>
+       <stored-value>ro</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Ruthenian</displayed-value>
+       <stored-value>ru</stored-value>
+     </pair>
+     <pair>
        <displayed-value>(Other)</displayed-value>
        <stored-value>other</stored-value>
      </pair>
