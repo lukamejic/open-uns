@@ -147,12 +147,13 @@ public class OrganizationUnitTreeMaker {
 
             for (OrganizationUnit child : children) {
 
-                ouCounter++;
-
-                OrganizationUnitWrapper childOU = createOuHierarchy(searchService, child, ous);
-                currentOU.pubCount += childOU.pubCount;
-                currentOU.rpCount += childOU.rpCount;
-                builder.append(childOU.asHTML);
+                if (child.getName() != null) {
+                    ouCounter++;
+                    OrganizationUnitWrapper childOU = createOuHierarchy(searchService, child, ous);
+//                    currentOU.pubCount += childOU.pubCount;
+//                    currentOU.rpCount += childOU.rpCount;
+                    builder.append(childOU.asHTML);
+                }
             }
 
             builder.append("</div></div></div>");
