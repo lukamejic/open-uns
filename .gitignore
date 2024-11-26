@@ -36,3 +36,4 @@ rebel.xml
 .externalToolBuilders/
 *.bak
 /.metadata/
+*.vdi
