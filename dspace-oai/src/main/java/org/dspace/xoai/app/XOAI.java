@@ -32,6 +32,7 @@ import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.storage.rdbms.DatabaseManager;
 import org.dspace.storage.rdbms.TableRowIterator;
+import org.dspace.storage.rdbms.TableRow;
 import org.dspace.xoai.exceptions.CompilingException;
 import org.dspace.xoai.services.api.cache.XOAICacheService;
 import org.dspace.xoai.services.api.cache.XOAIItemCacheService;
@@ -57,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.HashMap;
 
 import static com.lyncode.xoai.dataprovider.core.Granularity.Second;
 import static org.dspace.content.Item.find;
@@ -89,6 +91,7 @@ public class XOAI {
     @Autowired
     private CollectionsService collectionsService;
 
+    private static HashMap<Integer,String> dictOrcids;
 
     private static List<String> getFileFormats(Item item) {
         List<String> formats = new ArrayList<String>();
@@ -175,6 +178,19 @@ public class XOAI {
                 sqlQuery = "SELECT item_id FROM item WHERE (in_archive=1 OR withdrawn=1) AND discoverable=1 AND last_modified > ?";
         }
 
+        try{
+            dictOrcids = new HashMap<Integer, String>();
+            String sqlQueryOrcid = "select textvalue, parent_id from jdyna_values jdv join cris_rp_prop crp on jdv.id = crp.value_id join cris_rp_pdef crpdef on crpdef.id = crp.typo_id where crpdef.shortname = 'orcid'";
+            TableRowIterator iteratorOrcid = DatabaseManager.query(context,sqlQueryOrcid);
+            while (iteratorOrcid.hasNext()) {
+                TableRow tmpIter = iteratorOrcid.next();
+                dictOrcids.put(tmpIter.getIntColumn("parent_id"), tmpIter.getStringColumn("textvalue"));
+            }
+        } 
+        catch (Exception ex1) {
+            System.out.println(ex1.getMessage());
+            log.error(ex1.getMessage(), ex1);
+        }   
         try {
             TableRowIterator iterator = DatabaseManager
                     .query(context,
@@ -196,6 +212,21 @@ public class XOAI {
                 sqlQuery = "SELECT item_id FROM item WHERE (in_archive=1 OR withdrawn=1) AND discoverable=1";
             }
 
+
+            try{
+                dictOrcids = new HashMap<Integer, String>();
+                String sqlQueryOrcid = "select textvalue, parent_id from jdyna_values jdv join cris_rp_prop crp on jdv.id = crp.value_id join cris_rp_pdef crpdef on crpdef.id = crp.typo_id where crpdef.shortname = 'orcid'";
+                TableRowIterator iteratorOrcid = DatabaseManager.query(context,sqlQueryOrcid);
+                while (iteratorOrcid.hasNext()) {
+                    TableRow tmpIter = iteratorOrcid.next();
+                    dictOrcids.put(tmpIter.getIntColumn("parent_id"), tmpIter.getStringColumn("textvalue"));
+                }
+            } 
+            catch (Exception ex1) {
+                System.out.println(ex1.getMessage());
+                log.error(ex1.getMessage(), ex1);
+            }   
+            
             TableRowIterator iterator = DatabaseManager.query(context,
                     sqlQuery);
             return this.index(iterator);
@@ -223,6 +254,9 @@ public class XOAI {
                     log.error(e.getMessage(), e);
                 } catch (WritingXmlException e) {
                     log.error(e.getMessage(), e);
+                } catch (Exception e) {
+                    System.out.println("Error on item " + i + "...");
+                    log.error(e.getMessage(), e);
                 }
                 i++;
                 if (i % 100 == 0) System.out.println(i + " items imported so far...");
@@ -239,7 +273,7 @@ public class XOAI {
         }
     }
 
-    private SolrInputDocument index(Item item) throws SQLException, MetadataBindException, ParseException, XMLStreamException, WritingXmlException {
+    private SolrInputDocument index(Item item) throws SQLException, MetadataBindException, ParseException, XMLStreamException, WritingXmlException, IllegalArgumentException {
         SolrInputDocument doc = new SolrInputDocument();
         doc.addField("item.id", item.getID());
         boolean pub = this.isPublic(item);
@@ -274,6 +308,9 @@ public class XOAI {
             doc.addField(key, val);
             if (dc.authority != null) {
                 doc.addField(key + ".authority", dc.authority);
+                //doc.addField(key + ".authority", "orcid::0000-0002-3053-1035");
+                //println(String.format("Item %d authority %s indexed",
+                //    item.getID(), dc.authority));
                 doc.addField(key + ".confidence", dc.confidence + "");
             }
         }
@@ -284,7 +321,7 @@ public class XOAI {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         XmlOutputContext context = XmlOutputContext.emptyContext(out, Second);
-        retrieveMetadata(item).write(context);
+        retrieveMetadata(item, dictOrcids).write(context);
         context.getWriter().flush();
         context.getWriter().close();
         doc.addField("item.compile", out.toString());
@@ -400,6 +437,7 @@ public class XOAI {
 
             if (!line.hasOption('h') && run) {
                 System.out.println("OAI 2.0 manager action started");
+               
                 long start = System.currentTimeMillis();
 
                 String command = line.getArgs()[0];
@@ -459,6 +497,20 @@ public class XOAI {
     private void compile() throws CompilingException {
         ItemIterator iterator;
         try {
+            try{
+                dictOrcids = new HashMap<Integer, String>();
+                String sqlQueryOrcid = "select textvalue, parent_id from jdyna_values jdv join cris_rp_prop crp on jdv.id = crp.value_id join cris_rp_pdef crpdef on crpdef.id = crp.typo_id where crpdef.shortname = 'orcid'";
+                TableRowIterator iteratorOrcid = DatabaseManager.query(context,sqlQueryOrcid);
+                while (iteratorOrcid.hasNext()) {
+                    TableRow tmpIter = iteratorOrcid.next();
+                    dictOrcids.put(tmpIter.getIntColumn("parent_id"), tmpIter.getStringColumn("textvalue"));
+                }
+            } 
+            catch (Exception ex1) {
+                System.out.println(ex1.getMessage());
+                log.error(ex1.getMessage(), ex1);
+            }   
+
             Date last = xoaiLastCompilationCacheService.get();
 
             if (last == null) {
@@ -473,7 +525,7 @@ public class XOAI {
             while (iterator.hasNext()) {
                 Item item = iterator.next();
                 if (verbose) System.out.println("Compiling item with handle: " + item.getHandle());
-                xoaiItemCacheService.put(item, retrieveMetadata(item));
+                xoaiItemCacheService.put(item, retrieveMetadata(item, dictOrcids));
                 context.clearCache();
             }
 

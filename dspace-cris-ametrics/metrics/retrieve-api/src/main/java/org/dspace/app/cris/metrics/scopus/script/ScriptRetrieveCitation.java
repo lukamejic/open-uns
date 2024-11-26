@@ -128,6 +128,9 @@ public class ScriptRetrieveCitation {
 		if (line.hasOption('e')) {
 			enrichMetadataItem = true;
 		}
+		
+		log.info(LogManager.getHeader(null, "retrieve_citation_scopus",
+				"STARTED."));
 
 		ServiceManager serviceManager = dspace.getServiceManager();
 
@@ -143,6 +146,10 @@ public class ScriptRetrieveCitation {
 		try {
 			context = new Context();
 			context.turnOffAuthorisationSystem();
+
+			log.info(LogManager.getHeader(null, "retrieve_citation_scopus",
+					"Authorisation system off."));
+
 			all: for (int page = 0;; page++) {
 				int start = page * MAX_QUERY_RESULTS;
 				if (resultsTot != -1 && start >= resultsTot) {
@@ -207,6 +214,8 @@ public class ScriptRetrieveCitation {
 			log.info(LogManager.getHeader(null, "retrieve_citation", "Processing time " + processTime
 					+ " sec. - Retrieved " + citationRetrieved + " Scopus citation for " + itemWorked + " items(" + itemForceWorked + " forced items)"));
 		} catch (Exception ex) {
+			log.info(LogManager.getHeader(null, "retrieve_citation_scopus",
+					"EXCEPTION."));
 			log.error(ex.getMessage(), ex);
 		} finally {
 

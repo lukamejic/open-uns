@@ -29,12 +29,16 @@ public class MapDataBean extends StatisticDatasBean implements
         Integer total = 0;
         for (MapPointBean mapPointBean : dataTable)
         {
-            total += (Integer) mapPointBean.getValue();
+            try{
+                total += (Integer) mapPointBean.getValue();
+            }catch (Exception e){}
         }
         for (MapPointBean mapPointBean : dataTable)
         {
-            mapPointBean.setPercentage((((Integer) mapPointBean.getValue())
+            try{
+                mapPointBean.setPercentage((((Integer) mapPointBean.getValue())
                     .doubleValue() / total) * 100);
+            }catch (Exception e){}
         }
     }
 

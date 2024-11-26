@@ -89,9 +89,10 @@ public class CrisValuePairsIndexPlugin implements CrisServiceIndexPlugin,
             }
         }
         if(StringUtils.isNotBlank(language)) {
+			String newLang = language.equals("sr_LAT") ? "hr_HR" :(language.equals("sr_CYR") ? "sr_RS" : language);
             if (!dcInputsReader.containsKey(language))
             {
-                dcInputsReader.put(language, new DCInputsReader(I18nUtil.getInputFormsFileName(LocaleUtils.toLocale(language))));
+                dcInputsReader.put(language, new DCInputsReader(I18nUtil.getInputFormsFileName(LocaleUtils.toLocale(newLang))));
             }
         }
     }

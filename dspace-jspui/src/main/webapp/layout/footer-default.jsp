@@ -94,6 +94,9 @@
             	 		<img src="<%= request.getContextPath() %>/image/logo-4science-small.png"
                                     alt="Logo 4SCIENCE" height="18px"/></a>
 				</div>
+			   <div id="designedby" class="col-sm-12 text-center">
+				 <fmt:message key="jsp.layout.footer-default.support"/>
+			   </div>
 			</div>
 		</footer>
 		<script>

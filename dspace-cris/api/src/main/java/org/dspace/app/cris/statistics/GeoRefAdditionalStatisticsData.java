@@ -43,7 +43,9 @@ public class GeoRefAdditionalStatisticsData implements
             DSpaceObject dspaceObject)
     {
         String ip = (String) doc1.getFieldValue("ip");
-        if (ip == null)
+        if (ip == null || 
+                (!ConfigurationManager.getBooleanProperty(
+                    SolrLogger.CFG_USAGE_MODULE, "randomize-localhost", false) && ip.equals("127.0.0.1")))
             return;
         // Save the location information if valid, save the event without
         // location information if not valid

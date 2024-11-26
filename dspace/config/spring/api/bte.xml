@@ -509,11 +509,16 @@
 	<bean id="endnoteDataLoader" class="gr.ekt.bteio.loaders.EndnoteDataLoader">
 		<property name="fieldMap">
 			<map>
-				<entry key="TI" value="title" />
+				<!-- <entry key="TI" value="title" />
 				<entry key="AU" value="authors" />
 				<entry key="AB" value="abstract" />
 				<entry key="PY" value="issued" />
-				<entry key="SO" value="journal" />
+				<entry key="SO" value="journal" /> -->
+				<entry key="T" value="title" />
+				<entry key="A" value="authors" />
+				<entry key="D" value="issued" />
+				<entry key="S" value="journal" />
+				<entry key="R" value="doi" />
 			</map>
 		</property>
 	</bean>

@@ -40,6 +40,10 @@
     // Is the logged in user an admin
     Boolean admin = (Boolean)request.getAttribute("is.admin");
     boolean isAdmin = (admin == null ? false : admin.booleanValue());
+    
+    // Is the logged in user a librarian
+    Boolean librarian = (Boolean)request.getAttribute("is.librarian");
+    boolean isLibrarian = (librarian == null ? false : librarian.booleanValue());
 
     // Get the current page, minus query string
     String currentPage = UIUtil.getOriginalURL(request);
@@ -234,6 +238,22 @@
           {
            %>
             <%= extraNavbarData %>
+          <%
+          }
+          %>
+
+          <%
+          if (isLibrarian)
+          {
+           %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="jsp.layout.navbar-admin.contents"/> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="<%= request.getContextPath() %>/tools/edit-communities"><fmt:message key="jsp.layout.navbar-admin.communities-collections"/></a></li>
+              <li class="divider"></li>
+              <li><a href="<%= request.getContextPath() %>/tools/edit-item"><fmt:message key="jsp.layout.navbar-admin.items"/></a></li>
+           </ul>
+          </li>
           <%
           }
           %>

@@ -1872,10 +1872,10 @@ window.onload = function() {};
 
         if (document.getElementById('dc_identifier_isbn') !== null ) {
             var isbn = document.getElementById('dc_identifier_isbn');
-            if (isbn.value !== '' && !/^[0-9]{10,13}$/.test(isbn.value)) {
+            if (isbn.value !== '' && !/^[a-z0-9_-]{10,17}$/.test(isbn.value)) {
                 var error_div = document.createElement("div");
                 error_div.className = "alert alert-warning";
-                error_div.innerText = "ISBN must have 10-13 digits";
+                error_div.innerText = "ISBN must have 10-17 characters";
 
                 isbn.parentNode.insertBefore(error_div, isbn.nextSibling);
 

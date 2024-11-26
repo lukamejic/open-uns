@@ -156,7 +156,7 @@ public abstract class ASolrStatsConfigurerComponent<T extends DSpaceObject>
                 {
                     fullData.add(new MapPointBean(_NotAvailable, _NotAvailable,
                             null));
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
             mapDataBean.setHits(result.size());
@@ -167,12 +167,12 @@ public abstract class ASolrStatsConfigurerComponent<T extends DSpaceObject>
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
         catch (Exception e)
         {
-            log.warn(e.getMessage());
+            //log.warn(e.getMessage());
             fullData.add(new MapPointBean(_NotAvailable, _NotAvailable, null));
         }
         return mapDataBean;
@@ -332,8 +332,10 @@ public abstract class ASolrStatsConfigurerComponent<T extends DSpaceObject>
 
     protected void buildTopMapBasedResult(String key2)
     {
-        statisticDatasBeans.addValue(TOP, key2, _LOCATION,
-                generateMapView(TOP, key2, _LOCATION, null));
+        try{
+            statisticDatasBeans.addValue(TOP, key2, _LOCATION,
+                    generateMapView(TOP, key2, _LOCATION, null));
+        }catch(Exception e){}
     }
 
     protected void buildTopGeoBasedResult(String key2)
@@ -459,8 +461,10 @@ public abstract class ASolrStatsConfigurerComponent<T extends DSpaceObject>
 
     protected void buildSelectedObjectMapBasedResults(String key1)
     {
-        statisticDatasBeans.addValue(key1, GEO_VIEW, _LOCATION,
+        try{
+            statisticDatasBeans.addValue(key1, GEO_VIEW, _LOCATION,
                 generateMapView(key1, GEO_VIEW, _LOCATION, null));
+        }catch(Exception e){}
     }
 
     protected void buildSelectedObjectGeoBasedResults(String key1)

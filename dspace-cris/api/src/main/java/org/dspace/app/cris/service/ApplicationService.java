@@ -642,7 +642,7 @@ public class ApplicationService extends ExtendedTabService
             String query = "select sum(cm.metriccount) from cris_metrics cm " +
                     "where cm.metrictype = 'scopus_aggregate' and cm.last = true and cm.resourceid in " +
                     "(select crp.id from cris_rpage crp left join cris_rp_prop cpr on cpr.parent_id = crp.id left join jdyna_values jdv on cpr.id = jdv.id " +
-                    "where jdv.ouvalue = ? and cpr.typo_id = 33)";
+                    "where jdv.ouvalue = ? and cpr.typo_id = 32)";
 
             Context context = new Context();
             conn = context.getDBConnection();

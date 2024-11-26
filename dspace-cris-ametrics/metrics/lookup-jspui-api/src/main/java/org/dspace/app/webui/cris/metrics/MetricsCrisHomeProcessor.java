@@ -100,8 +100,8 @@ public class MetricsCrisHomeProcessor<ACO extends ACrisObject> implements ICrisH
 				try {
 					Item publication = Item.find(context, itemId);
 					Double[] values = getPageViewsAndDownloads(context, publication);
-					viewCounter += values[0].intValue();
-					downloadCounter += values[1].intValue();;
+					viewCounter += ((values[0] != null) ? values[0].intValue() : 0);
+					downloadCounter += ((values[1]) != null ? values[1].intValue() : 0);
 
 				} catch (SQLException e) {
 					log.error(LogManager.getHeader(context, "MetricsItemHomeProcessor", e.getMessage()), e);

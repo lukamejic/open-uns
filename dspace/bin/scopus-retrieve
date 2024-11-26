@@ -3,7 +3,8 @@
 # Get the DSPACE/bin directory
 BINDIR=`dirname $0`
 
-$BINDIR/dspace dsrun org.dspace.app.cris.metrics.scopus.script.ScriptRetrieveCitation -t 604800 -x 5000
+#$BINDIR/dspace dsrun org.dspace.app.cris.metrics.scopus.script.ScriptRetrieveCitation -t 518400 -x 5000 -s
+$BINDIR/dspace dsrun org.dspace.app.cris.metrics.scopus.script.ScriptRetrieveCitation -t 3600 -x 5000 -s
 $BINDIR/dspace dsrun org.dspace.app.cris.batch.ScriptStatsMetrics -s RPStatsAggregatorScopusIndicatorsPlugin
 #$BINDIR/dspace dsrun org.dspace.app.cris.batch.ScriptStatsMetrics -s PercentileScopusIndicatorsPlugin
 #$BINDIR/dspace dsrun org.dspace.app.cris.batch.ScriptStatsMetrics -s PercentileScopusAggregateIndicatorsPlugin

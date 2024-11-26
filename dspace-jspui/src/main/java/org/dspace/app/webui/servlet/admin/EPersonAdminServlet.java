@@ -167,6 +167,7 @@ public class EPersonAdminServlet extends DSpaceServlet
                         }
                         catch (MessagingException e1)
                         {
+                            log.info(" " + e1);
                             JSPManager
                                     .showJSP(request, response,
                                             "/dspace-admin/eperson-resetpassword-error.jsp");
@@ -235,6 +236,7 @@ public class EPersonAdminServlet extends DSpaceServlet
                     }
                     catch (MessagingException e1)
                     {
+                        log.info(" " + e1);
                         JSPManager
                                 .showJSP(request, response,
                                         "/dspace-admin/eperson-resetpassword-error.jsp");

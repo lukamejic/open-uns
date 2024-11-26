@@ -27,7 +27,7 @@ rm -rf oai/ rdf/ rest/ ROOT/ solr/ sword/ swordv2/
 #Kopiranje web aplikacije iz dspace instalacionog foldera u tomcat
 echo 'Kopiranje web aplikacije u tomcat ...'
 cd $DSPACE_INSTALL/webapps
-cp -R jspui/ oai/ rdf/ rest/ solr/ sword/ swordv2/ $TOMCAT/webapps
+cp -R jspui/ oai/ solr/ $TOMCAT/webapps
 
 #Preimenovanje jspui u ROOT
 cd $TOMCAT/webapps

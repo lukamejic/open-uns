@@ -213,17 +213,23 @@ public class DedupUtils
         
         List<DuplicateItemInfo> dupsInfo = new ArrayList<DuplicateItemInfo>();        
         for (Integer idResult : result) {
-            DuplicateItemInfo info = new DuplicateItemInfo();            
-            info.setRejected(false);
-            info.setDuplicateItem(resolver.fillDTO(context, idResult, resourceType));
-            if(verify.containsKey(idResult)) {
-                info.setNote(verify.get(idResult));
-                info.setCustomActions(context);
-            }
-            else {
-                info.setDefaultActions(context, isInWorkflow);
-            }                     
-            dupsInfo.add(info);
+			try{
+				DuplicateItemInfo info = new DuplicateItemInfo();            
+				info.setRejected(false);
+				info.setDuplicateItem(resolver.fillDTO(context, idResult, resourceType));
+				if(verify.containsKey(idResult)) {
+					info.setNote(verify.get(idResult));
+					info.setCustomActions(context);
+				}
+				else {
+					info.setDefaultActions(context, isInWorkflow);
+				}                     
+				dupsInfo.add(info);
+			}
+			catch (Exception ex)
+			{
+				log.error(ex.getMessage(), ex);
+			}
         }
         
         return dupsInfo;
