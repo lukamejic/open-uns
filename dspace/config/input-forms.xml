@@ -1318,7 +1318,7 @@ it, please enter the types and the actual numbers or codes.</hint>
 		 <dc-schema>dc</dc-schema>
          <dc-element>publisher</dc-element>
          <dc-qualifier></dc-qualifier>
-         <repeatable>false</repeatable>
+         <repeatable>true</repeatable>
          <label>Publisher</label>
          <input-type>onebox</input-type>
          <hint>Enter the name of the publisher of the previously issued instance of this item.</hint>
@@ -1760,6 +1760,10 @@ it, please enter the types and the actual numbers or codes.</hint>
      <pair>
        <displayed-value>Learning Object</displayed-value>
        <stored-value>Learning Object</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Text book</displayed-value>
+       <stored-value>Text book</stored-value>
      </pair>
      <pair>
        <displayed-value>Image</displayed-value>

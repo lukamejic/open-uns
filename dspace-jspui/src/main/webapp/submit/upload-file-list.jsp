@@ -252,7 +252,7 @@
         <p class="uploadHelp"><fmt:message key="jsp.submit.upload-file-list.info3"/></p>
         <ul class="uploadHelp">
             <li class="uploadHelp"><fmt:message key="jsp.submit.upload-file-list.info4"/></li>
-<%
+<!-- <%
         if (showChecksums)
         {
 %>
@@ -268,7 +268,7 @@
             <input class="btn btn-info" type="submit" name="submit_show_checksums" value="<fmt:message key="jsp.submit.upload-file-list.button3"/>" /></li>
 <%
         }
-%>
+%> -->
         </ul>
         <br />
 <%

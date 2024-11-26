@@ -106,10 +106,10 @@ public class FeedbackServlet extends DSpaceServlet
             if ((formEmail == null) || formEmail.equals("")
                     || (feedback == null) || feedback.equals("") || !ev.isValid(formEmail))
             {
-                log.info(LogManager.getHeader(context, "show_feedback_form",
-                        "problem=true"));
-                request.setAttribute("feedback.problem", Boolean.TRUE);
-                JSPManager.showJSP(request, response, "/feedback/form.jsp");
+                // log.info(LogManager.getHeader(context, "show_feedback_form",
+                //         "problem=true"));
+                // request.setAttribute("feedback.problem", Boolean.TRUE);
+                // JSPManager.showJSP(request, response, "/feedback/form.jsp");
 
                 return;
             }
@@ -151,10 +151,10 @@ public class FeedbackServlet extends DSpaceServlet
         else
         {
             // Display feedback form
-            log.info(LogManager.getHeader(context, "show_feedback_form",
-                    "problem=false"));
-            request.setAttribute("authenticated.email", authEmail);
-            JSPManager.showJSP(request, response, "/feedback/form.jsp");
+            // log.info(LogManager.getHeader(context, "show_feedback_form",
+            //         "problem=false"));
+            // request.setAttribute("authenticated.email", authEmail);
+            // JSPManager.showJSP(request, response, "/feedback/form.jsp");
         }
     }
 

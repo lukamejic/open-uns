@@ -152,7 +152,7 @@
                 <td><b>Repository Name</b></td>
                 <td><xsl:value-of select="oai:repositoryName/text()" /></td>
             </tr>
-            <xsl:for-each select="oai:adminEmail">
+            <!-- <xsl:for-each select="oai:adminEmail">
                 <tr>
                     <td><b>E-Mail Contact</b></td>
                     <td>
@@ -164,7 +164,7 @@
                         </a>
                     </td>
                 </tr>
-            </xsl:for-each>
+            </xsl:for-each> -->
             <tr>
                 <td><b>Repository identifier</b></td>
                 <td>
