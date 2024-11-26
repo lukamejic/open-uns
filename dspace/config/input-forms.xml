@@ -115,7 +115,7 @@
 		 <dc-schema>dc</dc-schema>
          <dc-element>publisher</dc-element>
          <dc-qualifier></dc-qualifier>
-         <repeatable>false</repeatable>
+         <repeatable>true</repeatable>
          <label>Publisher</label>
          <input-type>onebox</input-type>
          <hint>Enter the name of the publisher of the previously issued instance of this item.</hint>
@@ -426,7 +426,7 @@ it, please enter the types and the actual numbers or codes.</hint>
 		 <dc-schema>dc</dc-schema>
          <dc-element>publisher</dc-element>
          <dc-qualifier></dc-qualifier>
-         <repeatable>false</repeatable>
+         <repeatable>true</repeatable>
          <label>Publisher</label>
          <input-type>onebox</input-type>
          <hint>Enter the name of the publisher of the previously issued instance of this item.</hint>
@@ -635,7 +635,7 @@ it, please enter the types and the actual numbers or codes.</hint>
 		 <dc-schema>dc</dc-schema>
          <dc-element>publisher</dc-element>
          <dc-qualifier></dc-qualifier>
-         <repeatable>false</repeatable>
+         <repeatable>true</repeatable>
          <label>Publisher</label>
          <input-type>onebox</input-type>
          <hint>Enter the name of the publisher of the previously issued instance of this item.</hint>
@@ -844,7 +844,7 @@ it, please enter the types and the actual numbers or codes.</hint>
 		 <dc-schema>dc</dc-schema>
          <dc-element>publisher</dc-element>
          <dc-qualifier></dc-qualifier>
-         <repeatable>false</repeatable>
+         <repeatable>true</repeatable>
          <label>Publisher</label>
          <input-type>onebox</input-type>
          <hint>Enter the name of the publisher of the previously issued instance of this item.</hint>
@@ -1543,6 +1543,10 @@ it, please enter the types and the actual numbers or codes.</hint>
        <stored-value>pmid</stored-value>
      </pair>
      <pair>
+       <displayed-value>COBISS ID</displayed-value>
+       <stored-value>cobid</stored-value>
+     </pair>
+     <pair>
        <displayed-value>arXiv ID</displayed-value>
        <stored-value>arxiv</stored-value>
      </pair>
@@ -1622,6 +1626,10 @@ it, please enter the types and the actual numbers or codes.</hint>
        <stored-value>pmid</stored-value>
      </pair>
      <pair>
+       <displayed-value>COBISS ID</displayed-value>
+       <stored-value>cobid</stored-value>
+     </pair>
+     <pair>
        <displayed-value>arXiv ID</displayed-value>
        <stored-value>arxiv</stored-value>
      </pair>
@@ -1655,6 +1663,10 @@ it, please enter the types and the actual numbers or codes.</hint>
      <pair>
        <displayed-value>Pubmed ID</displayed-value>
        <stored-value>pmid</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>COBISS ID</displayed-value>
+       <stored-value>cobid</stored-value>
      </pair>
      <pair>
        <displayed-value>arXiv ID</displayed-value>
@@ -1692,6 +1704,10 @@ it, please enter the types and the actual numbers or codes.</hint>
        <stored-value>pmid</stored-value>
      </pair>
      <pair>
+       <displayed-value>COBISS ID</displayed-value>
+       <stored-value>cobid</stored-value>
+     </pair>
+     <pair>
        <displayed-value>arXiv ID</displayed-value>
        <stored-value>arxiv</stored-value>
      </pair>
@@ -1717,6 +1733,10 @@ it, please enter the types and the actual numbers or codes.</hint>
      <pair>
        <displayed-value>Pubmed ID</displayed-value>
        <stored-value>pmid</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>COBISS ID</displayed-value>
+       <stored-value>cobid</stored-value>
      </pair>
      <pair>
        <displayed-value>arXiv ID</displayed-value>
