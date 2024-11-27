@@ -8,35 +8,11 @@
     <xsl:template match="/">
         <dim:dim xmlns:dim="http://www.dspace.org/xmlns/dspace/dim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="http://www.dspace.org/xmlns/dspace/dim http://www.dspace.org/schema/dim.xsd">
-            <xsl:apply-templates select="//doc:field[@name='value']/doc:metadata/doc:element[@name='dc']"/>
+            <xsl:apply-templates select="//doc:field[@name='value']"/>
         </dim:dim>
     </xsl:template>
 
-    <xsl:template match="/doc:element/doc:element/doc:field[@name='value']">
-        <xsl:call-template name="dimfield">
-            <xsl:with-param name="mdschema" select="../../../@name"/>
-            <xsl:with-param name="element" select="../../@name"/>
-            <xsl:with-param name="qualifier"/>
-            <xsl:with-param name="language" select="../@name"/>
-            <xsl:with-param name="authority" select="following-sibling::doc:field[1][@name='authority']"/>
-            <xsl:with-param name="confidence" select="following-sibling::doc:field[2][@name='confidence']"/>
-            <xsl:with-param name="value" select="text()"/>
-        </xsl:call-template>
-    </xsl:template>
-
-    <xsl:template match="/doc:element/doc:element/doc:element/doc:field[@name='value']">
-        <xsl:call-template name="dimfield">
-            <xsl:with-param name="mdschema" select="../../../../@name"/>
-            <xsl:with-param name="element" select="../../../@name"/>
-            <xsl:with-param name="qualifier" select="../../@name"/>
-            <xsl:with-param name="language" select="../@name" />
-            <xsl:with-param name="authority" select="following-sibling::doc:field[1][@name='authority']"/>
-            <xsl:with-param name="confidence" select="following-sibling::doc:field[2][@name='confidence']"/>
-            <xsl:with-param name="value" select="text()"/>
-        </xsl:call-template>
-    </xsl:template>
-    
-    <!-- <xsl:template match="/doc:metadata/doc:element[@name='dc']/doc:element/doc:element/doc:field[@name='value']">
+    <xsl:template match="/doc:metadata/doc:element[@name='dc']/doc:element/doc:element/doc:field[@name='value']">
         <xsl:call-template name="dimfield">
             <xsl:with-param name="mdschema" select="../../../@name"/>
             <xsl:with-param name="element" select="../../@name"/>
@@ -58,7 +34,7 @@
             <xsl:with-param name="confidence" select="following-sibling::doc:field[2][@name='confidence']"/>
             <xsl:with-param name="value" select="text()"/>
         </xsl:call-template>
-    </xsl:template> -->
+    </xsl:template>
 
     <xsl:template name="dimfield">
         <xsl:param name="mdschema"/>
