@@ -56,6 +56,43 @@
                         source
                     </xsl:attribute>
                 </xsl:when>
+                <xsl:when test="$qualifier='conference'">
+                    <xsl:attribute name="element">
+                        source
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="$qualifier='volume'">
+                    <xsl:attribute name="element">
+                        citation
+                    </xsl:attribute>
+                    <xsl:attribute name="qualifier">
+                        volume
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="$qualifier='issue'">
+                    <xsl:attribute name="element">
+                        citation
+                    </xsl:attribute>
+                    <xsl:attribute name="qualifier">
+                        issue
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="$qualifier='firstPage'">
+                    <xsl:attribute name="element">
+                        citation
+                    </xsl:attribute>
+                    <xsl:attribute name="qualifier">
+                        spage
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="$qualifier='lastPage'">
+                    <xsl:attribute name="element">
+                        citation
+                    </xsl:attribute>
+                    <xsl:attribute name="qualifier">
+                        epage
+                    </xsl:attribute>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:attribute name="element">
                         <xsl:value-of select="$element"/>
