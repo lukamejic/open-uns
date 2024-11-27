@@ -51,7 +51,7 @@
             </xsl:attribute>
 
             <xsl:choose>
-                <xsl:when test="$qualifier='isPartOf'">
+                <xsl:when test="$qualifier='ispartof'">
                     <xsl:attribute name="element">
                         source
                     </xsl:attribute>
@@ -77,7 +77,7 @@
                         issue
                     </xsl:attribute>
                 </xsl:when>
-                <xsl:when test="$qualifier='firstPage'">
+                <xsl:when test="$qualifier='firstpage'">
                     <xsl:attribute name="element">
                         citation
                     </xsl:attribute>
@@ -85,7 +85,7 @@
                         spage
                     </xsl:attribute>
                 </xsl:when>
-                <xsl:when test="$qualifier='lastPage'">
+                <xsl:when test="$qualifier='lastpage'">
                     <xsl:attribute name="element">
                         citation
                     </xsl:attribute>
