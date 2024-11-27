@@ -14,10 +14,10 @@
 
     <xsl:template match="/doc:metadata/doc:element[@name='dc']/doc:element/doc:element/doc:field[@name='value']">
         <xsl:call-template name="dimfield">
-            <xsl:with-param name="mdschema" select="../../../@name"/>
-            <xsl:with-param name="element" select="../../@name"/>
-            <xsl:with-param name="qualifier"/>
-            <xsl:with-param name="language" select="../@name"/>
+            <xsl:with-param name="mdschema" select="../../../../@name"/>
+            <xsl:with-param name="element" select="../../../@name"/>
+            <xsl:with-param name="qualifier" select="../../@name"/>
+            <xsl:with-param name="language" select="../@name" />
             <xsl:with-param name="authority" select="following-sibling::doc:field[1][@name='authority']"/>
             <xsl:with-param name="confidence" select="following-sibling::doc:field[2][@name='confidence']"/>
             <xsl:with-param name="value" select="text()"/>
@@ -50,15 +50,23 @@
                 <xsl:value-of select="$mdschema"/>
             </xsl:attribute>
 
-            <xsl:attribute name="element">
-                <xsl:value-of select="$element"/>
-            </xsl:attribute>
-
-            <xsl:if test="$qualifier">
-                <xsl:attribute name="qualifier">
-                    <xsl:value-of select="$qualifier"/>
-                </xsl:attribute>
-            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="$qualifier='isPartOf'">
+                    <xsl:attribute name="element">
+                        source
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="element">
+                        <xsl:value-of select="$element"/>
+                    </xsl:attribute>
+                    <xsl:if test="$qualifier">
+                        <xsl:attribute name="qualifier">
+                            <xsl:value-of select="$qualifier"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                </xsl:otherwise>
+            </xsl:choose>
 
             <xsl:choose>
                 <xsl:when test="$language='none'"/>
